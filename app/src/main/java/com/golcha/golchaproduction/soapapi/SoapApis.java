@@ -15,8 +15,8 @@ public class SoapApis {
     {
         String namespace2 = "urn:microsoft-dynamics-schemas/page/fgdateandlocationwiserating";
         String url2 = "http://myerp.golchagroup.com:7048/DynamicsNAV90/WS/UMDS%20Pvt.Ltd./Page/FGDateandLocationWiseRating";
-        String soap_action2 = "urn:microsoft-dynamics-schemas/page/fgdateandlocationwiserating:ReadMultiple";
         String method_name2 = "ReadMultiple";
+        String soap_action2 = namespace2 + ":" + method_name2;
 
         try {
             SoapObject request = new SoapObject(namespace2, method_name2);
@@ -52,5 +52,37 @@ public class SoapApis {
             String error = e.toString();
             Log.i(TAG, "doInBackground: catch " + error);
         }
+    }
+
+
+
+    public static SoapObject getPlannedOrderList()
+    {
+        String namespace2 = Urls.planned_production_list_namespace;
+        String url2 = Urls.planned_production_list_url;
+        String method_name2 = "ReadMultiple";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result = null;
+
+        try {
+            SoapObject request = new SoapObject(namespace2, method_name2);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlm = new NtlmTransport();
+            ntlm.debug = true;
+            ntlm.setCredentials(url2, userName, password, domain, "");
+
+            ntlm.call(soap_action2, envelope); // Receive Error here!
+
+            result = (SoapObject) envelope.getResponse();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            String error = e.toString();
+            Log.e(TAG, "error " + error);
+        }
+        return result;
     }
 }

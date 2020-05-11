@@ -2,9 +2,12 @@ package com.golcha.golchaproduction;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.golcha.golchaproduction.soapapi.SoapApis;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.ksoap2.serialization.SoapObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -13,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,24 +32,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-//        call the webservice
-        new CallWebService().execute();
+
     }
 
 
-    class CallWebService extends AsyncTask<String, Void, String> {
-        @Override
-        protected void onPostExecute(String s) {
 
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String result = "";
-
-            SoapApis.getFgInventoryData();
-            return result;
-        }
-    }
 
 }
