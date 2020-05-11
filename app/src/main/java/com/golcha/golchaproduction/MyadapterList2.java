@@ -11,36 +11,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MyadapterList extends RecyclerView.Adapter<MyadapterList.ViewHolder> {
-    ArrayList<Getarraylist> list;
-    public MyadapterList(ArrayList<Getarraylist> list){
-        this.list=list;
+public class MyadapterList2 extends RecyclerView.Adapter<MyadapterList2.ViewHolder> {
+    ArrayList<Getplanarraylist> list2;
+
+    public MyadapterList2(ArrayList<Getplanarraylist> list){
+        this.list2=list;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyadapterList2.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
         View listitem=layoutInflater.inflate(R.layout.listitems,parent,false);
-        ViewHolder viewHolder=new ViewHolder(listitem);
+        MyadapterList2.ViewHolder viewHolder=new MyadapterList2.ViewHolder(listitem);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Getarraylist getarraylist=list.get(position);
+        final Getplanarraylist getarraylist=list2.get(position);
         holder.textView1.setText(getarraylist.getSourceno());
         holder.textView2.setText(getarraylist.getDesc());
         holder.textView3.setText(getarraylist.getNo());
         holder.textView4.setText(getarraylist.getQuantity());
         holder.textView5.setText(getarraylist.getRoutingno());
 
-
     }
+
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list2.size();
     }
     public  static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textView1;

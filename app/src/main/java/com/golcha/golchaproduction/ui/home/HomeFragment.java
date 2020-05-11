@@ -1,9 +1,12 @@
 package com.golcha.golchaproduction.ui.home;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,10 +14,29 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.golcha.golchaproduction.Getplanarraylist;
+import com.golcha.golchaproduction.MyadapterList;
+import com.golcha.golchaproduction.MyadapterList2;
 import com.golcha.golchaproduction.R;
+import com.golcha.golchaproduction.soapapi.SoapApis;
+
+import org.ksoap2.serialization.SoapObject;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+    private static final String TAG = "HomeFragment";
+
+    ArrayList<Getplanarraylist> list2= new ArrayList<>();
+    RecyclerView recyclerView;
+    String Source_No;
+    String Description;
+    String Routing_No;
+    String Quantity;
+    String No;
+    ProgressBar progressBar;
 
     private HomeViewModel homeViewModel;
 
@@ -30,6 +52,60 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        recyclerView = (RecyclerView)root.findViewById(R.id.recycleview2);
+        progressBar = (ProgressBar)root.findViewById(R.id.progresbar2);
+
+        new CallWebService().execute();
         return root;
+    }
+    class CallWebService extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String result3 = "";
+
+
+            try {
+                SoapObject result = SoapApis.getPlannedOrderList();
+                for (int i = 0; i < result.getPropertyCount(); i++) {
+                    SoapObject result2 = (SoapObject) result.getProperty(i);
+                    try {
+                        Source_No=String.valueOf(result2.getProperty("Source_No"));
+                        Description=String.valueOf(result2.getProperty("Description"));
+                        No = String.valueOf(result2.getProperty("No"));
+                        Routing_No = String.valueOf(result2.getProperty("Routing_No"));
+                        Quantity = String.valueOf(result2.getProperty("Quantity"));
+                        list2.add(new Getplanarraylist(Source_No,Description,No,Routing_No,Quantity));
+                      //  Log.i(TAG, "Planned List " +Source_No);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            } catch (Exception e) {
+                Log.e(TAG, "Error Inside " + e.toString());
+            }
+
+
+            return result3;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressBar.setVisibility(View.INVISIBLE);
+            MyadapterList2 myadapterList2 = new MyadapterList2(list2);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setAdapter(myadapterList2);
+
+        }
     }
 }

@@ -85,4 +85,33 @@ public class SoapApis {
         }
         return result;
     }
+    public static SoapObject getUpdatedOrderList()
+    {
+        String namespace2 = Urls.updated_production_list_namespace;
+        String url2 = Urls.updated_production_list_url;
+        String method_name2 = "ReadMultiple";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result = null;
+
+        try {
+            SoapObject request = new SoapObject(namespace2, method_name2);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlm = new NtlmTransport();
+            ntlm.debug = true;
+            ntlm.setCredentials(url2, userName, password, domain, "");
+
+            ntlm.call(soap_action2, envelope); // Receive Error here!
+
+            result = (SoapObject) envelope.getResponse();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            String error = e.toString();
+            Log.e(TAG, "error " + error);
+        }
+        return result;
+    }
 }

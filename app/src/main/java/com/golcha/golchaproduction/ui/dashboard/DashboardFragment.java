@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,10 @@ public class DashboardFragment extends Fragment {
     RecyclerView recyclerView;
     String Source_No;
     String Description;
+    String Routing_No;
+    String Quantity;
+    String No;
+    ProgressBar progressBar;
 
 
 
@@ -41,6 +46,8 @@ public class DashboardFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
         recyclerView = (RecyclerView)root.findViewById(R.id.recycleview);
+        progressBar=(ProgressBar)root.findViewById(R.id.progresbar);
+
 
 
         // call the webservice
@@ -54,6 +61,7 @@ public class DashboardFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -62,13 +70,16 @@ public class DashboardFragment extends Fragment {
 
 
             try {
-                SoapObject result = SoapApis.getPlannedOrderList();
+                SoapObject result = SoapApis.getUpdatedOrderList();
                 for (int i = 0; i < result.getPropertyCount(); i++) {
                     SoapObject result2 = (SoapObject) result.getProperty(i);
                     try {
-                        Source_No=String.valueOf(result2.getProperty("Source_No"));
-                        Description=String.valueOf(result2.getProperty("Description"));
-                        list.add(new Getarraylist(Source_No,Description));
+                        Source_No = String.valueOf(result2.getProperty("Source_No"));
+                        Description = String.valueOf(result2.getProperty("Description"));
+                        No = String.valueOf(result2.getProperty("No"));
+                        Routing_No = String.valueOf(result2.getProperty("Routing_No"));
+                        Quantity = String.valueOf(result2.getProperty("Quantity"));
+                        list.add(new Getarraylist(Source_No,Description,No,Routing_No,Quantity));
                         Log.i(TAG, "Planned List " +Source_No);
                     }
                     catch (Exception e)
@@ -88,6 +99,7 @@ public class DashboardFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
+            progressBar.setVisibility(View.INVISIBLE);
             MyadapterList myadapterList=new MyadapterList(list);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(myadapterList);

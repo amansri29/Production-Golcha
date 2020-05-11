@@ -1,9 +1,9 @@
 package com.golcha.golchaproduction;
 
-public class Getarraylist {
+public class Getplanarraylist {
     String sourceno,desc,no,routingno,quantity;
 
-    public Getarraylist(String sourceno, String desc, String no, String routingno, String quantity){
+    public Getplanarraylist(String sourceno, String desc, String no, String routingno, String quantity){
         this.desc=desc;
         this.sourceno=sourceno;
         this.no=no;
