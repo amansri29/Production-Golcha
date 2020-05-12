@@ -1,9 +1,6 @@
 package com.golcha.golchaproduction.soapapi;
 
-import android.content.Context;
 import android.util.Log;
-
-import com.golcha.golchaproduction.Getplanarraylist;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -115,11 +112,12 @@ public class SoapApis {
     }
 
 
-    public static void getPlannedCardDetails(String no) {
+    public static SoapObject getPlannedCardDetails(String no) {
         String namespace2 = Urls.planned_production_card_namespace;
         String url2 = Urls.planned_production_card_url;
         String method_name2 = "Read";
         String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result2 = null;
 
 
         try {
@@ -140,16 +138,7 @@ public class SoapApis {
 
             ntlm.call(soap_action2, envelope); // Receive Error here!
 
-            SoapObject result = (SoapObject) envelope.getResponse();
-
-            try {
-                String no2 = String.valueOf(result.getProperty("No"));
-                String desc1 = String.valueOf(result.getProperty("Description"));
-                String desc2 = String.valueOf(result.getProperty("Description_2"));
-                Log.i(TAG, "Planned Card::" + no2 + " " + desc1 + " " + desc2);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            result2 = (SoapObject) envelope.getResponse();
 
 
         } catch (Exception e) {
@@ -157,7 +146,7 @@ public class SoapApis {
             String error = e.toString();
             Log.e(TAG, "error " + error);
         }
-//        return result;
+        return result2;
     }
 
 }

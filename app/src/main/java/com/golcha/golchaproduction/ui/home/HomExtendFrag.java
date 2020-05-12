@@ -1,65 +1,108 @@
 package com.golcha.golchaproduction.ui.home;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.golcha.golchaproduction.Getplanarraylist;
+import com.golcha.golchaproduction.MyadapterList2;
 import com.golcha.golchaproduction.R;
+import com.golcha.golchaproduction.soapapi.SoapApis;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomExtendFrag#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.ksoap2.serialization.SoapObject;
+
+
 public class HomExtendFrag extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HomExtendFrag() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomExtendFrag.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomExtendFrag newInstance(String param1, String param2) {
-        HomExtendFrag fragment = new HomExtendFrag();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private static final String TAG = "HomExtendFrag";
+    String no;
+    ProgressDialog progressDialog;
+    String no2,desc1,desc2,source_type,source_no,p_quantity,department,location;
+    TextView textViewno,textViewdes,textViewdes2,textViewsourcetype,textViewsourceno,textViewp_quantity,textViewdepart,textViewlocation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hom_extend, container, false);
+        View root = inflater.inflate(R.layout.fragment_hom_extend, container, false);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setProgress(0);
+        no=getArguments().getString("no");
+        textViewno=(TextView)root.findViewById(R.id.textViewno);
+        textViewdes=(TextView)root.findViewById(R.id.textViewdesc);
+        textViewdes2=(TextView)root.findViewById(R.id.textViewdesc2);
+        textViewsourcetype=(TextView)root.findViewById(R.id.textViewsourectype);
+        textViewsourceno=(TextView)root.findViewById(R.id.textViewsourceno);
+        textViewp_quantity=(TextView)root.findViewById(R.id.textViewpro_quan);
+        textViewdepart=(TextView)root.findViewById(R.id.textViewdepart);
+        textViewlocation=(TextView)root.findViewById(R.id.textViewloca);
+        new CallWebService().execute();
+
+
+        return root;
+    }
+    class CallWebService extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String result3 = "";
+
+            try {
+                SoapObject result = SoapApis.getPlannedCardDetails(no);
+                try {
+                    no2 = String.valueOf(result.getProperty("No"));
+                    desc1 = String.valueOf(result.getProperty("Description"));
+                    desc2 = String.valueOf(result.getProperty("Description_2"));
+                    source_type = String.valueOf(result.getProperty("Source_Type"));
+                    source_no = String.valueOf(result.getProperty("Source_No"));
+                    p_quantity = String.valueOf(result.getProperty("Production_Quantity"));
+                 //   department = String.valueOf(result.getProperty(""));
+                    location = String.valueOf(result.getProperty("Location_Code"));
+
+                    Log.i(TAG, "Planned Card::" + no2 + " " + desc1 + " " + desc2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            } catch (Exception e) {
+                Log.e(TAG, "Error api " + e.toString());
+            }
+
+
+
+            return result3;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            textViewno.setText(no);
+            textViewdes.setText(desc1);
+            textViewdes2.setText(desc2);
+            textViewsourcetype.setText(source_type);
+            textViewsourceno.setText(source_no);
+            textViewp_quantity.setText(p_quantity);
+            textViewlocation.setText(location);
+
+        }
     }
 }

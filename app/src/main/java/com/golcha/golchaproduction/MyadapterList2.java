@@ -1,5 +1,6 @@
 package com.golcha.golchaproduction;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.golcha.golchaproduction.ui.home.HomExtendFrag;
 
 import java.util.ArrayList;
 
@@ -28,8 +33,23 @@ public class MyadapterList2 extends RecyclerView.Adapter<MyadapterList2.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final Getplanarraylist getarraylist=list2.get(position);
+        holder.itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                        Fragment myFragment = new HomExtendFrag();
+                        Bundle bundle=new Bundle();
+                        bundle.putString("no",getarraylist.getNo());
+                        myFragment.setArguments(bundle);
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.home, myFragment).addToBackStack(null).commit();
+
+                    }
+                }
+        );
+
         holder.textView1.setText(getarraylist.getSourceno());
         holder.textView2.setText(getarraylist.getDesc());
         holder.textView3.setText(getarraylist.getNo());

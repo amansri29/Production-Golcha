@@ -1,5 +1,6 @@
 package com.golcha.golchaproduction;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,16 +8,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.golcha.golchaproduction.ui.home.HomExtendFrag;
+
 import java.util.ArrayList;
 
 public class MyadapterList extends RecyclerView.Adapter<MyadapterList.ViewHolder> {
     ArrayList<Getarraylist> list;
+    private Context mContext;
     public MyadapterList(ArrayList<Getarraylist> list){
         this.list=list;
     }
@@ -32,6 +41,7 @@ public class MyadapterList extends RecyclerView.Adapter<MyadapterList.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         final Getarraylist getarraylist=list.get(position);
         holder.textView1.setText(getarraylist.getSourceno());
         holder.textView2.setText(getarraylist.getDesc());
@@ -64,4 +74,5 @@ public class MyadapterList extends RecyclerView.Adapter<MyadapterList.ViewHolder
             this.cardView=(CardView) itemView.findViewById(R.id.card_view);
         }
     }
+
 }
