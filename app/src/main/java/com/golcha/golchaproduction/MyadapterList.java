@@ -7,6 +7,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -48,7 +52,7 @@ public class MyadapterList extends RecyclerView.Adapter<MyadapterList.ViewHolder
         public TextView textView3;
         public TextView textView4;
         public TextView textView5;
-        public LinearLayout linearLayout;
+        public CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,7 +61,7 @@ public class MyadapterList extends RecyclerView.Adapter<MyadapterList.ViewHolder
             this.textView3=(TextView)itemView.findViewById(R.id.no);
             this.textView4=(TextView)itemView.findViewById(R.id.quantity);
             this.textView5=(TextView)itemView.findViewById(R.id.routingno);
-            this.linearLayout=(LinearLayout)itemView.findViewById(R.id.list_item);
+            this.cardView=(CardView) itemView.findViewById(R.id.card_view);
         }
     }
 }
