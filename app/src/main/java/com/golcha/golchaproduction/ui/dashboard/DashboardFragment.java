@@ -6,20 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.golcha.golchaproduction.Getarraylist;
-import com.golcha.golchaproduction.MyadapterList;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
 
@@ -30,7 +24,7 @@ import java.util.ArrayList;
 
 public class DashboardFragment extends Fragment {
     private static final String TAG = "DashboardFragment";
-    ArrayList<Getarraylist> list= new ArrayList<>();
+    ArrayList<GetReleasearraylist> list= new ArrayList<>();
     RecyclerView recyclerView;
     String Source_No;
     String Description;
@@ -79,7 +73,7 @@ public class DashboardFragment extends Fragment {
                         No = String.valueOf(result2.getProperty("No"));
                         Routing_No = String.valueOf(result2.getProperty("Routing_No"));
                         Quantity = String.valueOf(result2.getProperty("Quantity"));
-                        list.add(new Getarraylist(Source_No,Description,No,Routing_No,Quantity));
+                        list.add(new GetReleasearraylist(Source_No,Description,No,Routing_No,Quantity));
                         Log.i(TAG, "Planned List " +Source_No);
                     }
                     catch (Exception e)
@@ -100,9 +94,9 @@ public class DashboardFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             progressBar.setVisibility(View.INVISIBLE);
-            MyadapterList myadapterList=new MyadapterList(list);
+            ReleaseProd_Listadapter releaseProdListadapter =new ReleaseProd_Listadapter(list);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(myadapterList);
+            recyclerView.setAdapter(releaseProdListadapter);
 
         }
     }

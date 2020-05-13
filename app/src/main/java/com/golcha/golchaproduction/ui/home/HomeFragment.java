@@ -1,24 +1,25 @@
 package com.golcha.golchaproduction.ui.home;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.golcha.golchaproduction.Getplanarraylist;
-import com.golcha.golchaproduction.MyadapterList;
-import com.golcha.golchaproduction.MyadapterList2;
+
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
 
@@ -37,6 +38,7 @@ public class HomeFragment extends Fragment {
     String Quantity;
     String No;
     ProgressBar progressBar;
+    Activity activity;
 
     private HomeViewModel homeViewModel;
 
@@ -52,9 +54,21 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        activity = getActivity();
 
         recyclerView = (RecyclerView)root.findViewById(R.id.recycleview2);
         progressBar = (ProgressBar)root.findViewById(R.id.progresbar2);
+        Button button=(Button)root.findViewById(R.id.button_createfrag);
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.home, new Home_to_CreateFrag()).addToBackStack(null).commit();
+
+                    }
+                }
+        );
 
         new CallWebService().execute();
         return root;
@@ -105,9 +119,9 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             progressBar.setVisibility(View.INVISIBLE);
-            MyadapterList2 myadapterList2 = new MyadapterList2(list2);
+            PlanProduc_ListAdaper planProducListAdaper = new PlanProduc_ListAdaper(list2, activity);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(myadapterList2);
+            recyclerView.setAdapter(planProducListAdaper);
 
         }
     }
