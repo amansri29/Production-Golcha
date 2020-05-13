@@ -230,6 +230,8 @@ public class SoapApis {
                Log.i("number",result2);
             }
             catch (SoapFault soapFault) {
+                result2 =String.valueOf(soapFault);
+
                 soapFault.printStackTrace();
             }
 
