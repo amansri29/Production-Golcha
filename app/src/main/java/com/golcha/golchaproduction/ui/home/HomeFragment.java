@@ -108,11 +108,6 @@ public class HomeFragment extends Fragment {
             } catch (Exception e) {
                 Log.e(TAG, "Error Inside " + e.toString());
             }
-
-            String no = "M-PLAN\\OCT18\\1442";
-            Log.i(TAG, "doInBackground: No " + no);
-            SoapApis.getPlannedCardDetails(no);
-
             return result3;
         }
 

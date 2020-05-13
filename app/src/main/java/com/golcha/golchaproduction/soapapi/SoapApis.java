@@ -1,6 +1,14 @@
 package com.golcha.golchaproduction.soapapi;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.golcha.golchaproduction.MainActivity;
+import com.google.gson.Gson;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -8,12 +16,16 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SoapApis {
     private static final String TAG = "SoapApis";
     public static String userName = "aman.srivastav";
     public static String password = "Change@123";
     public static String domain = "gghojai";
+
+    private static boolean True=true;
+
 
     public static void getFgInventoryData() {
         String namespace2 = "urn:microsoft-dynamics-schemas/page/fgdateandlocationwiserating";
@@ -133,7 +145,6 @@ public class SoapApis {
 
 //            SoapObject filter = new SoapObject(namespace2,"filter");
 //            envelope.bodyOut = request;
-            envelope.dotNet = true;
 
             envelope.setOutputSoapObject(request);
 
@@ -231,7 +242,6 @@ public class SoapApis {
             }
             catch (SoapFault soapFault) {
                 result2 =String.valueOf(soapFault);
-
                 soapFault.printStackTrace();
             }
 
@@ -240,6 +250,89 @@ public class SoapApis {
             e.printStackTrace();
         }
         return result2;
+    }
+
+    public static void Login(Activity activity, String username, String Password){
+        Gson gson = new Gson();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String namespace2 = Urls.employeelocations_list_namespace;
+        String url2 = Urls.employeelocations_list_url;
+        String method_name2 = "ReadMultiple";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result= null;
+
+        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list_loc= new ArrayList<>();
+
+
+        try {
+            SoapObject request = new SoapObject(namespace2,method_name2);
+            SoapObject filter = new SoapObject(namespace2,"filter");
+            filter.addProperty("Field","User_ID");
+            filter.addProperty("Criteria","*"+username.toUpperCase());
+            request.addSoapObject(filter);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlm = new NtlmTransport();
+            ntlm.debug = true;
+            ntlm.setCredentials(url2, username, Password, domain, "");
+            ntlm.call(soap_action2, envelope);
+            try {
+                result= (SoapObject) envelope.getResponse();
+                if(result.getPropertyCount() == 0){
+
+                    editor.putString("fullaccess", String.valueOf(True)); //sharedpreference to check location access
+
+                }
+                for(int i=0;i<result.getPropertyCount();i++){
+
+                    SoapObject result2 = (SoapObject)result.getProperty(i);
+                    try {
+                        String loction_code = String.valueOf(result2.getProperty("Location_Code"));
+                        String location_name = String.valueOf(result2.getProperty("Location_Name"));
+                        String code_name = loction_code + "-" +location_name;
+                        list_loc.add(loction_code);
+                        list.add(code_name);
+                        Log.i("Locations",code_name);
+
+                    }
+
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                String loc_code = gson.toJson(list_loc);
+                Log.i("Locations",loc_code);
+                editor.putString("Location_code",loc_code);
+
+
+            }
+            catch (SoapFault soapFault) {
+                soapFault.printStackTrace();
+            }
+            editor.putBoolean("Loginaccess", true);//savespreference to check logins
+            editor.commit();
+            //Moving to next Activity
+            Intent intent = new Intent(activity, MainActivity.class);
+            activity.startActivity(intent);
+            Log.i("Logins :  " , String.valueOf(sharedPreferences.getBoolean("Loginaccess",false)));
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            String earror =e.toString();
+            Log.e(TAG,"earror " + earror);
+
+        };
+
+
+
     }
 
 }

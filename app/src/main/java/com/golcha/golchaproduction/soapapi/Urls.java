@@ -20,4 +20,5 @@ public class Urls {
     public static String employeelocations_list_url=base_url + "/" +company_name +
             "/WS/UMDS%20Pvt.Ltd./Page/EmployeeLocations";
     public static String employeelocations_list_namespace = "urn:microsoft-dynamics-schemas/page/employeelocations";
+
 }
