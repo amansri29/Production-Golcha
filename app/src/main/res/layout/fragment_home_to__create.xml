@@ -3,27 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
     android:background="?android:windowBackground"
     tools:context=".ui.home.Home_to_CreateFrag">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
         android:orientation="vertical">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="10"
+            android:layout_weight="10"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_margin="5dp"
                 android:layout_height="match_parent"
+                android:text="Items"
+                android:id="@+id/items_select"/>
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_item_select"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="5"
+                android:layout_margin="5dp"
+                android:layout_height="match_parent"
                 android:text="Source_No"
                 android:id="@+id/textview_create_sourceno"/>
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                android:layout_width="0dp"
+            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
+                android:layout_width="match_parent"
                 android:layout_weight="5"
                 android:layout_height="match_parent"
                 android:id="@+id/edit_auto_sourceno"/>
@@ -41,6 +62,7 @@
                 android:text="Production_quantity"
                 android:id="@+id/textview_prod_quan"/>
             <EditText
+                android:inputType="numberDecimal"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="match_parent"
@@ -59,30 +81,13 @@
                 android:layout_height="match_parent"
                 android:text="Location_Code"
                 android:id="@+id/textview_loca_code"/>
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="match_parent"
                 android:id="@+id/edit_loca_code"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="5"
-                android:layout_margin="5dp"
-                android:layout_height="match_parent"
-                android:text="Items"
-                android:id="@+id/items_select"/>
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                android:layout_width="0dp"
-                android:layout_weight="5"
-                android:layout_height="match_parent"
-                android:id="@+id/edit_item_select"/>
-        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,7 +100,7 @@
                 android:layout_height="match_parent"
                 android:text="Department"
                 android:id="@+id/items_select_department"/>
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="match_parent"
@@ -113,7 +118,7 @@
                 android:layout_height="match_parent"
                 android:text="Machine"
                 android:id="@+id/items_select_machine"/>
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="match_parent"

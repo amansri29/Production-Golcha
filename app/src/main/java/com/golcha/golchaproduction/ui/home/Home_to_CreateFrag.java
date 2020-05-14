@@ -21,17 +21,15 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.golcha.golchaproduction.DropDownAdapter;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
+import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
 
-import org.ksoap2.serialization.SoapObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Home_to_CreateFrag extends Fragment {
     ArrayList<String> mylocationlist;
@@ -39,7 +37,8 @@ public class Home_to_CreateFrag extends Fragment {
     ArrayList<String> machine_list;
     ArrayList<String> Source_no;
     ProgressDialog progressDialog;
-    AutoCompleteTextView autocomp_textView,autocom_items, autocomp_department,autocom_machine,mysourceno ;
+    CustomAutoCompleteTextView autocomp_textView, autocomp_department,autocom_machine,mysourceno ;
+    Spinner autocom_items;
     EditText pro_quantity_edittxt;
     String resultof_newPlan;
     SharedPreferences sharedPreferencesl;
@@ -60,27 +59,49 @@ public class Home_to_CreateFrag extends Fragment {
         Department_list = new ArrayList<>();
         machine_list = new ArrayList<>();
         Source_no = new ArrayList<>();
-        autocomp_textView = (AutoCompleteTextView)root.findViewById(R.id.edit_loca_code);
-        mysourceno = (AutoCompleteTextView)root.findViewById(R.id.edit_auto_sourceno);
 
-        autocomp_department= (AutoCompleteTextView)root.findViewById(R.id.edit_item_select_department);
-        autocom_machine = (AutoCompleteTextView)root.findViewById(R.id.edit_item_select_machine);
+        autocomp_textView = (CustomAutoCompleteTextView) root.findViewById(R.id.edit_loca_code);
+        showSuggestionsOnClick(autocomp_textView);
+        setSelectedValue(autocomp_textView);
+
+        mysourceno = (CustomAutoCompleteTextView) root.findViewById(R.id.edit_auto_sourceno);
+        showSuggestionsOnClick(mysourceno);
+        setSelectedValue(mysourceno);
+
+        autocomp_department= (CustomAutoCompleteTextView) root.findViewById(R.id.edit_item_select_department);
+        showSuggestionsOnClick(autocomp_department);
+        setSelectedValue(autocomp_department);
 
 
-        autocom_items = (AutoCompleteTextView)root.findViewById(R.id.edit_item_select);
+        autocom_machine = (CustomAutoCompleteTextView) root.findViewById(R.id.edit_item_select_machine);
+        showSuggestionsOnClick(autocom_machine);
+        setSelectedValue(autocom_machine);
+
+
+
+        autocom_items = (Spinner) root.findViewById(R.id.edit_item_select);
         String[] list_itms = root.getResources().getStringArray(R.array.myitems);
         ArrayAdapter<String>  list_items_adapter = new ArrayAdapter<String>(activity,android.R.layout.simple_dropdown_item_1line,list_itms);
-        autocom_items.setThreshold(1);
+
+
         autocom_items.setAdapter(list_items_adapter);
-        autocom_items.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String x = autocom_items.getText().toString().trim();
-                        new CallserviceGetResult(x).execute();
-                    }
-                }
-        );
+        autocom_items.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // your code here
+                String x = autocom_items.getSelectedItem().toString().trim();
+                new CallserviceGetResult(x).execute();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+
+
 
         pro_quantity_edittxt = (EditText)root.findViewById(R.id.edit_prod_quan) ;
 
@@ -137,9 +158,15 @@ public class Home_to_CreateFrag extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
-            ArrayAdapter<String> Locationadapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,mylocationlist);
-            ArrayAdapter<String> Departmentadapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,Department_list);
-            ArrayAdapter<String> Machineadapter= new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,machine_list);
+//            ArrayAdapter<String> Locationadapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,mylocationlist);
+//            ArrayAdapter<String> Departmentadapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,Department_list);
+//            ArrayAdapter<String> Machineadapter= new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,machine_list);
+
+            DropDownAdapter Locationadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, mylocationlist);
+            DropDownAdapter Departmentadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, Department_list);
+            DropDownAdapter Machineadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, machine_list);
+
+
             autocomp_textView.setThreshold(1);
             autocomp_textView.setAdapter(Locationadapter);
 
@@ -158,9 +185,13 @@ public class Home_to_CreateFrag extends Fragment {
 
     class CallserviceGetResult extends AsyncTask<String, Void, String> {
         private String x;
+        // Construct the data source
+        ArrayList source_array = new ArrayList<String>();
+
         public CallserviceGetResult(String x) {
             this.x=x;
         }
+
 
         @Override
         protected void onPreExecute() {
@@ -174,7 +205,7 @@ public class Home_to_CreateFrag extends Fragment {
                 background_locationlist();
             }
             else {
-                Source_no = SoapApis.getSource_no(activity,username,password,x);
+                source_array = SoapApis.getSource_no(activity,username,password,x);
 
             }
 
@@ -184,17 +215,20 @@ public class Home_to_CreateFrag extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             progressDialog.dismiss();
             if(x.equals("Create_new")) {
                 post_locationList();
             }
             else {
-                ArrayAdapter<String> mysource= new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,Source_no);
-                mysourceno.setThreshold(1);
-                mysourceno.setAdapter(mysource);
+//
+                DropDownAdapter adapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, source_array);
+                Log.i("Background", "onPostExecute: " + source_array.size());
+                adapter.notifyDataSetChanged();
+                mysourceno.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
 
-            super.onPostExecute(s);
         }
     }
 
@@ -226,5 +260,34 @@ public class Home_to_CreateFrag extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         //Toast.makeText(getContext(),"Number :" + resultof_newPlan,Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    private void showSuggestionsOnClick(final CustomAutoCompleteTextView customAutoCompleteTextView){
+        customAutoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(hasFocus){
+                    customAutoCompleteTextView.showDropDown();
+                }
+            }
+        });
+    }
+
+    private void setSelectedValue(final CustomAutoCompleteTextView customAutoCompleteTextView)
+    {
+        customAutoCompleteTextView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        String[] splited = customAutoCompleteTextView.getText().toString().split("\\s+");
+                        if(splited.length > 0)
+                        {
+                            customAutoCompleteTextView.setText(splited[0]);
+                        }
+                    }
+                }
+        );
     }
 }

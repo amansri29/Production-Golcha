@@ -71,8 +71,10 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.home, new Home_to_CreateFrag()).addToBackStack(null)
-                                .remove(new HomeFragment()).commit();
+                        fragmentTransaction.replace(R.id.nav_host_fragment, new Home_to_CreateFrag())
+                                .addToBackStack(null)
+                                .commit();
+                        getActivity().getFragmentManager().popBackStack();
 
                     }
                 }

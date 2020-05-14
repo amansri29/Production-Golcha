@@ -1,7 +1,6 @@
 package com.golcha.golchaproduction.soapapi;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -16,7 +15,6 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class SoapApis {
     private static final String TAG = "SoapApis";
@@ -376,6 +374,7 @@ public class SoapApis {
     }
     public static ArrayList<String> getSource_no(Activity activity,String myusername,String mypassword,String key_item){
 
+//        ArrayList<DropDownItems> arrayOfItems = new ArrayList<DropDownItems>();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String namespace2 = Urls.source_no_item_namespace;
@@ -416,6 +415,7 @@ public class SoapApis {
                         myresult = No +" "+ desc1 + " " + desc2;
                         Log.i("Sourceno",myresult);
                         list.add(myresult);
+//                        arrayOfItems.add(new DropDownItems(No, No + " " +desc1 + " " + desc2));
 
 
                         } catch (Exception e) {
