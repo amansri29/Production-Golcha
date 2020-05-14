@@ -1,7 +1,10 @@
 package com.golcha.golchaproduction.ui.dashboard;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 
 
 public class DashboardFragment extends Fragment {
+    Activity activity;
     private static final String TAG = "DashboardFragment";
     ArrayList<GetReleasearraylist> list= new ArrayList<>();
     RecyclerView recyclerView;
@@ -32,15 +36,21 @@ public class DashboardFragment extends Fragment {
     String Quantity;
     String No;
     ProgressBar progressBar;
+    SharedPreferences sharedPreferences;
+    String username,password;
 
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        activity=getActivity();
         final TextView textView = root.findViewById(R.id.text_dashboard);
         recyclerView = (RecyclerView)root.findViewById(R.id.recycleview);
         progressBar=(ProgressBar)root.findViewById(R.id.progresbar);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);//passing saves username and pass to plan production
+        username= sharedPreferences.getString("username","");
+        password = sharedPreferences.getString("password","");
 
 
 
@@ -64,7 +74,7 @@ public class DashboardFragment extends Fragment {
 
 
             try {
-                SoapObject result = SoapApis.getUpdatedOrderList();
+                SoapObject result = SoapApis.getUpdatedOrderList(activity,username,password);
                 for (int i = 0; i < result.getPropertyCount(); i++) {
                     SoapObject result2 = (SoapObject) result.getProperty(i);
                     try {
@@ -74,7 +84,7 @@ public class DashboardFragment extends Fragment {
                         Routing_No = String.valueOf(result2.getProperty("Routing_No"));
                         Quantity = String.valueOf(result2.getProperty("Quantity"));
                         list.add(new GetReleasearraylist(Source_No,Description,No,Routing_No,Quantity));
-                        Log.i(TAG, "Planned List " +Source_No);
+                       // Log.i(TAG, "Source_no " +Source_No);
                     }
                     catch (Exception e)
                     {

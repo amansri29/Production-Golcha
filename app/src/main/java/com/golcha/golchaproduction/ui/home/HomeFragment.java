@@ -1,8 +1,10 @@
 package com.golcha.golchaproduction.ui.home;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,8 @@ public class HomeFragment extends Fragment {
     Activity activity;
 
     private HomeViewModel homeViewModel;
+    SharedPreferences sharedPreferences;
+    String username,password;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +59,9 @@ public class HomeFragment extends Fragment {
             }
         });
         activity = getActivity();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);//passing saves username and pass to plan production
+        username= sharedPreferences.getString("username","");
+        password = sharedPreferences.getString("password","");
 
         recyclerView = (RecyclerView)root.findViewById(R.id.recycleview2);
         progressBar = (ProgressBar)root.findViewById(R.id.progresbar2);
@@ -64,7 +71,8 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.home, new Home_to_CreateFrag()).addToBackStack(null).commit();
+                        fragmentTransaction.replace(R.id.home, new Home_to_CreateFrag()).addToBackStack(null).remove(new HomeFragment())
+                                .commit();
 
                     }
                 }
@@ -86,7 +94,7 @@ public class HomeFragment extends Fragment {
 
 
             try {
-                SoapObject result = SoapApis.getPlannedOrderList();
+                SoapObject result = SoapApis.getPlannedOrderList(activity,username,password);
                 for (int i = 0; i < result.getPropertyCount(); i++) {
                     SoapObject result2 = (SoapObject) result.getProperty(i);
                     try {
