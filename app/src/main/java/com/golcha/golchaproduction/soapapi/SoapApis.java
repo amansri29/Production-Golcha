@@ -287,6 +287,7 @@ public class SoapApis {
 
         String piping_locationCode = "";
         String loction_code ="";
+        String loc_code ="";
         ArrayList<String> list = new ArrayList<>();
         ArrayList<String> list_loc= new ArrayList<>();
 
@@ -313,24 +314,27 @@ public class SoapApis {
                     editor.putBoolean("fullaccess", true); //sharedpreference to check location access
 
                 }
-                for(int i=0;i<result.getPropertyCount();i++){
+                else {
+                    for (int i = 0; i < result.getPropertyCount(); i++) {
 
-                    SoapObject result2 = (SoapObject)result.getProperty(i);
-                    try {
-                        loction_code = String.valueOf(result2.getProperty("Location_Code"));
-                        String location_name = String.valueOf(result2.getProperty("Location_Name"));
-                        String code_name = loction_code + "-" +location_name;
-                        piping_locationCode = piping_locationCode + loction_code + "|";//concanate string with "|" to filter productions
-                        list_loc.add(loction_code);
-                        list.add(code_name); // list concanate of location code and location name
+                        SoapObject result2 = (SoapObject) result.getProperty(i);
+                        try {
+                            loction_code = String.valueOf(result2.getProperty("Location_Code"));
+                            String location_name = String.valueOf(result2.getProperty("Location_Name"));
+                            String code_name = loction_code + "-" + location_name;
+                            piping_locationCode = piping_locationCode + loction_code + "|";//concanate string with "|" to filter productions
+                            list_loc.add(loction_code);
+                            list.add(code_name); // list concanate of location code and location name
 
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                     }
-
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                    loc_code = gson.toJson(list_loc);
+                    int length=piping_locationCode.length()-1;
+                    piping_locationCode = piping_locationCode.substring(0,length);
                 }
 
 
@@ -339,9 +343,7 @@ public class SoapApis {
                 soapFault.printStackTrace();
             }
 
-            String loc_code = gson.toJson(list_loc);
-            int length=piping_locationCode.length()-1;
-            piping_locationCode = piping_locationCode.substring(0,length);
+
             editor.putBoolean("Loginaccess", true);//savespreference to check logins
             editor.putString("username",myusername);
             editor.putString("password",mypassword);
