@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,13 +22,11 @@
                 android:layout_height="match_parent"
                 android:text="Source_No"
                 android:id="@+id/textview_create_sourceno"/>
-            <EditText
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="match_parent"
-                android:text="CRUDE000021"
-                android:editable="false"
-                android:id="@+id/edit_create_sourceno"/>
+                android:id="@+id/edit_auto_sourceno"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,6 +82,42 @@
                 android:layout_weight="5"
                 android:layout_height="match_parent"
                 android:id="@+id/edit_item_select"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_margin="5dp"
+                android:layout_height="match_parent"
+                android:text="Department"
+                android:id="@+id/items_select_department"/>
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_item_select_department"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_margin="5dp"
+                android:layout_height="match_parent"
+                android:text="Machine"
+                android:id="@+id/items_select_machine"/>
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_item_select_machine"/>
         </LinearLayout>
         <Button
             android:layout_width="wrap_content"

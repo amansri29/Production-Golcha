@@ -34,13 +34,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Home_to_CreateFrag extends Fragment {
-    ArrayList<String> mylist;
+    ArrayList<String> mylocationlist;
+    ArrayList<String> Department_list;
+    ArrayList<String> machine_list;
+    ArrayList<String> Source_no;
     ProgressDialog progressDialog;
-    AutoCompleteTextView autocomp_textView,autocom_items;
-    EditText source_edittxt,pro_quantity_edittxt;
+    AutoCompleteTextView autocomp_textView,autocom_items, autocomp_department,autocom_machine,mysourceno ;
+    EditText pro_quantity_edittxt;
     String resultof_newPlan;
     SharedPreferences sharedPreferencesl;
     Activity activity;
+    String username,password;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -50,8 +54,19 @@ public class Home_to_CreateFrag extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home_to__create, container, false);
         activity=getActivity();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        mylist = new ArrayList<>();
+        username= sharedPreferences.getString("username","");
+        password = sharedPreferences.getString("password","");
+        mylocationlist = new ArrayList<>();
+        Department_list = new ArrayList<>();
+        machine_list = new ArrayList<>();
+        Source_no = new ArrayList<>();
         autocomp_textView = (AutoCompleteTextView)root.findViewById(R.id.edit_loca_code);
+        mysourceno = (AutoCompleteTextView)root.findViewById(R.id.edit_auto_sourceno);
+
+        autocomp_department= (AutoCompleteTextView)root.findViewById(R.id.edit_item_select_department);
+        autocom_machine = (AutoCompleteTextView)root.findViewById(R.id.edit_item_select_machine);
+
+
         autocom_items = (AutoCompleteTextView)root.findViewById(R.id.edit_item_select);
         String[] list_itms = root.getResources().getStringArray(R.array.myitems);
         ArrayAdapter<String>  list_items_adapter = new ArrayAdapter<String>(activity,android.R.layout.simple_dropdown_item_1line,list_itms);
@@ -67,8 +82,6 @@ public class Home_to_CreateFrag extends Fragment {
                 }
         );
 
-
-        source_edittxt = (EditText)root.findViewById(R.id.edit_create_sourceno);
         pro_quantity_edittxt = (EditText)root.findViewById(R.id.edit_prod_quan) ;
 
         progressDialog = new ProgressDialog(getContext());
@@ -82,7 +95,7 @@ public class Home_to_CreateFrag extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(autocomp_textView.getText().toString().isEmpty() || source_edittxt.getText().toString().isEmpty()
+                        if(autocomp_textView.getText().toString().isEmpty() || mysourceno.getText().toString().isEmpty()
                            || pro_quantity_edittxt.getText().toString().isEmpty())
                         {
                             Toast.makeText(getContext(),"Empty Field",Toast.LENGTH_SHORT).show();
@@ -111,9 +124,11 @@ public class Home_to_CreateFrag extends Fragment {
         protected String doInBackground(String... strings) {
 
             ArrayList<String> list = SoapApis.getLocationlist();
+            Department_list = SoapApis.get_deprt_machine(activity,username,password,"1");
+            machine_list = SoapApis.get_deprt_machine(activity,username,password,"2");
             for (int i = 0; i < list.size(); i++) {
                 String[] location = list.get(i).split("-");
-                mylist.add(location[0]);
+                mylocationlist.add(location[0]);
                 //Log.i("location_code",location[0] );
             }
             return null;
@@ -122,9 +137,17 @@ public class Home_to_CreateFrag extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,mylist);
+            ArrayAdapter<String> Locationadapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,mylocationlist);
+            ArrayAdapter<String> Departmentadapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,Department_list);
+            ArrayAdapter<String> Machineadapter= new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,machine_list);
             autocomp_textView.setThreshold(1);
-            autocomp_textView.setAdapter(adapter);
+            autocomp_textView.setAdapter(Locationadapter);
+
+            autocomp_department.setThreshold(1);
+            autocomp_department.setAdapter(Departmentadapter);
+
+            autocom_machine.setThreshold(1);
+            autocom_machine.setAdapter(Machineadapter);
             super.onPostExecute(s);
         }
     }
@@ -151,6 +174,7 @@ public class Home_to_CreateFrag extends Fragment {
                 background_locationlist();
             }
             else {
+                Source_no = SoapApis.getSource_no(activity,username,password,x);
 
             }
 
@@ -165,7 +189,9 @@ public class Home_to_CreateFrag extends Fragment {
                 post_locationList();
             }
             else {
-                Toast.makeText(activity,x,Toast.LENGTH_SHORT).show();
+                ArrayAdapter<String> mysource= new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,Source_no);
+                mysourceno.setThreshold(1);
+                mysourceno.setAdapter(mysource);
             }
 
             super.onPostExecute(s);
@@ -176,7 +202,7 @@ public class Home_to_CreateFrag extends Fragment {
 
     public void background_locationlist(){
         String source_no,product_quantity,location_code;
-        source_no = source_edittxt.getText().toString().trim();
+        source_no = mysourceno.getText().toString().trim();
         product_quantity  = pro_quantity_edittxt.getText().toString().trim();
         location_code = autocomp_textView.getText().toString().trim();
 

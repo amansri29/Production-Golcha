@@ -374,5 +374,143 @@ public class SoapApis {
 
 
     }
+    public static ArrayList<String> getSource_no(Activity activity,String myusername,String mypassword,String key_item){
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String namespace2 = Urls.source_no_item_namespace;
+        String url2 = Urls.source_no_item_url;
+        String method_name2 = "ReadMultiple";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result= null;
+        String myresult = "";
+
+        String No,desc1,desc2;
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            SoapObject request = new SoapObject(namespace2,method_name2);
+            SoapObject filter = new SoapObject(namespace2,"filter");
+            filter.addProperty("Field","No");
+            filter.addProperty("Criteria",key_item);
+            request.addSoapObject(filter);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlm = new NtlmTransport();
+            ntlm.debug = true;
+            ntlm.setCredentials(url2, myusername, mypassword, domain, "");
+            ntlm.call(soap_action2, envelope);
+            try {
+                result= (SoapObject) envelope.getResponse();
+                for (int i = 0; i < result.getPropertyCount(); i++) {
+
+                    SoapObject result2 = (SoapObject) result.getProperty(i);
+                    try {
+                        No = String.valueOf(result2.getProperty("No"));
+                        desc1 = String.valueOf(result2.getProperty("Description"));
+                        desc2 = String.valueOf(result2.getProperty("Description_2"));
+                        myresult = No +" "+ desc1 + " " + desc2;
+                        Log.i("Sourceno",myresult);
+                        list.add(myresult);
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+
+            }
+            catch (SoapFault soapFault) {
+                soapFault.printStackTrace();
+            }
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            String earror =e.toString();
+            Log.e(TAG,"earror " + earror);
+
+        };
+
+
+
+        return  list;
+    }
+    public static ArrayList<String> get_deprt_machine(Activity activity,String myusername,String mypassword,String key_item){
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String namespace2 = Urls.get_depart_machine_namespace;
+        String url2 = Urls.get_depart_machine_url;
+        String method_name2 = "ReadMultiple";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result= null;
+        String myresult = "";
+
+        String code,name;
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            SoapObject request = new SoapObject(namespace2,method_name2);
+            SoapObject filter = new SoapObject(namespace2,"filter");
+            filter.addProperty("Field","Global_Dimension_No");
+            filter.addProperty("Criteria",key_item);
+            request.addSoapObject(filter);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlm = new NtlmTransport();
+            ntlm.debug = true;
+            ntlm.setCredentials(url2, myusername, mypassword, domain, "");
+            ntlm.call(soap_action2, envelope);
+            try {
+                result= (SoapObject) envelope.getResponse();
+                for (int i = 0; i < result.getPropertyCount(); i++) {
+
+                    SoapObject result2 = (SoapObject) result.getProperty(i);
+                    try {
+                        name = String.valueOf(result2.getProperty("Name"));
+                        code = String.valueOf(result2.getProperty("Code"));
+
+                        myresult = code + " " + name;
+                        Log.i("code_name",myresult);
+                        list.add(myresult);
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+            }
+            catch (SoapFault soapFault) {
+                soapFault.printStackTrace();
+            }
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            String earror =e.toString();
+            Log.e(TAG,"earror " + earror);
+
+        };
+
+
+
+        return  list;
+    }
 
 }
