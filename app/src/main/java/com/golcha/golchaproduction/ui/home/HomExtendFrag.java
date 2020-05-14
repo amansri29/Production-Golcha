@@ -1,15 +1,21 @@
 package com.golcha.golchaproduction.ui.home;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.golcha.golchaproduction.R;
@@ -20,8 +26,13 @@ import org.ksoap2.serialization.SoapObject;
 
 public class HomExtendFrag extends Fragment {
     private static final String TAG = "HomExtendFrag";
+    SharedPreferences sharedPreferences;
+    String username,password;
     String no;
-    ProgressDialog progressDialog;
+    Activity activity;
+    String Button_clickresult = "";
+    ProgressDialog progressDialog,progressDialog2;
+    Button refresh,changestatus;
     String no2,desc1,desc2,source_type,source_no,p_quantity,department,location;
     TextView textViewno,textViewdes,textViewdes2,textViewsourcetype,textViewsourceno,textViewp_quantity,textViewdepart,textViewlocation;
 
@@ -30,11 +41,21 @@ public class HomExtendFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_hom_extend, container, false);
+        activity=getActivity();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);//passing saves username and pass to plan production
+        username= sharedPreferences.getString("username","");
+        password = sharedPreferences.getString("password","");
+
+
+
+        activity = getActivity();
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.setProgress(0);
+
+
         no=getArguments().getString("no");
         textViewno=(TextView)root.findViewById(R.id.textViewno);
         textViewdes=(TextView)root.findViewById(R.id.textViewdesc);
@@ -44,6 +65,24 @@ public class HomExtendFrag extends Fragment {
         textViewp_quantity=(TextView)root.findViewById(R.id.textViewpro_quan);
         textViewdepart=(TextView)root.findViewById(R.id.textViewdepart);
         textViewlocation=(TextView)root.findViewById(R.id.textViewloca);
+        refresh = (Button)root.findViewById(R.id.refreshbutton);
+        refresh.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new CallWebService_ref_create("refresh").execute();
+                    }
+                }
+        );
+        changestatus = (Button)root.findViewById(R.id.changestatus);
+        changestatus.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new CallWebService_ref_create("changestatus").execute();
+                    }
+                }
+        );
         new CallWebService().execute();
 
 
@@ -98,6 +137,54 @@ public class HomExtendFrag extends Fragment {
             textViewsourceno.setText(source_no);
             textViewp_quantity.setText(p_quantity);
             textViewlocation.setText(location);
+
+        }
+    }
+    class CallWebService_ref_create extends AsyncTask<String, Void, String> {
+        String button_click;
+        public CallWebService_ref_create(String button_click) {
+            this.button_click=button_click;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String result3 = "";
+            if(button_click.equals("refresh")){
+                Button_clickresult = SoapApis.Refreshbutton(activity,username,password,no);
+            }
+            else{
+                Button_clickresult = SoapApis.ChangeStatus_button(activity,username,password,no);
+            }
+
+            return result3;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+            builder.setMessage(Button_clickresult);
+            builder.setTitle("NEW NUMBER");
+            builder.setCancelable(false);
+            builder.setPositiveButton(
+                    "OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    }
+            );
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
 
         }
     }

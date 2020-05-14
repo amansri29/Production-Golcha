@@ -30,6 +30,14 @@ public class Urls {
             "/WS/UMDS%20Pvt.Ltd./Page/DepptPPOAPI";
     public static  String get_depart_machine_namespace = "urn:microsoft-dynamics-schemas/page/depptppoapi";
 
+    public static  String refreshbutton_url = base_url + "/" +company_name +
+            "/WS/UMDS%20Pvt.Ltd./Codeunit/RefProdOrderActionButtonAPi";
+    public static  String refresh_button_namespace = "urn:microsoft-dynamics-schemas/codeunit/RefProdOrderActionButtonAPi";
+
+    public static  String change_statusbutton_url = base_url + "/" +company_name +
+            "/WS/UMDS%20Pvt.Ltd./Codeunit/CahngeActionButtonApi";
+    public static  String change_statusbutton_namespace = "urn:microsoft-dynamics-schemas/codeunit/CahngeActionButtonApi";
+
 
 
 }
