@@ -48,7 +48,7 @@ public class PlanProduc_ListAdaper extends RecyclerView.Adapter<PlanProduc_ListA
                         Bundle bundle=new Bundle();
                         bundle.putString("no",getarraylist.getNo());
                         myFragment.setArguments(bundle);
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.home, myFragment).addToBackStack(null)
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null)
                                 .remove(new HomeFragment()).commit();
 
 
