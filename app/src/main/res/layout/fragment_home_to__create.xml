@@ -47,6 +47,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/edit_prod_quan"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,6 +65,24 @@
                 android:layout_weight="5"
                 android:layout_height="match_parent"
                 android:id="@+id/edit_loca_code"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_margin="5dp"
+                android:layout_height="match_parent"
+                android:text="Items"
+                android:id="@+id/items_select"/>
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_item_select"/>
         </LinearLayout>
         <Button
             android:layout_width="wrap_content"

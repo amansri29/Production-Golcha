@@ -78,10 +78,15 @@ public class HomeFragment extends Fragment {
                 }
         );
 
-        new CallWebService().execute();
+        new CallWebService(1).execute();
         return root;
     }
     class CallWebService extends AsyncTask<String, Void, String> {
+        private int a;
+        public CallWebService(int a) {
+            this.a=a;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
