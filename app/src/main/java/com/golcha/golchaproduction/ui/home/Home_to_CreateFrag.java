@@ -29,7 +29,10 @@ import com.golcha.golchaproduction.DropDownAdapter;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
 import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Home_to_CreateFrag extends Fragment {
@@ -42,9 +45,10 @@ public class Home_to_CreateFrag extends Fragment {
     Spinner autocom_items;
     EditText pro_quantity_edittxt;
     String resultof_newPlan;
-    SharedPreferences sharedPreferencesl;
+    SharedPreferences sharedPreferences;
     Activity activity;
     String username,password;
+    DropDownAdapter Locationadapter;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -53,7 +57,7 @@ public class Home_to_CreateFrag extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_home_to__create, container, false);
         activity=getActivity();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         username= sharedPreferences.getString("username","");
         password = sharedPreferences.getString("password","");
         mylocationlist = new ArrayList<>();
@@ -145,14 +149,10 @@ public class Home_to_CreateFrag extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
 
-            ArrayList<String> list = SoapApis.getLocationlist();
+            mylocationlist= SoapApis.getLocationlist();
             Department_list = SoapApis.get_deprt_machine(activity,username,password,"1");
             machine_list = SoapApis.get_deprt_machine(activity,username,password,"2");
-            for (int i = 0; i < list.size(); i++) {
-                String[] location = list.get(i).split("-");
-                mylocationlist.add(location[0]);
-                //Log.i("location_code",location[0] );
-            }
+
             return null;
         }
 
@@ -162,11 +162,25 @@ public class Home_to_CreateFrag extends Fragment {
 //            ArrayAdapter<String> Locationadapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,mylocationlist);
 //            ArrayAdapter<String> Departmentadapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,Department_list);
 //            ArrayAdapter<String> Machineadapter= new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,machine_list);
+            Boolean fullaccess = sharedPreferences.getBoolean("fullaccess",false);
+            if (fullaccess == false) {
+                Gson gson = new Gson();
+                String json = sharedPreferences.getString("Location_code_name","");
+                Type type = new TypeToken<ArrayList<String>>(){}.getType();
+                ArrayList<String> mynewLocationlist = new ArrayList<String>();
+                mynewLocationlist = gson.fromJson(json,type);
+                for(int i=0;i<mynewLocationlist.size();i++){
+                    Log.i("mmynewLocations",mynewLocationlist.get(i));
+                }
 
-            DropDownAdapter Locationadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, mylocationlist);
+                 Locationadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items,mynewLocationlist );
+            }
+            else{
+                 Locationadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items,mylocationlist );
+            }
+
             DropDownAdapter Departmentadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, Department_list);
             DropDownAdapter Machineadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, machine_list);
-
 
             autocomp_textView.setThreshold(1);
             autocomp_textView.setAdapter(Locationadapter);
@@ -206,7 +220,7 @@ public class Home_to_CreateFrag extends Fragment {
                 background_locationlist();
             }
             else {
-                source_array = SoapApis.getSource_no(activity,username,password,x);
+                source_array = SoapApis.getSource_no(activity,username,password,x+"*");
 
             }
 
@@ -236,12 +250,18 @@ public class Home_to_CreateFrag extends Fragment {
 
 
     public void background_locationlist(){
-        String source_no,product_quantity,location_code;
+        String source_no,product_quantity,location_code,department,machine;
         source_no = mysourceno.getText().toString().trim();
         product_quantity  = pro_quantity_edittxt.getText().toString().trim();
         location_code = autocomp_textView.getText().toString().trim();
+        department = autocomp_department.getText().toString().trim();
+        machine = autocom_machine.getText().toString().trim();
+        String [] locationsplit =location_code.split(" ");
+        String [] departmentsplit = department.split(" ");
+        String [] machinesplit = machine.split(" ");
+        Log.i("loc_dep_machine",locationsplit[0] +" "+ departmentsplit[0] + " "+ machinesplit[0]);
 
-        resultof_newPlan= SoapApis.CreatenewPlan(source_no,product_quantity,location_code);
+        resultof_newPlan= SoapApis.CreatenewPlan(source_no,product_quantity,locationsplit[0],departmentsplit[0],machinesplit[0]);
         Log.i("number",resultof_newPlan);
 
     }

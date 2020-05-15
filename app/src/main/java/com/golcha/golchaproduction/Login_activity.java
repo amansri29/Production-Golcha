@@ -3,7 +3,10 @@ package com.golcha.golchaproduction;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -24,12 +27,21 @@ public class Login_activity extends AppCompatActivity {
     Activity activity;
     EditText useredittext;
     EditText passedittext;
+    String Logins =null;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activity);
         activity = this;
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setProgress(0);
+
         list = new ArrayList<>();
         mylist = new ArrayList<>();
         useredittext = (EditText)findViewById(R.id.username);
@@ -54,6 +66,7 @@ public class Login_activity extends AppCompatActivity {
         class Callwebser extends AsyncTask<String,Void,String>{
             @Override
             protected void onPreExecute() {
+                progressDialog.show();
                 super.onPreExecute();
             }
 
@@ -62,12 +75,30 @@ public class Login_activity extends AppCompatActivity {
             protected String doInBackground(String... strings) {
                 String username = useredittext.getText().toString().trim();
                 String password = passedittext.getText().toString().trim();
-                SoapApis.Login(activity,username,password);
+                Logins = SoapApis.Login(activity,username,password);
                 return null;
             }
 
             @Override
             protected void onPostExecute(String s) {
+                progressDialog.dismiss();
+
+                if (!Logins.equals("successful")) {
+                    AlertDialog.Builder builder =new AlertDialog.Builder(Login_activity.this);
+                    builder.setMessage(Logins);
+                    builder.setTitle("Failed!");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(
+                            "OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            }
+                    );
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
                 super.onPostExecute(s);
             }
 

@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.golcha.golchaproduction.R;
@@ -33,8 +34,9 @@ public class HomExtendFrag extends Fragment {
     String Button_clickresult = "";
     ProgressDialog progressDialog,progressDialog2;
     Button refresh,changestatus;
-    String no2,desc1,desc2,source_type,source_no,p_quantity,department,location;
-    TextView textViewno,textViewdes,textViewdes2,textViewsourcetype,textViewsourceno,textViewp_quantity,textViewdepart,textViewlocation;
+    String no2,desc1,desc2,source_type,source_no,p_quantity,department,location,machine;
+    EditText editno,editdes,editdes2,editsourcetype,editsourceno,edit_quantity,editdepart,editlocation,editmachine;
+    TextView Textno,Textdes,Textdes2,Textsourcetype,Textsourceno,Text_quantity,Textdepart,Textlocation,Textmachine;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,14 +59,43 @@ public class HomExtendFrag extends Fragment {
 
 
         no=getArguments().getString("no");
-        textViewno=(TextView)root.findViewById(R.id.textViewno);
-        textViewdes=(TextView)root.findViewById(R.id.textViewdesc);
-        textViewdes2=(TextView)root.findViewById(R.id.textViewdesc2);
-        textViewsourcetype=(TextView)root.findViewById(R.id.textViewsourectype);
-        textViewsourceno=(TextView)root.findViewById(R.id.textViewsourceno);
-        textViewp_quantity=(TextView)root.findViewById(R.id.textViewpro_quan);
-        textViewdepart=(TextView)root.findViewById(R.id.textViewdepart);
-        textViewlocation=(TextView)root.findViewById(R.id.textViewloca);
+
+
+        editno=(EditText) root.findViewById(R.id.editTextno);
+        editdes=(EditText)root.findViewById(R.id.editTextdesc);
+        editdes2=(EditText)root.findViewById(R.id.editTextdesc2);
+        editsourcetype=(EditText)root.findViewById(R.id.editTextsourcetype);
+        editsourceno=(EditText)root.findViewById(R.id.editTextsourceno);
+        edit_quantity=(EditText)root.findViewById(R.id.editTextpro_quan);
+        editdepart=(EditText)root.findViewById(R.id.editTextdepart);
+        editlocation=(EditText)root.findViewById(R.id.editTextloca);
+        editdepart = (EditText)root.findViewById(R.id.editTextdepart);
+        editmachine = (EditText)root.findViewById(R.id.editTextMachine);
+
+
+        Textno =(TextView)root.findViewById(R.id.textViewno);
+        Textdes=(TextView)root.findViewById(R.id.textViewdesc);
+        Textdes2=(TextView)root.findViewById(R.id.textViewdesc2);
+        Textsourcetype=(TextView)root.findViewById(R.id.textViewsourectype);
+        Textsourceno=(TextView)root.findViewById(R.id.textViewsourceno);
+        Text_quantity=(TextView)root.findViewById(R.id.textViewpro_quan);
+        Textdepart=(TextView)root.findViewById(R.id.textViewdepart);
+        Textlocation=(TextView)root.findViewById(R.id.textViewloca);
+        Textmachine = (TextView)root.findViewById(R.id.editTextMachine);
+        Textno.setText("number");
+        Textdes.setText("Description_1");
+        Textdes2.setText("Description_2");
+        Textsourcetype.setText("Source_type");
+        Textsourceno.setText("Source_no");
+        Textdepart.setText("Department");
+        Text_quantity.setText("Product_qty");
+        Textlocation.setText("Location");
+
+
+
+
+
+
         refresh = (Button)root.findViewById(R.id.refreshbutton);
         refresh.setOnClickListener(
                 new View.OnClickListener() {
@@ -110,8 +141,9 @@ public class HomExtendFrag extends Fragment {
                     source_type = String.valueOf(result.getProperty("Source_Type"));
                     source_no = String.valueOf(result.getProperty("Source_No"));
                     p_quantity = String.valueOf(result.getProperty("Production_Quantity"));
-                 //   department = String.valueOf(result.getProperty(""));
+                    department = String.valueOf(result.getProperty("Shortcut_Dimension_1_Code"));
                     location = String.valueOf(result.getProperty("Location_Code"));
+                    machine = String.valueOf(result.getProperty("Shortcut_Dimension_2_Code"));
 
                     Log.i(TAG, "Planned Card::" + no2 + " " + desc1 + " " + desc2);
                 } catch (Exception e) {
@@ -130,13 +162,15 @@ public class HomExtendFrag extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
-            textViewno.setText(no);
-            textViewdes.setText(desc1);
-            textViewdes2.setText(desc2);
-            textViewsourcetype.setText(source_type);
-            textViewsourceno.setText(source_no);
-            textViewp_quantity.setText(p_quantity);
-            textViewlocation.setText(location);
+            editno.setText(no);
+            editdes.setText(desc1);
+            editdes2.setText(desc2);
+            editsourcetype.setText(source_type);
+            editsourceno.setText(source_no);
+            edit_quantity.setText(p_quantity);
+            editlocation.setText(location);
+            editdepart.setText(department);
+            editmachine.setText(machine);
 
         }
     }
