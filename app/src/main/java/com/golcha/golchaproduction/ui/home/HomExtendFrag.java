@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,14 +16,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.golcha.golchaproduction.DropDownAdapter;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
+import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.ksoap2.serialization.SoapObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 
 public class HomExtendFrag extends Fragment {
@@ -31,12 +43,19 @@ public class HomExtendFrag extends Fragment {
     String username,password;
     String no;
     Activity activity;
+    Spinner autocom_items;
     String Button_clickresult = "";
     ProgressDialog progressDialog,progressDialog2;
     Button refresh,changestatus;
     String no2,desc1,desc2,source_type,source_no,p_quantity,department,location,machine;
-    EditText editno,editdes,editdes2,editsourcetype,editsourceno,edit_quantity,editdepart,editlocation,editmachine;
-    TextView Textno,Textdes,Textdes2,Textsourcetype,Textsourceno,Text_quantity,Textdepart,Textlocation,Textmachine;
+    EditText editno,editdes,editdes2,editsourcetype,edit_quantity;
+    ArrayList<String> mylocationlist;
+    ArrayList<String> Department_list;
+    ArrayList<String> machine_list;
+    ArrayList<String>source_array;
+    DropDownAdapter Locationadapter;
+
+    CustomAutoCompleteTextView editsourceno,editdepart,editlocation,editmachine;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +66,9 @@ public class HomExtendFrag extends Fragment {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);//passing saves username and pass to plan production
         username= sharedPreferences.getString("username","");
         password = sharedPreferences.getString("password","");
+        mylocationlist = new ArrayList<>();
+        Department_list = new ArrayList<>();
+        machine_list = new ArrayList<>();
 
 
 
@@ -65,31 +87,44 @@ public class HomExtendFrag extends Fragment {
         editdes=(EditText)root.findViewById(R.id.editTextdesc);
         editdes2=(EditText)root.findViewById(R.id.editTextdesc2);
         editsourcetype=(EditText)root.findViewById(R.id.editTextsourcetype);
-        editsourceno=(EditText)root.findViewById(R.id.editTextsourceno);
+        editsourceno=(CustomAutoCompleteTextView)root.findViewById(R.id.editTextsourceno);
         edit_quantity=(EditText)root.findViewById(R.id.editTextpro_quan);
-        editdepart=(EditText)root.findViewById(R.id.editTextdepart);
-        editlocation=(EditText)root.findViewById(R.id.editTextloca);
-        editdepart = (EditText)root.findViewById(R.id.editTextdepart);
-        editmachine = (EditText)root.findViewById(R.id.editTextMachine);
+
+        editdepart=(CustomAutoCompleteTextView)root.findViewById(R.id.editTextdepart);
+        showSuggestionsOnClick(editdepart);
+        setSelectedValue(editdepart);
+
+        editlocation=(CustomAutoCompleteTextView)root.findViewById(R.id.editTextloca);
+        showSuggestionsOnClick(editlocation);
+        setSelectedValue(editlocation);
+
+        editmachine = (CustomAutoCompleteTextView)root.findViewById(R.id.editTextMachine);
+        showSuggestionsOnClick(editmachine);
+        setSelectedValue(editmachine);
 
 
-        Textno =(TextView)root.findViewById(R.id.textViewno);
-        Textdes=(TextView)root.findViewById(R.id.textViewdesc);
-        Textdes2=(TextView)root.findViewById(R.id.textViewdesc2);
-        Textsourcetype=(TextView)root.findViewById(R.id.textViewsourectype);
-        Textsourceno=(TextView)root.findViewById(R.id.textViewsourceno);
-        Text_quantity=(TextView)root.findViewById(R.id.textViewpro_quan);
-        Textdepart=(TextView)root.findViewById(R.id.textViewdepart);
-        Textlocation=(TextView)root.findViewById(R.id.textViewloca);
-        Textmachine = (TextView)root.findViewById(R.id.editTextMachine);
-        Textno.setText("number");
-        Textdes.setText("Description_1");
-        Textdes2.setText("Description_2");
-        Textsourcetype.setText("Source_type");
-        Textsourceno.setText("Source_no");
-        Textdepart.setText("Department");
-        Text_quantity.setText("Product_qty");
-        Textlocation.setText("Location");
+
+        autocom_items = (Spinner) root.findViewById(R.id.edit_item_select);
+        String[] list_itms = root.getResources().getStringArray(R.array.myitems);
+        ArrayAdapter<String>  list_items_adapter = new ArrayAdapter<String>(activity,android.R.layout.simple_dropdown_item_1line,list_itms);
+
+
+        autocom_items.setAdapter(list_items_adapter);
+        autocom_items.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // your code here
+                String x = autocom_items.getSelectedItem().toString().trim();
+                new CallWebService_ref_create(x).execute();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
 
 
 
@@ -131,6 +166,9 @@ public class HomExtendFrag extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             String result3 = "";
+            mylocationlist= SoapApis.getLocationlist(activity,username,password);
+            Department_list = SoapApis.get_deprt_machine(activity,username,password,"1");
+            machine_list = SoapApis.get_deprt_machine(activity,username,password,"2");
 
             try {
                 SoapObject result = SoapApis.getPlannedCardDetails(no);
@@ -163,14 +201,61 @@ public class HomExtendFrag extends Fragment {
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
             editno.setText(no);
+            editno.setEnabled(false);
             editdes.setText(desc1);
+            editdes.setEnabled(false);
             editdes2.setText(desc2);
+            editdes2.setEnabled(false);
             editsourcetype.setText(source_type);
+            editsourcetype.setEnabled(false);
             editsourceno.setText(source_no);
             edit_quantity.setText(p_quantity);
             editlocation.setText(location);
             editdepart.setText(department);
             editmachine.setText(machine);
+
+
+
+
+
+
+
+
+            Boolean fullaccess = sharedPreferences.getBoolean("fullaccess",false);
+            if (fullaccess == false) {
+                Gson gson = new Gson();
+                String json = sharedPreferences.getString("Location_code_name","");
+                Type type = new TypeToken<ArrayList<String>>(){}.getType();
+                ArrayList<String> mynewLocationlist = new ArrayList<String>();
+                mynewLocationlist = gson.fromJson(json,type);
+                for(int i=0;i<mynewLocationlist.size();i++){
+                    Log.i("mmynewLocations",mynewLocationlist.get(i));
+                }
+
+                Locationadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items,mynewLocationlist );
+            }
+            else{
+                Locationadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items,mylocationlist );
+            }
+
+            DropDownAdapter Departmentadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, Department_list);
+            DropDownAdapter Machineadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, machine_list);
+
+            editmachine.setThreshold(1);
+            editmachine.setAdapter(Machineadapter);
+
+           editdepart.setThreshold(1);
+           editdepart.setAdapter(Departmentadapter);
+
+            editlocation.setThreshold(1);
+            editlocation.setAdapter(Locationadapter);
+
+
+
+
+
+
+
 
         }
     }
@@ -195,7 +280,12 @@ public class HomExtendFrag extends Fragment {
                 Button_clickresult = SoapApis.Refreshbutton(activity,username,password,no);
             }
             else{
-                Button_clickresult = SoapApis.ChangeStatus_button(activity,username,password,no);
+                if(button_click.equals("changestatus")){
+                    Button_clickresult = SoapApis.ChangeStatus_button(activity,username,password,no);
+                }
+                else {
+                    source_array = SoapApis.getSource_no(activity,username,password,button_click+"*");
+                }
             }
 
             return result3;
@@ -204,22 +294,56 @@ public class HomExtendFrag extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
-            AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
-            builder.setMessage(Button_clickresult);
-            builder.setTitle("NEW NUMBER");
-            builder.setCancelable(false);
-            builder.setPositiveButton(
-                    "OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
+            if (button_click.equals("refresh") || button_click.equals("changestatus")) {
+                AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+                builder.setMessage(Button_clickresult);
+                builder.setTitle("NEW NUMBER");
+                builder.setCancelable(false);
+                builder.setPositiveButton(
+                        "OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
                         }
-                    }
-            );
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+                );
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            } else {
+                DropDownAdapter adapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, source_array);
+                Log.i("Background", "onPostExecute: " + source_array.size());
+                adapter.notifyDataSetChanged();
+                editsourceno.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
 
 
         }
+    }
+    private void showSuggestionsOnClick(final CustomAutoCompleteTextView customAutoCompleteTextView){
+        customAutoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(hasFocus){
+                    customAutoCompleteTextView.showDropDown();
+                }
+            }
+        });
+    }
+
+    private void setSelectedValue(final CustomAutoCompleteTextView customAutoCompleteTextView)
+    {
+        customAutoCompleteTextView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        String[] splited = customAutoCompleteTextView.getText().toString().split("\\s+");
+                        if(splited.length > 0)
+                        {
+                            customAutoCompleteTextView.setText(splited[0]);
+                        }
+                    }
+                }
+        );
     }
 }

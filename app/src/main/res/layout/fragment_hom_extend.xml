@@ -15,6 +15,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:weightSum="10"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_margin="5dp"
+                android:layout_height="match_parent"
+                android:text="Items"
+                android:id="@+id/items_select"/>
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_item_select"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_margin="5dp"
             android:orientation="horizontal">
             <TextView
@@ -22,16 +41,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="No" />
 
             <EditText
                 android:id="@+id/editTextno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
                 android:ems="10"
-                android:inputType="textPersonName"
-                />
+                android:inputType="textPersonName" />
 
 
         </LinearLayout>
@@ -46,16 +65,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Description_1" />
 
             <EditText
                 android:id="@+id/editTextdesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
                 android:ems="10"
-                android:inputType="textPersonName"
-                />
+                android:inputType="textPersonName" />
 
 
         </LinearLayout>
@@ -70,13 +89,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Description_2" />
 
             <EditText
                 android:id="@+id/editTextdesc2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
                 android:ems="10"
                 android:inputType="textPersonName"
                 />
@@ -94,13 +114,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Source_type" />
 
             <EditText
                 android:id="@+id/editTextsourcetype"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
                 android:ems="10"
                 android:inputType="textPersonName"
                 />
@@ -118,9 +139,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Source_no" />
 
-            <EditText
+            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
                 android:id="@+id/editTextsourceno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -142,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Product_qty" />
 
             <EditText
                 android:id="@+id/editTextpro_quan"
@@ -150,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="numberDecimal"
                 />
 
 
@@ -166,9 +187,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Department" />
 
-            <EditText
+            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
                 android:id="@+id/editTextdepart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -190,9 +211,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Machine" />
 
-            <EditText
+            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
                 android:id="@+id/editTextMachine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -214,9 +235,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="Location" />
 
-            <EditText
+            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
                 android:id="@+id/editTextloca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

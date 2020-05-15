@@ -184,7 +184,7 @@ public class SoapApis {
         }
         return result2;
     }
-    public static ArrayList<String> getLocationlist(){
+    public static ArrayList<String> getLocationlist(Activity activity, String myusername, String mypassword){
         String namespace2 = Urls.employeelocations_list_namespace;
         String url2 = Urls.employeelocations_list_url;
         String method_name2 = "ReadMultiple";
@@ -201,7 +201,7 @@ public class SoapApis {
 
             NtlmTransport ntlm = new NtlmTransport();
             ntlm.debug = true;
-            ntlm.setCredentials(url2, userName, password, domain, "");
+            ntlm.setCredentials(url2, myusername, mypassword, domain, "");
             ntlm.call(soap_action2, envelope);
             try {
                 result= (SoapObject) envelope.getResponse();
@@ -455,8 +455,8 @@ public class SoapApis {
     }
     public static ArrayList<String> get_deprt_machine(Activity activity,String myusername,String mypassword,String key_item){
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+       // SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        //SharedPreferences.Editor editor = sharedPreferences.edit();
         String namespace2 = Urls.get_depart_machine_namespace;
         String url2 = Urls.get_depart_machine_url;
         String method_name2 = "ReadMultiple";
@@ -524,8 +524,8 @@ public class SoapApis {
     }
     public static String Refreshbutton(Activity activity,String myusername,String mypassword,String no){
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+       // SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+       // SharedPreferences.Editor editor = sharedPreferences.edit();
         String namespace2 = Urls.refresh_button_namespace;
         String url2 = Urls.refreshbutton_url;
         String method_name2 = "RefreshProductionOrder";

@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -50,7 +49,6 @@ public class Home_to_CreateFrag extends Fragment {
     String username,password;
     DropDownAdapter Locationadapter;
 
-    @SuppressLint("WrongViewCast")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -149,7 +147,7 @@ public class Home_to_CreateFrag extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
 
-            mylocationlist= SoapApis.getLocationlist();
+            mylocationlist= SoapApis.getLocationlist(activity, username, password);
             Department_list = SoapApis.get_deprt_machine(activity,username,password,"1");
             machine_list = SoapApis.get_deprt_machine(activity,username,password,"2");
 
