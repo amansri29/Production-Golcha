@@ -210,7 +210,7 @@ public class SoapApis {
                     try {
                         String loction_code = String.valueOf(result2.getProperty("Location_Code"));
                         String location_name = String.valueOf(result2.getProperty("Location_Name"));
-                        String code_name = loction_code + "-" +location_name;
+                        String code_name = loction_code + " " +location_name;
                         list.add(code_name);
 
 
@@ -233,7 +233,7 @@ public class SoapApis {
         return list;
 
     }
-    public static String CreatenewPlan(String source_no , String production_quan , String location_code){
+    public static String CreatenewPlan(String source_no , String production_quan , String location_code ,String mydepartment, String mylocation){
         String namespace2 = Urls.planned_production_card_namespace;
         String url2 = Urls.planned_production_card_url;
         String method_name2 = "Create";
@@ -246,6 +246,8 @@ public class SoapApis {
             plannedProdOrder.addProperty("Source_No",source_no);
             plannedProdOrder.addProperty("Production_Quantity",production_quan);
             plannedProdOrder.addProperty("Location_Code",location_code);
+            plannedProdOrder.addProperty("Shortcut_Dimension_1_Code",mydepartment);
+            plannedProdOrder.addProperty("Shortcut_Dimension_2_Code",mylocation);
             request.addSoapObject(plannedProdOrder);
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
@@ -272,7 +274,7 @@ public class SoapApis {
         return result2;
     }
 
-    public static void Login(Activity activity, String myusername, String mypassword){
+    public static String Login(Activity activity, String myusername, String mypassword){
         Gson gson = new Gson();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
@@ -282,6 +284,7 @@ public class SoapApis {
         String method_name2 = "ReadMultiple";
         String soap_action2 = namespace2 + ":" + method_name2;
         SoapObject result= null;
+        String logins = "";
 
         String piping_locationCode = "";
         String loction_code ="";
@@ -319,7 +322,7 @@ public class SoapApis {
                         try {
                             loction_code = String.valueOf(result2.getProperty("Location_Code"));
                             String location_name = String.valueOf(result2.getProperty("Location_Name"));
-                            String code_name = loction_code + "-" + location_name;
+                            String code_name = loction_code + " " + location_name;
                             piping_locationCode = piping_locationCode + loction_code + "|";//concanate string with "|" to filter productions
                             list_loc.add(loction_code);
                             list.add(code_name); // list concanate of location code and location name
@@ -330,7 +333,7 @@ public class SoapApis {
                         }
 
                     }
-                    loc_code = gson.toJson(list_loc);
+                    loc_code = gson.toJson(list);
                     int length=piping_locationCode.length()-1;
                     piping_locationCode = piping_locationCode.substring(0,length);
                 }
@@ -345,9 +348,10 @@ public class SoapApis {
             editor.putBoolean("Loginaccess", true);//savespreference to check logins
             editor.putString("username",myusername);
             editor.putString("password",mypassword);
-            editor.putString("Location_code",loc_code);// storing location make concanate location code with " | " to filter planproduction
+            editor.putString("Location_code_name",loc_code);// storing location make concanate location code with " | " to filter planproduction
             editor.putString("planproduction_filter_|_",piping_locationCode);//// make concanate location code with " | " to filter planproduction
             editor.commit();
+            logins ="successful";
             Log.i("Locations",loc_code);
 
 
@@ -368,6 +372,12 @@ public class SoapApis {
             Log.e(TAG,"earror " + earror);
 
         };
+        if(logins.equals("")){
+            return "Logins Failed";
+        }
+        else {
+            return logins;
+        }
 
 
 
