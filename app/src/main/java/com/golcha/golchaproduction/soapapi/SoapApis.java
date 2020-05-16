@@ -360,6 +360,52 @@ public class SoapApis {
         }
         return result2;
     }
+    public static String UpdatenewRelease(String myusername,String mypassword ,Boolean hourly, Boolean composite,String Q_S_Q,String Key1,String Key2){
+        String namespace2 = Urls.Read_ReleaseProduction_namespace;
+        String url2 = Urls.Read_ReleaseProduction_url;
+        String method_name2 = "Update";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result= null;
+        String result2 = null;
+        try {
+            SoapObject request = new SoapObject(namespace2,method_name2);
+            SoapObject RPODocPage = new SoapObject(namespace2,"RPODocPage");
+            RPODocPage.addProperty("Key",Key1);
+            RPODocPage.addProperty("Hourly",hourly);
+            RPODocPage.addProperty("Composite",composite);
+            SoapObject ProdOrderLines = new SoapObject(namespace2,"ProdOrderLines");
+
+            SoapObject Released_Prod_Order_Lines = new SoapObject(namespace2,"Released_Prod_Order_Lines");
+            Released_Prod_Order_Lines.addProperty("Key",Key2);
+            Released_Prod_Order_Lines.addProperty("Quantity_Sending_To_Quality",Q_S_Q);
+
+            ProdOrderLines.addSoapObject(Released_Prod_Order_Lines);
+            RPODocPage.addSoapObject(ProdOrderLines);
+            request.addSoapObject(RPODocPage);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlmTransport = new NtlmTransport();
+            ntlmTransport.debug = true;
+            ntlmTransport.setCredentials(url2,myusername,mypassword,domain,"");
+            ntlmTransport.call(soap_action2,envelope);
+            try {
+                result = (SoapObject)envelope.getResponse();
+                result2=String.valueOf(result.getProperty("No"));
+                Log.i("number",result2);
+            }
+            catch (SoapFault soapFault) {
+                result2 =String.valueOf(soapFault);
+                soapFault.printStackTrace();
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result2;
+    }
 
 
     public static String Login(Activity activity, String myusername, String mypassword){
@@ -713,4 +759,58 @@ public class SoapApis {
         else {
             return  output;
         }
-    }}
+    }
+    public static String CreateInspection_Release(String myusername,String mypassword,String no){
+
+        // SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        // v SharedPreferences.Editor editor = sharedPreferences.edit();
+        String namespace2 = Urls.CreateInspection_Release_namespace;
+        String url2 = Urls.CreateInspection_Release_url;
+        String method_name2 = "CreateInspectionDatasheetAPI";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result= null;
+        String earror = "";
+        String output = "";
+
+        try {
+            SoapObject request = new SoapObject(namespace2,method_name2);
+            request.addProperty("status",3);
+            request.addProperty("no",no);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlm = new NtlmTransport();
+            ntlm.debug = true;
+            ntlm.setCredentials(url2, myusername, mypassword, domain, "");
+            ntlm.call(soap_action2, envelope);
+
+            try {
+                result= (SoapObject) envelope.getResponse();
+                //Log.i("Output",output);
+                //output = String.valueOf(result.getProperty("No"));
+
+            } catch (SoapFault soapFault) {
+                output=soapFault.toString();
+                soapFault.printStackTrace();
+            }
+
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            output=e.toString();
+            Log.e(TAG,"earror " + earror);
+
+        };
+        if(output.equals("")){
+            return "SUCCESSFULLY REFRESHED";
+        }
+        else {
+            return  output;
+        }
+
+
+    }
+}

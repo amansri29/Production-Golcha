@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -29,13 +30,14 @@ public class ReleasePro_OnList_Click extends Fragment {
             ,editQunatity_accepted,editQunatity_rejected,editQunatity_rewoked;
     ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;
-    String username,password;
+    String username,password,UpdateresulT;
     Activity activity;
     CheckBox checkBox1,checkBox2;
-    String no,KEY;
+    String no,KEY,KEY2,Button_clickresult;
     String no2,desc1,desc2,location,machine,department,source_type,
             source_no,p_quantity,Q_send,Q_sending,Q_accepted,Q_rejected,Q_Revoke;
     private static final String TAG = "ReleasePro_OnList_Click";
+    Boolean hourlyy ,compositt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +50,7 @@ public class ReleasePro_OnList_Click extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.setProgress(0);
         activity = getActivity();
+
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);//passing saves username and pass to plan production
         username= sharedPreferences.getString("username","");
@@ -63,6 +66,8 @@ public class ReleasePro_OnList_Click extends Fragment {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                         if(compoundButton.isChecked()==true){
+                            hourlyy = true;
+                            compositt = false;
                             checkBox2.setChecked(false);
                         }
                     }
@@ -73,6 +78,8 @@ public class ReleasePro_OnList_Click extends Fragment {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                         if(compoundButton.isChecked()==true){
+                             compositt= true;
+                             hourlyy = false;
                             checkBox1.setChecked(false);
                         }
                     }
@@ -103,6 +110,16 @@ public class ReleasePro_OnList_Click extends Fragment {
 
         editQunatity_rewoked = (EditText)root.findViewById(R.id.editQuantity_Rework);
 
+        Button button_create_ins = (Button)root.findViewById(R.id.create_inspection);
+        button_create_ins.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MyButton_click("createIns").execute();
+                    }
+                }
+        );
+
         new MyCallwebService().execute();
         return root;
     }
@@ -110,6 +127,11 @@ public class ReleasePro_OnList_Click extends Fragment {
 
 
     class MyButton_click extends AsyncTask<String,Void,String>{
+        String button_click;
+        public MyButton_click(String button_click) {
+            this.button_click = button_click;
+        }
+
         @Override
         protected void onPreExecute() {
 
@@ -117,6 +139,27 @@ public class ReleasePro_OnList_Click extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
+            if(button_click.equals("createIns")){
+
+                String Q_sending;
+                Q_sending = editQunatity_sending.getText().toString().trim();
+                UpdateresulT=SoapApis.UpdatenewRelease(username,password,hourlyy,compositt,Q_sending,KEY,KEY2);
+                Log.i("mygetting numbet",UpdateresulT + " " +no);
+//                if(UpdateresulT.equals(no)){
+//                    Button_clickresult = SoapApis.Refreshbutton(username,password,);
+//                }
+
+
+            }
+//            else{
+//                if(button_click.equals("changestatus")){
+//                    Button_clickresult = SoapApis.ChangeStatus_button(activity,username,password,no);
+//                }
+//                else {
+//                    source_array = SoapApis.getSource_no(activity,username,password,button_click+"*");
+//                }
+//            }
+
 
 
             return "";
@@ -155,6 +198,10 @@ public class ReleasePro_OnList_Click extends Fragment {
                     source_type = String.valueOf(result.getProperty("Source_Type"));
                     source_no = String.valueOf(result.getProperty("Source_No"));
                     p_quantity = String.valueOf(result.getProperty("Production_Quantity"));
+                    Log.i(TAG,"Vipulsharma key" +"    " + KEY);
+                    Log.i(TAG,"Vipulsharma key2" +"    " + KEY2);
+
+                    Log.i(TAG, "New RESULT::" + no2 + " " + desc1 + " " + desc2);
                     department = String.valueOf(result.getProperty("Shortcut_Dimension_1_Code"));
                     location = String.valueOf(result.getProperty("Location_Code"));
                     machine = String.valueOf(result.getProperty("Shortcut_Dimension_2_Code"));
@@ -163,8 +210,8 @@ public class ReleasePro_OnList_Click extends Fragment {
                     Q_accepted = String.valueOf(result4.getProperty("Quantity_Accepted"));
                     Q_rejected = String.valueOf(result4.getProperty("Quantity_Rejected"));
                     Q_Revoke = String.valueOf(result4.getProperty("Quantity_Rework"));
+                    KEY2 = String.valueOf(result4.getProperty("Key"));
 
-                    Log.i(TAG, "New RESULT::" + no2 + " " + desc1 + " " + desc2);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
