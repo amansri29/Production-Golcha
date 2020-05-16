@@ -23,12 +23,12 @@ import com.golcha.golchaproduction.soapapi.SoapApis;
 import java.util.ArrayList;
 
 public class Login_activity extends AppCompatActivity {
-    String username,password;
+
     ArrayList<String> list;
     ArrayList<String> mylist;
     Activity activity;
     EditText useredittext;
-    EditText passedittext;
+    public  static EditText passedittext;
     String Logins =null;
     ProgressDialog progressDialog;
 
