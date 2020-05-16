@@ -149,7 +149,7 @@ public class SoapApis {
     }
 
 
-    public static SoapObject getPlannedCardDetails(String no) {
+    public static SoapObject getPlannedCardDetails(String myusername, String mypassword, String no) {
         String namespace2 = Urls.planned_production_card_namespace;
         String url2 = Urls.planned_production_card_url;
         String method_name2 = "Read";
@@ -170,7 +170,7 @@ public class SoapApis {
 
             NtlmTransport ntlm = new NtlmTransport();
             ntlm.debug = true;
-            ntlm.setCredentials(url2, userName, password, domain, "");
+            ntlm.setCredentials(url2, myusername, mypassword, domain, "");
 
             ntlm.call(soap_action2, envelope); // Receive Error here!
 
@@ -233,7 +233,7 @@ public class SoapApis {
         return list;
 
     }
-    public static String CreatenewPlan(String source_no , String production_quan , String location_code ,String mydepartment, String mylocation){
+    public static String CreatenewPlan(String myusername, String mypassword, String source_no, String production_quan, String location_code, String mydepartment, String mylocation){
         String namespace2 = Urls.planned_production_card_namespace;
         String url2 = Urls.planned_production_card_url;
         String method_name2 = "Create";
@@ -255,7 +255,7 @@ public class SoapApis {
 
             NtlmTransport ntlmTransport = new NtlmTransport();
             ntlmTransport.debug = true;
-            ntlmTransport.setCredentials(url2,userName,password,domain,"");
+            ntlmTransport.setCredentials(url2,myusername, mypassword,domain,"");
             ntlmTransport.call(soap_action2,envelope);
             try {
                 result = (SoapObject)envelope.getResponse();
@@ -273,6 +273,48 @@ public class SoapApis {
         }
         return result2;
     }
+    public static String UpdatenewPlan(String myusername,String mypassword ,String source_no , String production_quan , String location_code ,String mydepartment, String mylocation,String mykey){
+        String namespace2 = Urls.planned_production_card_namespace;
+        String url2 = Urls.planned_production_card_url;
+        String method_name2 = "Update";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result= null;
+        String result2 = null;
+        try {
+            SoapObject request = new SoapObject(namespace2,method_name2);
+            SoapObject plannedProdOrder = new SoapObject(namespace2,"PlannedProdOrder");
+            plannedProdOrder.addProperty("Key",mykey);
+            plannedProdOrder.addProperty("Source_No",source_no);
+            plannedProdOrder.addProperty("Production_Quantity",production_quan);
+            plannedProdOrder.addProperty("Location_Code",location_code);
+            plannedProdOrder.addProperty("Shortcut_Dimension_1_Code",mydepartment);
+            plannedProdOrder.addProperty("Shortcut_Dimension_2_Code",mylocation);
+            request.addSoapObject(plannedProdOrder);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlmTransport = new NtlmTransport();
+            ntlmTransport.debug = true;
+            ntlmTransport.setCredentials(url2,myusername,mypassword,domain,"");
+            ntlmTransport.call(soap_action2,envelope);
+            try {
+                result = (SoapObject)envelope.getResponse();
+                result2=String.valueOf(result.getProperty("No"));
+                Log.i("number",result2);
+            }
+            catch (SoapFault soapFault) {
+                result2 =String.valueOf(soapFault);
+                soapFault.printStackTrace();
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result2;
+    }
+
 
     public static String Login(Activity activity, String myusername, String mypassword){
         Gson gson = new Gson();
@@ -522,7 +564,7 @@ public class SoapApis {
 
         return  list;
     }
-    public static String Refreshbutton(Activity activity,String myusername,String mypassword,String no){
+    public static String Refreshbutton(String myusername,String mypassword,String no){
 
        // SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
        // v SharedPreferences.Editor editor = sharedPreferences.edit();

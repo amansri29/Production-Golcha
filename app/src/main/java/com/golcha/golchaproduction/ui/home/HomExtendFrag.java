@@ -41,9 +41,10 @@ public class HomExtendFrag extends Fragment {
     private static final String TAG = "HomExtendFrag";
     SharedPreferences sharedPreferences;
     String username,password;
-    String no;
+    String no,KEY;
     Activity activity;
     Spinner autocom_items;
+    String UpdateresulT;
     String Button_clickresult = "";
     ProgressDialog progressDialog,progressDialog2;
     Button refresh,changestatus;
@@ -171,9 +172,10 @@ public class HomExtendFrag extends Fragment {
             machine_list = SoapApis.get_deprt_machine(activity,username,password,"2");
 
             try {
-                SoapObject result = SoapApis.getPlannedCardDetails(no);
+                SoapObject result = SoapApis.getPlannedCardDetails(username,password,no);
                 try {
                     no2 = String.valueOf(result.getProperty("No"));
+                    KEY = String.valueOf(result.getProperty("Key"));
                     desc1 = String.valueOf(result.getProperty("Description"));
                     desc2 = String.valueOf(result.getProperty("Description_2"));
                     source_type = String.valueOf(result.getProperty("Source_Type"));
@@ -277,7 +279,20 @@ public class HomExtendFrag extends Fragment {
         protected String doInBackground(String... params) {
             String result3 = "";
             if(button_click.equals("refresh")){
-                Button_clickresult = SoapApis.Refreshbutton(activity,username,password,no);
+
+                String source_no,product_quantity,location_code,department,machine;
+                source_no = editsourceno.getText().toString().trim();
+                product_quantity  = edit_quantity.getText().toString().trim();
+                location_code = editlocation.getText().toString().trim();
+                department = editdepart.getText().toString().trim();
+                machine = editmachine.getText().toString().trim();
+                Log.i("loc_dep_machine",location_code +" "+ department + " "+ machine);
+                UpdateresulT=SoapApis.UpdatenewPlan(username,password,source_no,product_quantity,location_code,department,machine,KEY);
+                Log.i("mygetting numbet",UpdateresulT + " " +no);
+               if(UpdateresulT.equals(no)){
+                   Button_clickresult = SoapApis.Refreshbutton(username,password,UpdateresulT);
+               }
+
             }
             else{
                 if(button_click.equals("changestatus")){
@@ -294,27 +309,64 @@ public class HomExtendFrag extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
-            if (button_click.equals("refresh") || button_click.equals("changestatus")) {
-                AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
-                builder.setMessage(Button_clickresult);
-                builder.setTitle("NEW NUMBER");
-                builder.setCancelable(false);
-                builder.setPositiveButton(
-                        "OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
+            if (button_click.equals("refresh")) {
+                if (UpdateresulT.equals(no)) {
+                    AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+                    builder.setMessage(Button_clickresult);
+                    builder.setTitle("NEW NUMBER");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(
+                            "OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
                             }
-                        }
-                );
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                    );
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else {
+                    AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+                    builder.setMessage(UpdateresulT);
+                    builder.setTitle("Update Failed!");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(
+                            "OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            }
+                    );
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
+                }
             } else {
-                DropDownAdapter adapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, source_array);
-                Log.i("Background", "onPostExecute: " + source_array.size());
-                adapter.notifyDataSetChanged();
-                editsourceno.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                if( button_click.equals("changestatus")){
+                    AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+                    builder.setMessage(Button_clickresult);
+                    builder.setTitle("NEW NUMBER");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(
+                            "OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            }
+                    );
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
+                }
+                else {
+                    DropDownAdapter adapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, source_array);
+                    Log.i("Background", "onPostExecute: " + source_array.size());
+                    adapter.notifyDataSetChanged();
+                    editsourceno.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
 

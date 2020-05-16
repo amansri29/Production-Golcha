@@ -254,12 +254,9 @@ public class Home_to_CreateFrag extends Fragment {
         location_code = autocomp_textView.getText().toString().trim();
         department = autocomp_department.getText().toString().trim();
         machine = autocom_machine.getText().toString().trim();
-        String [] locationsplit =location_code.split(" ");
-        String [] departmentsplit = department.split(" ");
-        String [] machinesplit = machine.split(" ");
-        Log.i("loc_dep_machine",locationsplit[0] +" "+ departmentsplit[0] + " "+ machinesplit[0]);
+       // Log.i("loc_dep_machine",locationsplit[0] +" "+ departmentsplit[0] + " "+ machinesplit[0]);
 
-        resultof_newPlan= SoapApis.CreatenewPlan(source_no,product_quantity,locationsplit[0],departmentsplit[0],machinesplit[0]);
+        resultof_newPlan= SoapApis.CreatenewPlan(username,password,source_no,product_quantity,location_code,department,machine);
         Log.i("number",resultof_newPlan);
 
     }
