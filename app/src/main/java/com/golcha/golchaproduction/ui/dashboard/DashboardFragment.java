@@ -104,7 +104,7 @@ public class DashboardFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             progressBar.setVisibility(View.INVISIBLE);
-            ReleaseProd_Listadapter releaseProdListadapter =new ReleaseProd_Listadapter(list);
+            ReleaseProd_Listadapter releaseProdListadapter =new ReleaseProd_Listadapter(activity,list);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(releaseProdListadapter);
 

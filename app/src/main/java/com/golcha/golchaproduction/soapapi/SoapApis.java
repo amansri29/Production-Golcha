@@ -184,6 +184,51 @@ public class SoapApis {
         }
         return result2;
     }
+    public static SoapObject getReleaseCardDetails(String myusername, String mypassword, String no) {
+        String namespace2 = Urls.Read_ReleaseProduction_namespace;
+        String url2 = Urls.Read_ReleaseProduction_url;
+        String method_name2 = "Read";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result2 = null;
+
+
+        try {
+            SoapObject request = new SoapObject(namespace2, method_name2);
+            request.addProperty("No", no);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+
+//            SoapObject filter = new SoapObject(namespace2,"filter");
+//            envelope.bodyOut = request;
+
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlm = new NtlmTransport();
+            ntlm.debug = true;
+            ntlm.setCredentials(url2, myusername, mypassword, domain, "");
+
+            ntlm.call(soap_action2, envelope); // Receive Error here!
+
+
+                try {
+                        result2 = (SoapObject) envelope.getResponse();
+
+
+
+
+                } catch (Exception e) {
+                    Log.e(TAG, "doInBackground: catch response FG Inventory Data " + e.toString());
+                }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            String error = e.toString();
+            Log.e(TAG, "error " + error);
+        }
+        return result2;
+    }
+
     public static ArrayList<String> getLocationlist(Activity activity, String myusername, String mypassword){
         String namespace2 = Urls.employeelocations_list_namespace;
         String url2 = Urls.employeelocations_list_url;
@@ -630,7 +675,7 @@ public class SoapApis {
 
         try {
             SoapObject request = new SoapObject(namespace2, method_name2);
-            request.addProperty("status", "1");
+            request.addProperty("status", 1);
             request.addProperty("no", no);
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
@@ -643,7 +688,7 @@ public class SoapApis {
 
             try {
                 result = (SoapObject) envelope.getResponse();
-                output = String.valueOf(result.getProperty("No"));
+                output = String.valueOf(result.getProperty("return_value"));
                 Log.i("Output", output);
             } catch (SoapFault soapFault) {
                 earror = soapFault.toString();

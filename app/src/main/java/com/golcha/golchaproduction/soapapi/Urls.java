@@ -38,6 +38,16 @@ public class Urls {
             "/WS/UMDS%20Pvt.Ltd./Codeunit/CahngeActionButtonApi";
     public static  String change_statusbutton_namespace = "urn:microsoft-dynamics-schemas/codeunit/CahngeActionButtonApi";
 
+    public static  String Read_ReleaseProduction_url = base_url + "/" +company_name +
+            "/WS/UMDS%20Pvt.Ltd./Page/RPODocPage";
+    public static  String Read_ReleaseProduction_namespace = "urn:microsoft-dynamics-schemas/page/rpodocpage";
 
+    public static  String ChangeStatus_Release_url = base_url + "/" +company_name +
+            "/WS/UMDS%20Pvt.Ltd./Codeunit/CahngeActionButtonApi";
+    public static  String ChangeStatus_Release_namespace = "urn:microsoft-dynamics-schemas/codeunit/CahngeActionButtonApi";
+
+    public static  String CreateInspection_Release_url = base_url + "/" +company_name +
+            "/WS/UMDS%20Pvt.Ltd./Codeunit/CreateInspDataSheetActButonAPI";
+    public static  String CreateInspection_Release_namespace = "urn:microsoft-dynamics-schemas/codeunit/CreateInspDataSheetActButonAPI";
 
 }

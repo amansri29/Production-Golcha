@@ -46,7 +46,7 @@ public class HomExtendFrag extends Fragment {
     Spinner autocom_items;
     String UpdateresulT;
     String Button_clickresult = "";
-    ProgressDialog progressDialog,progressDialog2;
+    ProgressDialog progressDialog;
     Button refresh,changestatus;
     String no2,desc1,desc2,source_type,source_no,p_quantity,department,location,machine;
     EditText editno,editdes,editdes2,editsourcetype,edit_quantity;
