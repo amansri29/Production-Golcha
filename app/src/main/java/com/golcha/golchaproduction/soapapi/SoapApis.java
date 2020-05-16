@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 
 import java.util.ArrayList;
@@ -636,10 +637,11 @@ public class SoapApis {
 
             try {
                 result= (SoapObject) envelope.getResponse();
-                output = String.valueOf(result.getProperty("No"));
-                Log.i("Output",output);
+                //Log.i("Output",output);
+               // output = String.valueOf(result.getProperty("No"));
+
             } catch (SoapFault soapFault) {
-                earror=soapFault.toString();
+                output=soapFault.toString();
                 soapFault.printStackTrace();
             }
 
@@ -648,12 +650,12 @@ public class SoapApis {
         }
         catch (Exception e){
             e.printStackTrace();
-            earror=e.toString();
+            output=e.toString();
             Log.e(TAG,"earror " + earror);
 
         };
         if(output.equals("")){
-            return earror;
+            return "SUCCESSFULLY REFRESHED";
         }
         else {
             return  output;
@@ -669,7 +671,8 @@ public class SoapApis {
         String url2 = Urls.change_statusbutton_url;
         String method_name2 = "ChangeStatusActButtonPlanedProOrd";
         String soap_action2 = namespace2 + ":" + method_name2;
-        SoapObject result = null;
+        //SoapObject result = null;
+        SoapPrimitive results = null;
         String earror = "";
         String output = "";
 
@@ -687,11 +690,13 @@ public class SoapApis {
             ntlm.call(soap_action2, envelope);
 
             try {
-                result = (SoapObject) envelope.getResponse();
-                output = String.valueOf(result.getProperty("return_value"));
-                Log.i("Output", output);
+                SoapPrimitive result = (SoapPrimitive) envelope.getResponse();
+
+                output = result.toString();
+                Log.i("CHANGE STATUS Output", String.valueOf(result));
             } catch (SoapFault soapFault) {
                 earror = soapFault.toString();
+                Log.i("earror",earror);
                 soapFault.printStackTrace();
             }
 

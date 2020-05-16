@@ -88,8 +88,11 @@ public class HomExtendFrag extends Fragment {
         editdes=(EditText)root.findViewById(R.id.editTextdesc);
         editdes2=(EditText)root.findViewById(R.id.editTextdesc2);
         editsourcetype=(EditText)root.findViewById(R.id.editTextsourcetype);
-        editsourceno=(CustomAutoCompleteTextView)root.findViewById(R.id.editTextsourceno);
+
         edit_quantity=(EditText)root.findViewById(R.id.editTextpro_quan);
+        editsourceno=(CustomAutoCompleteTextView)root.findViewById(R.id.editTextsourceno);
+        showSuggestionsOnClick(editsourceno);
+        setSelectedValue(editsourceno);
 
         editdepart=(CustomAutoCompleteTextView)root.findViewById(R.id.editTextdepart);
         showSuggestionsOnClick(editdepart);
@@ -313,7 +316,7 @@ public class HomExtendFrag extends Fragment {
                 if (UpdateresulT.equals(no)) {
                     AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
                     builder.setMessage(Button_clickresult);
-                    builder.setTitle("NEW NUMBER");
+                    builder.setTitle("Refresh NUMBER");
                     builder.setCancelable(false);
                     builder.setPositiveButton(
                             "OK", new DialogInterface.OnClickListener() {
@@ -346,7 +349,7 @@ public class HomExtendFrag extends Fragment {
                 if( button_click.equals("changestatus")){
                     AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
                     builder.setMessage(Button_clickresult);
-                    builder.setTitle("NEW NUMBER");
+                    builder.setTitle("Changed NUMBER");
                     builder.setCancelable(false);
                     builder.setPositiveButton(
                             "OK", new DialogInterface.OnClickListener() {
