@@ -250,6 +250,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="match_parent"
+            android:checked="true"
             android:button="?android:attr/listChoiceIndicatorMultiple"
             android:layout_height="wrap_content"
             android:text="Hourly" />
@@ -393,6 +394,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginBottom="200dp"
         android:layout_margin="5dp"
         android:orientation="horizontal">
         <TextView

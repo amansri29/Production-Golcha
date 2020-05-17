@@ -212,10 +212,7 @@ public class SoapApis {
 
 
                 try {
-                        result2 = (SoapObject) envelope.getResponse();
-
-
-
+                    result2 = (SoapObject) envelope.getResponse();
 
                 } catch (Exception e) {
                     Log.e(TAG, "doInBackground: catch response FG Inventory Data " + e.toString());
@@ -367,6 +364,7 @@ public class SoapApis {
         String soap_action2 = namespace2 + ":" + method_name2;
         SoapObject result= null;
         String result2 = null;
+        Log.i("updatenewReleasepassing",hourly +" :" +composite +" :" + Key1 + " :" +Key2 + " :"+ Q_S_Q);
         try {
             SoapObject request = new SoapObject(namespace2,method_name2);
             SoapObject RPODocPage = new SoapObject(namespace2,"RPODocPage");
@@ -393,7 +391,7 @@ public class SoapApis {
             try {
                 result = (SoapObject)envelope.getResponse();
                 result2=String.valueOf(result.getProperty("No"));
-                Log.i("number",result2);
+                Log.i("Updated Number",result2);
             }
             catch (SoapFault soapFault) {
                 result2 =String.valueOf(soapFault);
@@ -805,7 +803,7 @@ public class SoapApis {
 
         };
         if(output.equals("")){
-            return "SUCCESSFULLY REFRESHED";
+            return "SUCCESSFULLY Created Inspection";
         }
         else {
             return  output;

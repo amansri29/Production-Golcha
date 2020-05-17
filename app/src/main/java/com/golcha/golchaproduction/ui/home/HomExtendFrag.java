@@ -364,7 +364,7 @@ public class HomExtendFrag extends Fragment {
 
                 }
                 else {
-                    DropDownAdapter adapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, source_array);
+                    DropDownAdapter adapter = new DropDownAdapter(activity, R.layout.drop_down_items, source_array);
                     Log.i("Background", "onPostExecute: " + source_array.size());
                     adapter.notifyDataSetChanged();
                     editsourceno.setAdapter(adapter);

@@ -1,7 +1,9 @@
 package com.golcha.golchaproduction.ui.dashboard;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,7 +39,7 @@ public class ReleasePro_OnList_Click extends Fragment {
     String no2,desc1,desc2,location,machine,department,source_type,
             source_no,p_quantity,Q_send,Q_sending,Q_accepted,Q_rejected,Q_Revoke;
     private static final String TAG = "ReleasePro_OnList_Click";
-    Boolean hourlyy ,compositt;
+    Boolean hourlyy =true ,compositt =false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,7 +104,7 @@ public class ReleasePro_OnList_Click extends Fragment {
 
         editmachine = (EditText)root.findViewById(R.id.editTextMachine1);
         editQunatity_send=(EditText)root.findViewById(R.id.editQuantity_Sent_To_Quality);
-        editQunatity_sending=(EditText)root.findViewById(R.id.editQuantity_Sent_To_Quality);
+        editQunatity_sending=(EditText)root.findViewById(R.id.editQuantity_Sending_To_Quality);
 
         editQunatity_accepted=(EditText)root.findViewById(R.id.editQuantity_Accepted);
 
@@ -134,6 +136,7 @@ public class ReleasePro_OnList_Click extends Fragment {
 
         @Override
         protected void onPreExecute() {
+            progressDialog.show();;
 
         }
 
@@ -145,9 +148,9 @@ public class ReleasePro_OnList_Click extends Fragment {
                 Q_sending = editQunatity_sending.getText().toString().trim();
                 UpdateresulT=SoapApis.UpdatenewRelease(username,password,hourlyy,compositt,Q_sending,KEY,KEY2);
                 Log.i("mygetting numbet",UpdateresulT + " " +no);
-//                if(UpdateresulT.equals(no)){
-//                    Button_clickresult = SoapApis.Refreshbutton(username,password,);
-//                }
+                if(UpdateresulT.equals(no)){
+                    Button_clickresult = SoapApis.CreateInspection_Release(username,password,UpdateresulT);
+                }
 
 
             }
@@ -167,6 +170,41 @@ public class ReleasePro_OnList_Click extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            if (button_click.equals("createIns")) {
+                if (UpdateresulT.equals(no)) {
+                    AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+                    builder.setMessage(Button_clickresult);
+                    builder.setTitle("CREATE INSPECTION");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(
+                            "OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            }
+                    );
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else {
+                    AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+                    builder.setMessage(UpdateresulT);
+                    builder.setTitle("Update Failed!");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(
+                            "OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            }
+                    );
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
+                }
+            }
 
 
         }
@@ -191,27 +229,90 @@ public class ReleasePro_OnList_Click extends Fragment {
                 SoapObject result3 = (SoapObject) result.getProperty("ProdOrderLines");
                 SoapObject result4 = (SoapObject) result3.getProperty("Released_Prod_Order_Lines");
                 try {
-                    no2 = String.valueOf(result.getProperty("No"));
-                    KEY = String.valueOf(result.getProperty("Key"));
-                    desc1 = String.valueOf(result.getProperty("Description"));
-                    desc2 = String.valueOf(result.getProperty("Description_2"));
-                    source_type = String.valueOf(result.getProperty("Source_Type"));
-                    source_no = String.valueOf(result.getProperty("Source_No"));
-                    p_quantity = String.valueOf(result.getProperty("Production_Quantity"));
+                    try {
+                        no2 = String.valueOf(result.getProperty("No"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        KEY = String.valueOf(result.getProperty("Key"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        desc1 = String.valueOf(result.getProperty("Description"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        desc2 = String.valueOf(result.getProperty("Description_2"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        source_type = String.valueOf(result.getProperty("Source_Type"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        source_no = String.valueOf(result.getProperty("Source_No"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        p_quantity = String.valueOf(result.getProperty("Production_Quantity"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        department = String.valueOf(result.getProperty("Shortcut_Dimension_1_Code"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        location = String.valueOf(result.getProperty("Location_Code"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        machine = String.valueOf(result.getProperty("Shortcut_Dimension_2_Code"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Q_send = String.valueOf(result4.getProperty("Quantity_Sent_To_Quality"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Q_sending= String.valueOf(result4.getProperty("Quantity_Sending_To_Quality"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Q_accepted = String.valueOf(result4.getProperty("Quantity_Accepted"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Q_rejected = String.valueOf(result4.getProperty("Quantity_Rejected"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Q_Revoke = String.valueOf(result4.getProperty("Quantity_Rework"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        KEY2 = String.valueOf(result4.getProperty("Key"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Log.i(TAG,"Vipulsharma key" +"    " + KEY);
                     Log.i(TAG,"Vipulsharma key2" +"    " + KEY2);
 
                     Log.i(TAG, "New RESULT::" + no2 + " " + desc1 + " " + desc2);
-                    department = String.valueOf(result.getProperty("Shortcut_Dimension_1_Code"));
-                    location = String.valueOf(result.getProperty("Location_Code"));
-                    machine = String.valueOf(result.getProperty("Shortcut_Dimension_2_Code"));
-                    Q_send = String.valueOf(result4.getProperty("Quantity_Sent_To_Quality"));
-                    Q_sending= String.valueOf(result4.getProperty("Quantity_Sending_To_Quality"));
-                    Q_accepted = String.valueOf(result4.getProperty("Quantity_Accepted"));
-                    Q_rejected = String.valueOf(result4.getProperty("Quantity_Rejected"));
-                    Q_Revoke = String.valueOf(result4.getProperty("Quantity_Rework"));
-                    KEY2 = String.valueOf(result4.getProperty("Key"));
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -50,8 +50,9 @@ public class ReleaseProd_Listadapter extends RecyclerView.Adapter<ReleaseProd_Li
                         Bundle bundle=new Bundle();
                         bundle.putString("Releaseno",getReleasearraylist.getNo());
                         myFragment.setArguments(bundle);
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null)
-                                .remove(new HomeFragment()).commit();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.dashboard, myFragment).addToBackStack(null)
+                                .remove(new DashboardFragment()).commit();
+
                     }
                 }
         );
