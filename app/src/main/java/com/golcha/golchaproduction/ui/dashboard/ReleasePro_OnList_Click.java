@@ -121,6 +121,15 @@ public class ReleasePro_OnList_Click extends Fragment {
                     }
                 }
         );
+        Button changestatus_button = (Button)root.findViewById(R.id.changestatus_release);
+        changestatus_button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MyButton_click("changestatus").execute();
+                    }
+                }
+        );
 
         new MyCallwebService().execute();
         return root;
@@ -154,14 +163,11 @@ public class ReleasePro_OnList_Click extends Fragment {
 
 
             }
-//            else{
-//                if(button_click.equals("changestatus")){
-//                    Button_clickresult = SoapApis.ChangeStatus_button(activity,username,password,no);
-//                }
-//                else {
-//                    source_array = SoapApis.getSource_no(activity,username,password,button_click+"*");
-//                }
-//            }
+            else{
+                if(button_click.equals("changestatus")){
+                    Button_clickresult = SoapApis.ChangeStatus_Releasebutton(activity,username,password,no);
+                }
+            }
 
 
 
@@ -205,9 +211,28 @@ public class ReleasePro_OnList_Click extends Fragment {
 
                 }
             }
+            else {
+                if( button_click.equals("changestatus")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage(Button_clickresult);
+                    builder.setTitle("FINAL PRODUCTION");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(
+                            "OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            }
+                    );
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    getActivity().getFragmentManager().popBackStack();
+
+                }
 
 
-        }
+        }}
     }
 
 

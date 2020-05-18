@@ -758,6 +758,57 @@ public class SoapApis {
             return  output;
         }
     }
+    public static String ChangeStatus_Releasebutton(Activity activity,String myusername,String mypassword,String no) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String namespace2 = Urls.change_statusbutton_namespace;
+        String url2 = Urls.change_statusbutton_url;
+        String method_name2 = "ChangeStatusActButtonReleasedProOrd";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        //SoapObject result = null;
+        SoapPrimitive results = null;
+        String earror = "";
+        String output = "";
+
+        try {
+            SoapObject request = new SoapObject(namespace2, method_name2);
+            request.addProperty("status", 3);
+            request.addProperty("no", no);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlm = new NtlmTransport();
+            ntlm.debug = true;
+            ntlm.setCredentials(url2, myusername, mypassword, domain, "");
+            ntlm.call(soap_action2, envelope);
+
+            try {
+                SoapPrimitive result = (SoapPrimitive) envelope.getResponse();
+
+                output = result.toString();
+                Log.i("CHANGE STATUS Output", String.valueOf(result));
+            } catch (SoapFault soapFault) {
+                earror = soapFault.toString();
+                Log.i("earror",earror);
+                soapFault.printStackTrace();
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            earror = e.toString();
+            Log.e(TAG, "earror " + earror);
+        }
+
+        if(output.equals("")){
+            return earror;
+        }
+        else {
+            return  output;
+        }
+    }
     public static String CreateInspection_Release(String myusername,String mypassword,String no){
 
         // SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
