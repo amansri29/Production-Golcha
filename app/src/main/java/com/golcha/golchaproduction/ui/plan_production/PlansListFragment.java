@@ -2,6 +2,7 @@ package com.golcha.golchaproduction.ui.plan_production;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,7 +45,6 @@ public class PlansListFragment extends Fragment {
     String No;
     Activity activity;
 
-    ProgressDialog progressDialog;
     private HomeViewModel homeViewModel;
     SharedPreferences sharedPreferences;
     String username,password;
@@ -56,32 +55,11 @@ public class PlansListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        activity = getActivity();
-//        toolbar =root.findViewById(R.id.toolbar1);
-//        toolbar.setNavigationIcon(R.drawable.ic_home_black_24dp);
-//        toolbar.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Toast.makeText(activity,"hellow ",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
+        View root = inflater.inflate(R.layout.fragment_plan_production_order, container, false);
 
-        progressDialog = new ProgressDialog(activity);
-        progressDialog.setMessage("Loading");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setProgress(0);
+        activity = getActivity();
+
+
 
 
 
@@ -112,10 +90,15 @@ public class PlansListFragment extends Fragment {
         public CallWebService(int a) {
             this.a=a;
         }
+        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Context context;
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Please wait, We are fetching the data");
             progressDialog.show();
         }
 
@@ -130,6 +113,8 @@ public class PlansListFragment extends Fragment {
                     SoapObject result2 = (SoapObject) result.getProperty(i);
                     try {
                         Source_No=String.valueOf(result2.getProperty("Source_No"));
+//                        Description=String.valueOf(result2.getProperty("Description")) + " " +
+//                                String.valueOf(result2.getProperty("Description_2"));
                         Description=String.valueOf(result2.getProperty("Description"));
                         No = String.valueOf(result2.getProperty("No"));
                         Routing_No = String.valueOf(result2.getProperty("Routing_No"));

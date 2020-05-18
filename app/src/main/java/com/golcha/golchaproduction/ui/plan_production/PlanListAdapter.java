@@ -47,7 +47,7 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                         Bundle bundle=new Bundle();
                         bundle.putString("no",getarraylist.getNo());
                         myFragment.setArguments(bundle);
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.home, myFragment).addToBackStack(null)
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null)
                                 .remove(new PlansListFragment()).commit();
 
 

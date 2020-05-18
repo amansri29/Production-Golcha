@@ -10,7 +10,7 @@
         android:id="@+id/navigation_home"
         android:name="com.golcha.golchaproduction.ui.plan_production.PlansListFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_plan_production_order" />
 
     <fragment
         android:id="@+id/navigation_dashboard"

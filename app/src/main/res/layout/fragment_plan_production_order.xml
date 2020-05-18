@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/home"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="?android:windowBackground"
+    tools:context=".ui.plan_production.PlansListFragment">
+
+    <View
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"></View>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/ll"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        >
+
+        <Button
+            android:padding="5dp"
+            android:id="@+id/button_createfrag"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_text_size"
+            android:text="Create New Order"
+            android:background="@drawable/rounded_rectangle_89"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
+
+            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
+                android:background="@drawable/text_bg"
+                android:textAlignment="center"
+                android:textColorHint="@android:color/white"
+                android:textColor="@android:color/white"
+                android:hint="Search Here"
+                android:layout_marginTop="10dp"
+                android:id="@+id/auto_search"
+                android:textStyle="bold"
+                android:textSize="@dimen/title_text_size"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/ll"
+        android:id="@+id/recycleview2"
+        tools:ignore="MissingConstraints" />
+
+
+</LinearLayout>

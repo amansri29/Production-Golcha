@@ -71,12 +71,6 @@ public class PlanDetailsFragment extends Fragment {
 
 
         activity = getActivity();
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setProgress(0);
-
 
         no=getArguments().getString("no");
 
@@ -158,6 +152,9 @@ public class PlanDetailsFragment extends Fragment {
     class CallWebService extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Please wait, We are fetching the data");
             progressDialog.show();
 
             super.onPreExecute();
