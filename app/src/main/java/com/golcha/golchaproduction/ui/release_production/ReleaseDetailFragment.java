@@ -1,4 +1,4 @@
-package com.golcha.golchaproduction.ui.dashboard;
+package com.golcha.golchaproduction.ui.release_production;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,11 +22,10 @@ import android.widget.EditText;
 
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
-import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
 
 import org.ksoap2.serialization.SoapObject;
 
-public class ReleasePro_OnList_Click extends Fragment {
+public class ReleaseDetailFragment extends Fragment {
     EditText editno,editdes,editdes2,editsourcetype,edit_quantity,editsourceno,editdepart,editlocation
             ,editmachine,editQunatity_send,editQunatity_sending
             ,editQunatity_accepted,editQunatity_rejected,editQunatity_rewoked;

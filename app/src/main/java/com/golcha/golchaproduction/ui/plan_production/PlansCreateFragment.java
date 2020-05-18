@@ -1,6 +1,5 @@
-package com.golcha.golchaproduction.ui.home;
+package com.golcha.golchaproduction.ui.plan_production;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -25,7 +24,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.golcha.golchaproduction.DropDownAdapter;
+import com.golcha.golchaproduction.DropDownArrayAdapter;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
 import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
@@ -35,7 +34,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class Home_to_CreateFrag extends Fragment {
+public class PlansCreateFragment extends Fragment {
     ArrayList<String> mylocationlist;
     ArrayList<String> Department_list;
     ArrayList<String> machine_list;
@@ -48,7 +47,7 @@ public class Home_to_CreateFrag extends Fragment {
     SharedPreferences sharedPreferences;
     Activity activity;
     String username,password;
-    DropDownAdapter Locationadapter;
+    DropDownArrayAdapter Locationadapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -172,14 +171,14 @@ public class Home_to_CreateFrag extends Fragment {
                     Log.i("mmynewLocations",mynewLocationlist.get(i));
                 }
 
-                 Locationadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items,mynewLocationlist );
+                 Locationadapter = new DropDownArrayAdapter(getContext(), R.layout.drop_down_items,mynewLocationlist );
             }
             else{
-                 Locationadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items,mylocationlist );
+                 Locationadapter = new DropDownArrayAdapter(getContext(), R.layout.drop_down_items,mylocationlist );
             }
 
-            DropDownAdapter Departmentadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, Department_list);
-            DropDownAdapter Machineadapter = new DropDownAdapter(getContext(), R.layout.drop_down_items, machine_list);
+            DropDownArrayAdapter Departmentadapter = new DropDownArrayAdapter(getContext(), R.layout.drop_down_items, Department_list);
+            DropDownArrayAdapter Machineadapter = new DropDownArrayAdapter(getContext(), R.layout.drop_down_items, machine_list);
 
             autocomp_textView.setThreshold(1);
             autocomp_textView.setAdapter(Locationadapter);
@@ -236,7 +235,7 @@ public class Home_to_CreateFrag extends Fragment {
             }
             else {
 //
-                DropDownAdapter adapter = new DropDownAdapter(activity, R.layout.drop_down_items, source_array);
+                DropDownArrayAdapter adapter = new DropDownArrayAdapter(activity, R.layout.drop_down_items, source_array);
                 Log.i("Background", "onPostExecute: " + source_array.size());
                 adapter.notifyDataSetChanged();
                 mysourceno.setAdapter(adapter);
@@ -271,7 +270,7 @@ public class Home_to_CreateFrag extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
-                        Fragment fragment1 = new HomeFragment();
+                        Fragment fragment1 = new PlansListFragment();
                         FragmentManager manager = getFragmentManager();
                         manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
                                 .commit();

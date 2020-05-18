@@ -1,9 +1,9 @@
-package com.golcha.golchaproduction.ui.home;
+package com.golcha.golchaproduction.ui.release_production;
 
-public class Getplanarraylist {
+public class ReleaseModel {
     String sourceno,desc,no,routingno,quantity;
 
-    public Getplanarraylist(String sourceno, String desc, String no, String routingno, String quantity){
+    public ReleaseModel(String sourceno, String desc, String no, String routingno, String quantity){
         this.desc=desc;
         this.sourceno=sourceno;
         this.no=no;

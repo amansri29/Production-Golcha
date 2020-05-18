@@ -1,4 +1,4 @@
-package com.golcha.golchaproduction.ui.home;
+package com.golcha.golchaproduction.ui.plan_production;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

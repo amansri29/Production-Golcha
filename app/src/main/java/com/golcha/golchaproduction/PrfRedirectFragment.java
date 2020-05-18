@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.golcha.golchaproduction.ui.dashboard.DashboardFragment;
-import com.golcha.golchaproduction.ui.home.HomeFragment;
-import com.golcha.golchaproduction.ui.notifications.NotificationsFragment;
+import com.golcha.golchaproduction.ui.release_production.ReleaseListFragment;
+import com.golcha.golchaproduction.ui.plan_production.PlansListFragment;
+import com.golcha.golchaproduction.ui.finish_production.FinishListFragment;
 
 
-public class P_R_F_Redirect extends Fragment {
+public class PrfRedirectFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,7 +28,7 @@ public class P_R_F_Redirect extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        Fragment fragment = new HomeFragment();
+                        Fragment fragment = new PlansListFragment();
                         FragmentManager manager = getFragmentManager();
                         manager.beginTransaction().replace(R.id.nav_host_fragment,fragment)
 
@@ -44,7 +44,7 @@ public class P_R_F_Redirect extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        Fragment fragment = new DashboardFragment();
+                        Fragment fragment = new ReleaseListFragment();
                         FragmentManager manager = getFragmentManager();
                         manager.beginTransaction().replace(R.id.nav_host_fragment,fragment)
                                 .addToBackStack(null)
@@ -53,16 +53,16 @@ public class P_R_F_Redirect extends Fragment {
                     }
                 }
         );
-        Button finaal = (Button)root.findViewById(R.id.final_production);
-        finaal.setOnClickListener(
+        Button final_btn = (Button)root.findViewById(R.id.final_production);
+        final_btn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        Fragment fragment = new NotificationsFragment();
-                        FragmentManager manager = getFragmentManager();
-                        manager.beginTransaction().replace(R.id.nav_host_fragment,fragment)
-                                .commit();
+//                        Fragment fragment = new FinishListFragment();
+//                        FragmentManager manager = getFragmentManager();
+//                        manager.beginTransaction().replace(R.id.nav_host_fragment,fragment)
+//                                .commit();
 
 
                     }

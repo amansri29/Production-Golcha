@@ -1,4 +1,4 @@
-package com.golcha.golchaproduction.ui.notifications;
+package com.golcha.golchaproduction.ui.finish_production;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

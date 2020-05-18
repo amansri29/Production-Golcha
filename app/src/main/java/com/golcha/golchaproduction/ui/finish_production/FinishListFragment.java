@@ -1,4 +1,4 @@
-package com.golcha.golchaproduction.ui.notifications;
+package com.golcha.golchaproduction.ui.finish_production;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.golcha.golchaproduction.R;
 
-public class NotificationsFragment extends Fragment {
+public class FinishListFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
 

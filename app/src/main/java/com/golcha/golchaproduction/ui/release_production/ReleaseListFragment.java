@@ -1,4 +1,4 @@
-package com.golcha.golchaproduction.ui.dashboard;
+package com.golcha.golchaproduction.ui.release_production;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -25,10 +25,10 @@ import org.ksoap2.serialization.SoapObject;
 import java.util.ArrayList;
 
 
-public class DashboardFragment extends Fragment {
+public class ReleaseListFragment extends Fragment {
     Activity activity;
     private static final String TAG = "DashboardFragment";
-    ArrayList<GetReleasearraylist> list= new ArrayList<>();
+    ArrayList<ReleaseModel> list= new ArrayList<>();
     RecyclerView recyclerView;
     String Source_No;
     String Description;
@@ -83,7 +83,7 @@ public class DashboardFragment extends Fragment {
                         No = String.valueOf(result2.getProperty("No"));
                         Routing_No = String.valueOf(result2.getProperty("Routing_No"));
                         Quantity = String.valueOf(result2.getProperty("Quantity"));
-                        list.add(new GetReleasearraylist(Source_No,Description,No,Routing_No,Quantity));
+                        list.add(new ReleaseModel(Source_No,Description,No,Routing_No,Quantity));
                        // Log.i(TAG, "Source_no " +Source_No);
                     }
                     catch (Exception e)
@@ -104,7 +104,7 @@ public class DashboardFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             progressBar.setVisibility(View.INVISIBLE);
-            ReleaseProd_Listadapter releaseProdListadapter =new ReleaseProd_Listadapter(activity,list);
+            ReleaseListAdapter releaseProdListadapter =new ReleaseListAdapter(activity,list);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(releaseProdListadapter);
 

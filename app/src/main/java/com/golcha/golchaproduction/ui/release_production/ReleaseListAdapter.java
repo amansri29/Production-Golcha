@@ -1,4 +1,4 @@
-package com.golcha.golchaproduction.ui.dashboard;
+package com.golcha.golchaproduction.ui.release_production;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,22 +10,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.golcha.golchaproduction.R;
-import com.golcha.golchaproduction.ui.home.HomExtendFrag;
-import com.golcha.golchaproduction.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 
-public class ReleaseProd_Listadapter extends RecyclerView.Adapter<ReleaseProd_Listadapter.ViewHolder> {
-    ArrayList<GetReleasearraylist> list;
+public class ReleaseListAdapter extends RecyclerView.Adapter<ReleaseListAdapter.ViewHolder> {
+    ArrayList<ReleaseModel> list;
     private Context mContext;
 
-    public ReleaseProd_Listadapter(Activity activity,ArrayList<GetReleasearraylist> list){
+    public ReleaseListAdapter(Activity activity, ArrayList<ReleaseModel> list){
         this.list=list;
     }
 
@@ -40,18 +37,18 @@ public class ReleaseProd_Listadapter extends RecyclerView.Adapter<ReleaseProd_Li
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final GetReleasearraylist getReleasearraylist =list.get(position);
+        final ReleaseModel getReleasearraylist =list.get(position);
         holder.itemView.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                        Fragment myFragment = new ReleasePro_OnList_Click();
+                        Fragment myFragment = new ReleaseDetailFragment();
                         Bundle bundle=new Bundle();
                         bundle.putString("Releaseno",getReleasearraylist.getNo());
                         myFragment.setArguments(bundle);
                         activity.getSupportFragmentManager().beginTransaction().replace(R.id.dashboard, myFragment).addToBackStack(null)
-                                .remove(new DashboardFragment()).commit();
+                                .remove(new ReleaseListFragment()).commit();
 
                     }
                 }

@@ -1,9 +1,9 @@
-package com.golcha.golchaproduction.ui.dashboard;
+package com.golcha.golchaproduction.ui.plan_production;
 
-public class GetReleasearraylist {
+public class GetPlanArrayList {
     String sourceno,desc,no,routingno,quantity;
 
-    public GetReleasearraylist(String sourceno, String desc, String no, String routingno, String quantity){
+    public GetPlanArrayList(String sourceno, String desc, String no, String routingno, String quantity){
         this.desc=desc;
         this.sourceno=sourceno;
         this.no=no;

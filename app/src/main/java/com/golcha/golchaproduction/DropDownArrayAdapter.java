@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DropDownAdapter extends ArrayAdapter<String> {
+public class DropDownArrayAdapter extends ArrayAdapter<String> {
     private final Context mContext;
     private final List<String> items;
     private final List<String> allItems;
@@ -23,7 +23,7 @@ public class DropDownAdapter extends ArrayAdapter<String> {
 //    ArrayList<String> departments;
     
 
-    public DropDownAdapter(Context context, int resource, ArrayList<String> items) {
+    public DropDownArrayAdapter(Context context, int resource, ArrayList<String> items) {
         super(context, resource, items);
         this.mContext = context;
         this.mLayoutResourceId = resource;

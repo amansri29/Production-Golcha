@@ -1,4 +1,4 @@
-package com.golcha.golchaproduction.ui.home;
+package com.golcha.golchaproduction.ui.plan_production;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +33,10 @@ import org.ksoap2.serialization.SoapObject;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class PlansListFragment extends Fragment {
     private static final String TAG = "HomeFragment";
 
-    ArrayList<Getplanarraylist> list2= new ArrayList<>();
+    ArrayList<GetPlanArrayList> list2= new ArrayList<>();
     RecyclerView recyclerView;
     String Source_No;
     String Description;
@@ -66,16 +65,16 @@ public class HomeFragment extends Fragment {
             }
         });
         activity = getActivity();
-        toolbar =root.findViewById(R.id.toolbar1);
-        toolbar.setNavigationIcon(R.drawable.ic_home_black_24dp);
-        toolbar.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(activity,"hellow ",Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
+//        toolbar =root.findViewById(R.id.toolbar1);
+//        toolbar.setNavigationIcon(R.drawable.ic_home_black_24dp);
+//        toolbar.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Toast.makeText(activity,"hellow ",Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//        );
 
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage("Loading");
@@ -97,7 +96,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.nav_host_fragment, new Home_to_CreateFrag())
+                        fragmentTransaction.replace(R.id.nav_host_fragment, new PlansCreateFragment())
                                 .commit();
 
 
@@ -135,7 +134,7 @@ public class HomeFragment extends Fragment {
                         No = String.valueOf(result2.getProperty("No"));
                         Routing_No = String.valueOf(result2.getProperty("Routing_No"));
                         Quantity = String.valueOf(result2.getProperty("Quantity"));
-                        list2.add(new Getplanarraylist(Source_No,Description,No,Routing_No,Quantity));
+                        list2.add(new GetPlanArrayList(Source_No,Description,No,Routing_No,Quantity));
                       //  Log.i(TAG, "Planned List " +Source_No);
                     }
                     catch (Exception e)
@@ -154,7 +153,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
            progressDialog.dismiss();
-            PlanProduc_ListAdaper planProducListAdaper = new PlanProduc_ListAdaper(list2, activity);
+            PlanListAdapter planProducListAdaper = new PlanListAdapter(list2, activity);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(planProducListAdaper);
 
