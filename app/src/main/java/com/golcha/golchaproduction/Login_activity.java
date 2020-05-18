@@ -45,6 +45,7 @@ public class Login_activity extends AppCompatActivity {
         progressDialog.setMessage("Loading");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
         progressDialog.setProgress(0);
 
         list = new ArrayList<>();
@@ -56,6 +57,7 @@ public class Login_activity extends AppCompatActivity {
         if(logins==true){
             Intent intent = new Intent(Login_activity.this ,MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
 
@@ -110,5 +112,4 @@ public class Login_activity extends AppCompatActivity {
         }
 
 
-
-    }
+}

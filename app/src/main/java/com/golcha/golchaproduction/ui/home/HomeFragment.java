@@ -1,8 +1,10 @@
 package com.golcha.golchaproduction.ui.home;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -12,9 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
@@ -39,13 +44,15 @@ public class HomeFragment extends Fragment {
     String Routing_No;
     String Quantity;
     String No;
-    ProgressBar progressBar;
     Activity activity;
 
+    ProgressDialog progressDialog;
     private HomeViewModel homeViewModel;
     SharedPreferences sharedPreferences;
     String username,password;
+    Toolbar toolbar;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -59,12 +66,31 @@ public class HomeFragment extends Fragment {
             }
         });
         activity = getActivity();
+        toolbar =root.findViewById(R.id.toolbar1);
+        toolbar.setNavigationIcon(R.drawable.ic_home_black_24dp);
+        toolbar.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(activity,"hellow ",Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage("Loading");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setProgress(0);
+
+
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);//passing saves username and pass to plan production
         username= sharedPreferences.getString("username","");
         password = sharedPreferences.getString("password","");
 
         recyclerView = (RecyclerView)root.findViewById(R.id.recycleview2);
-        progressBar = (ProgressBar)root.findViewById(R.id.progresbar2);
         Button button=(Button)root.findViewById(R.id.button_createfrag);
         button.setOnClickListener(
                 new View.OnClickListener() {
@@ -72,9 +98,8 @@ public class HomeFragment extends Fragment {
                     public void onClick(View view) {
                         FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.nav_host_fragment, new Home_to_CreateFrag())
-                                .addToBackStack(null)
                                 .commit();
-                        getActivity().getFragmentManager().popBackStack();
+
 
                     }
                 }
@@ -92,7 +117,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            progressDialog.show();
         }
 
         @Override
@@ -128,7 +153,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            progressBar.setVisibility(View.INVISIBLE);
+           progressDialog.dismiss();
             PlanProduc_ListAdaper planProducListAdaper = new PlanProduc_ListAdaper(list2, activity);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(planProducListAdaper);

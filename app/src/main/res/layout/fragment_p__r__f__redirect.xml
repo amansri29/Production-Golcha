@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/p_q_r_red"
+    android:paddingTop="?attr/actionBarSize"
+    tools:context=".P_R_F_Redirect">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PLAN_PRODUCTION"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:id="@+id/plan_production"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RELEASE_PRODUCTION"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:id="@+id/release_production"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FINAL_PRODUCTION"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:id="@+id/final_production"/>
+
+
+
+</LinearLayout>

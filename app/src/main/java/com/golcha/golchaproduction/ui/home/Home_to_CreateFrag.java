@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 
 import android.preference.PreferenceManager;
@@ -270,6 +271,10 @@ public class Home_to_CreateFrag extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
+                        Fragment fragment1 = new HomeFragment();
+                        FragmentManager manager = getFragmentManager();
+                        manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
+                                .commit();
                     }
                 }
         );
