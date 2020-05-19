@@ -26,11 +26,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.golcha.golchaproduction.DropDownArrayAdapter;
-import com.golcha.golchaproduction.PlannedOrderArrayAdapter;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
-import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
 
 import org.ksoap2.serialization.SoapObject;
 

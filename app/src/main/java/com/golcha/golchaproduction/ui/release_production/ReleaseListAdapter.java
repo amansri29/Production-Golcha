@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.golcha.golchaproduction.R;
+import com.golcha.golchaproduction.ui.plan_production.PlannedOrderModel;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,11 @@ public class ReleaseListAdapter extends RecyclerView.Adapter<ReleaseListAdapter.
 
     public ReleaseListAdapter(Activity activity, ArrayList<ReleaseModel> list){
         this.list=list;
+    }
+
+    public void updateList(ArrayList<ReleaseModel> list){
+        this.list = list;
+        notifyDataSetChanged();
     }
 
     @NonNull

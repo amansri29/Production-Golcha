@@ -6,11 +6,13 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
+import com.golcha.golchaproduction.ui.plan_production.PlannedOrderModel;
 
 import org.ksoap2.serialization.SoapObject;
 
@@ -40,14 +43,13 @@ public class ReleaseListFragment extends Fragment {
 
     SharedPreferences sharedPreferences;
     String username,password;
-
+    ReleaseListAdapter releaseProdListAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_release_order_list, container, false);
         activity=getActivity();
-        final TextView textView = root.findViewById(R.id.text_dashboard);
         recyclerView = (RecyclerView)root.findViewById(R.id.recycleview);
 
 
@@ -64,11 +66,46 @@ public class ReleaseListFragment extends Fragment {
 
 
 
+        EditText seach_view = (EditText) root.findViewById(R.id.auto_search);
+
+        seach_view.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter_data(s.toString());
+            }
+        });
+
+
+
+
         // call the webservice
         new CallWebService().execute();
 
         return root;
     }
+
+
+    void filter_data(String text){
+        ArrayList<ReleaseModel> result= new ArrayList<>();
+        for(ReleaseModel data: list){
+            String search_item = data.getNo()
+                    + data.getDesc()  + data.getSourceno()+ data.getQuantity();
+            if(search_item.toLowerCase().contains(text.toLowerCase())){
+                result.add(data);
+            }
+        }
+        //update recyclerview
+        releaseProdListAdapter.updateList(result);
+    }
+
 
 
     class CallWebService extends AsyncTask<String, Void, String> {
@@ -116,9 +153,9 @@ public class ReleaseListFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             progressDialog.dismiss();
-            ReleaseListAdapter releaseProdListadapter =new ReleaseListAdapter(activity,list);
+            releaseProdListAdapter =new ReleaseListAdapter(activity,list);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(releaseProdListadapter);
+            recyclerView.setAdapter(releaseProdListAdapter);
 
         }
     }
