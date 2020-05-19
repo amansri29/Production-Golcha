@@ -1,40 +1,23 @@
 package com.golcha.golchaproduction;
 
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.golcha.golchaproduction.soapapi.SoapApis;
-import com.golcha.golchaproduction.ui.dashboard.DashboardFragment;
-import com.golcha.golchaproduction.ui.dashboard.ReleasePro_OnList_Click;
-import com.golcha.golchaproduction.ui.home.HomExtendFrag;
-import com.golcha.golchaproduction.ui.home.HomeFragment;
-import com.golcha.golchaproduction.ui.home.Home_to_CreateFrag;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.ksoap2.serialization.SoapObject;
+import com.golcha.golchaproduction.ui.release_production.ReleaseListFragment;
+import com.golcha.golchaproduction.ui.release_production.ReleaseDetailFragment;
+import com.golcha.golchaproduction.ui.plan_production.PlanDetailsFragment;
+import com.golcha.golchaproduction.ui.plan_production.PlansListFragment;
+import com.golcha.golchaproduction.ui.plan_production.PlansCreateFragment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -47,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Fragment fragment = new P_R_F_Redirect();
+        Fragment fragment = new PrfRedirectFragment();
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.nav_host_fragment,fragment)
                 .commit();
@@ -89,49 +72,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        //
         Fragment fragment = (Fragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment fragment1 = null;
 
-        if(fragment instanceof Home_to_CreateFrag){
-            Fragment fragment1 = new HomeFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
-                    .commit();
-
+        if(fragment instanceof PlansCreateFragment){
+            fragment1 = new PlansListFragment();
         }
-        if(fragment instanceof HomeFragment){
-            Fragment fragment1 = new P_R_F_Redirect();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
-                    .commit();
-
+        else if(fragment instanceof PlansListFragment){
+            fragment1 = new PrfRedirectFragment();
         }
-        if(fragment instanceof DashboardFragment){
-            Fragment fragment1 = new P_R_F_Redirect();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
-                    .commit();
-
+        else if(fragment instanceof ReleaseListFragment){
+            fragment1 = new PrfRedirectFragment();
         }
-        if(fragment instanceof ReleasePro_OnList_Click){
-            Fragment fragment1 = new DashboardFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
-                    .commit();
-
+        else if(fragment instanceof ReleaseDetailFragment){
+            fragment1 = new ReleaseListFragment();
         }
-        if(fragment instanceof HomExtendFrag){
-            Fragment fragment1 = new HomeFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
-                    .commit();
-
+        else if(fragment instanceof PlanDetailsFragment){
+            fragment1 = new PlansListFragment();
         }
-
-
-
-
-
+        if(fragment1 != null) {
+            manager.beginTransaction().replace(R.id.nav_host_fragment, fragment1)
+                    .commit();
+        }
 
         return true;
     }

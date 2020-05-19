@@ -8,19 +8,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.golcha.golchaproduction.ui.home.HomeFragment"
+        android:name="com.golcha.golchaproduction.ui.plan_production.PlansListFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_plan_production_order" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.golcha.golchaproduction.ui.dashboard.DashboardFragment"
+        android:name="com.golcha.golchaproduction.ui.release_production.ReleaseListFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.golcha.golchaproduction.ui.notifications.NotificationsFragment"
+        android:name="com.golcha.golchaproduction.ui.finish_production.FinishListFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

@@ -4,23 +4,23 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
 
-    <dimen name="image_height">316dp</dimen>
-    <dimen name="cover_image_height">390dp</dimen>
+    <dimen name="image_height">330dp</dimen>
+    <dimen name="cover_image_height">380dp</dimen>
 
-    <dimen name="logo_dim">135dp</dimen>
-    <dimen name="logo_top_margin">160dp</dimen>
+    <dimen name="logo_dim">120dp</dimen>
+    <dimen name="logo_top_margin">150dp</dimen>
+
     <dimen name="left_margin">16dp</dimen>
     <dimen name="text1_top_margin">350dp</dimen>
     <dimen name="text2_top_margin">370dp</dimen>
 
-    <dimen name="edit_text1_top_margin">420dp</dimen>
-    <dimen name="edit_text2_top_margin">500dp</dimen>
+    <dimen name="edit_text1_top_margin">400dp</dimen>
+    <dimen name="edit_text2_top_margin">450dp</dimen>
     <dimen name="width">320dp</dimen>
 
-    <dimen name="button_top_margin">660dp</dimen>
+    <dimen name="button_top_margin">530dp</dimen>
 
     <dimen name="title_text_size">18dp</dimen>
-
 
 
 
