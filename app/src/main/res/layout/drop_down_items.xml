@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         />
     <View
-        android:background="@android:color/holo_purple"
+        android:background="@color/orange"
         android:layout_width="match_parent"
         android:layout_height="2dp"></View>
 </LinearLayout>

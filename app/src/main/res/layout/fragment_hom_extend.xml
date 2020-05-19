@@ -4,284 +4,292 @@
     android:orientation="vertical"
     android:id="@+id/home_extend_frag"
     android:background="?android:windowBackground"
-    android:weightSum="10"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-        <LinearLayout
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:weightSum="10"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="5"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_height="match_parent"
-                android:text="Items"
-                android:id="@+id/items_select"/>
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:layout_width="0dp"
-                android:layout_weight="5"
-                android:layout_height="match_parent"
-                android:id="@+id/edit_item_select"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/textViewno"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No" />
+                android:text="No."
+                />
 
             <EditText
-                android:id="@+id/editTextno"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:editable="false"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/textViewdesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Description_1" />
-
-            <EditText
-                android:id="@+id/editTextdesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
                 android:enabled="false"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/editTextno"/>
+
+        </androidx.cardview.widget.CardView>
 
 
-        </LinearLayout>
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/textViewdesc2"
-                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Description_2" />
-
-            <EditText
-                android:id="@+id/editTextdesc2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:editable="false"
-                android:ems="10"
-                android:inputType="textPersonName"
+                android:text="Description"
                 />
 
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/textViewsourectype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Source_type" />
-
             <EditText
-                android:id="@+id/editTextsourcetype"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/editTextdesc"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:editable="false"
-                android:ems="10"
-                android:inputType="textPersonName"
+                android:text="Item Type"
                 />
 
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/textViewsourceno"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:enabled="false"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/edit_item_select"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Source_no" />
+                android:text="Item Number"
+                />
 
             <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
-                android:id="@+id/editTextsourceno"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/editTextsourceno"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
+                android:text="Quantity"
                 />
 
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/textViewpro_quan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Product_qty" />
-
             <EditText
-                android:id="@+id/editTextpro_quan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
                 android:inputType="numberDecimal"
+                android:id="@+id/editTextpro_quan"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 />
 
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-        <LinearLayout
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/textViewdepart"
-                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Department" />
+                android:text="Location"
+                />
 
             <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
-                android:id="@+id/editTextdepart"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                />
+                android:layout_height="30dp"
+                android:id="@+id/editTextloca"/>
+
+        </androidx.cardview.widget.CardView>
 
 
-        </LinearLayout>
-        <LinearLayout
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/textViewdMachine"
-                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Machine" />
+                android:text="Department"
+                />
 
             <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
-                android:id="@+id/editTextMachine"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                />
+                android:layout_height="30dp"
+                android:id="@+id/editTextdepart"/>
+
+        </androidx.cardview.widget.CardView>
 
 
-        </LinearLayout>
-        <LinearLayout
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/textViewloca"
-                android:layout_width="match_parent"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Location" />
+                android:text="Machine"
+                />
 
             <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
-                android:id="@+id/editTextloca"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                />
+                android:layout_height="30dp"
+                android:id="@+id/editTextMachine"/>
+        </androidx.cardview.widget.CardView>
 
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginBottom="60dp"
+        <Button
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:background="@drawable/btn_bg"
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:text="Refresh Order"
+            android:layout_gravity="center"
+            android:id="@+id/refreshbutton"/>
 
-            android:weightSum="2"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="refresh"
-                android:id="@+id/refreshbutton"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Change status"
-                android:id="@+id/changestatus"></Button>
-
-
-        </LinearLayout>
+        <Button
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            android:background="@drawable/btn_bg2"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Change Status"
+            android:layout_gravity="center"
+            android:id="@+id/changestatus"/>
     </LinearLayout>
-
-
-
-
-
-
-
-
 
 </ScrollView>

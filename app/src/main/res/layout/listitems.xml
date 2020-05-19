@@ -97,7 +97,7 @@
                 android:textSize="16dp"
                 android:textColor="@color/list_title"
                 android:layout_marginRight="3dp"
-                android:text="Routing No"
+                android:text="Location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
 

@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
-        android:text="What are you going to do?"
+        android:text="What is your plan for today?"
         android:textColor="@color/orange"
         android:textSize="25dp"
         android:textStyle="bold"></TextView>

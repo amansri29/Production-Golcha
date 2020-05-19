@@ -49,7 +49,7 @@ public class PlanDetailsFragment extends Fragment {
     ProgressDialog progressDialog;
     Button refresh,changestatus;
     String no2,desc1,desc2,source_type,source_no,p_quantity,department,location,machine;
-    EditText editno,editdes,editdes2,editsourcetype,edit_quantity;
+    EditText editno,editdes,edit_quantity;
     ArrayList<String> mylocationlist;
     ArrayList<String> Department_list;
     ArrayList<String> machine_list;
@@ -90,8 +90,6 @@ public class PlanDetailsFragment extends Fragment {
 
         editno=(EditText) root.findViewById(R.id.editTextno);
         editdes=(EditText)root.findViewById(R.id.editTextdesc);
-        editdes2=(EditText)root.findViewById(R.id.editTextdesc2);
-        editsourcetype=(EditText)root.findViewById(R.id.editTextsourcetype);
 
         edit_quantity=(EditText)root.findViewById(R.id.editTextpro_quan);
         editsourceno=(CustomAutoCompleteTextView)root.findViewById(R.id.editTextsourceno);
@@ -254,12 +252,8 @@ public class PlanDetailsFragment extends Fragment {
             progressDialog.dismiss();
             editno.setText(no);
             editno.setEnabled(false);
-            editdes.setText(desc1);
-            editdes.setEnabled(false);
-            editdes2.setText(desc2);
-            editdes2.setEnabled(false);
-            editsourcetype.setText(source_type);
-            editsourcetype.setEnabled(false);
+            editdes.setText(desc1 + " " + desc2);
+
             editsourceno.setText(source_no);
             edit_quantity.setText(p_quantity);
             editlocation.setText(location);
@@ -317,27 +311,24 @@ public class PlanDetailsFragment extends Fragment {
             this.button_click=button_click;
         }
 
+        String source_no,product_quantity,location_code,department,machine;
         @Override
         protected void onPreExecute() {
             progressDialog.show();
 
             super.onPreExecute();
 
+            source_no = editsourceno.getText().toString().trim();
+            product_quantity  = edit_quantity.getText().toString().trim();
+            location_code = editlocation.getText().toString().trim();
+            department = editdepart.getText().toString().trim();
+            machine = editmachine.getText().toString().trim();
         }
 
         @Override
         protected String doInBackground(String... params) {
             String result3 = "";
             if(button_click.equals("refresh")){
-
-                String source_no,product_quantity,location_code,department,machine;
-                source_no = editsourceno.getText().toString().trim();
-                product_quantity  = edit_quantity.getText().toString().trim();
-                location_code = editlocation.getText().toString().trim();
-                department = editdepart.getText().toString().trim();
-                machine = editmachine.getText().toString().trim();
-                Log.i("loc_dep_machine",location_code +" "+ department + " "+ machine);
-                Log.i("Previous_key",KEY);
                 UpdateresulT= SoapApis.UpdatenewPlan(username,password,source_no,product_quantity,location_code,department,machine,KEY);
                 Log.i("mygetting numbet",UpdateresulT + " " +no);
                if(UpdateresulT.equals(no)){

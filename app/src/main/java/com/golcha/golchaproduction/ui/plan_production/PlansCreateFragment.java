@@ -40,7 +40,8 @@ public class PlansCreateFragment extends Fragment {
     ArrayList<String> machine_list;
     ArrayList<String> Source_no;
     ProgressDialog progressDialog;
-    CustomAutoCompleteTextView autocomp_textView, autocomp_department,autocom_machine,mysourceno ;
+    CustomAutoCompleteTextView autocomp_textView, autocomp_department,
+            autocom_machine,mysourceno ;
     Spinner autocom_items;
     EditText pro_quantity_edittxt;
     String resultof_newPlan;
@@ -107,13 +108,10 @@ public class PlansCreateFragment extends Fragment {
 
 
         pro_quantity_edittxt = (EditText)root.findViewById(R.id.edit_prod_quan) ;
-
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
-        progressDialog.setProgress(0);
 
         Button button = (Button)root.findViewById(R.id.create_new_plan);
         button.setOnClickListener(
@@ -238,7 +236,7 @@ public class PlansCreateFragment extends Fragment {
 
                 DropDownArrayAdapter adapter = new DropDownArrayAdapter(activity, R.layout.drop_down_items, source_array);
                 Log.i("Background", "onPostExecute: " + source_array.size());
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
                 mysourceno.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
@@ -267,7 +265,7 @@ public class PlansCreateFragment extends Fragment {
         final String result_number[] =resultof_newPlan.split(" ");
         AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
         builder.setMessage(resultof_newPlan);
-        builder.setTitle("NEW NUMBER");
+        builder.setTitle("Created Planned Order Number");
         builder.setCancelable(false);
         builder.setPositiveButton(
                 "OK", new DialogInterface.OnClickListener() {

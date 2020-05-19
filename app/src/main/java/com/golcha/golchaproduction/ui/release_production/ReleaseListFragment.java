@@ -96,7 +96,7 @@ public class ReleaseListFragment extends Fragment {
     void filter_data(String text){
         ArrayList<ReleaseModel> result= new ArrayList<>();
         for(ReleaseModel data: list){
-            String search_item = data.getNo()
+            String search_item = data.getNo() + data.getRoutingno()
                     + data.getDesc()  + data.getSourceno()+ data.getQuantity();
             if(search_item.toLowerCase().contains(text.toLowerCase())){
                 result.add(data);
@@ -127,9 +127,11 @@ public class ReleaseListFragment extends Fragment {
                     SoapObject result2 = (SoapObject) result.getProperty(i);
                     try {
                         Source_No = String.valueOf(result2.getProperty("Source_No"));
-                        Description = String.valueOf(result2.getProperty("Description"));
+                        Description=String.valueOf(result2.getProperty("Description")) + " " +
+                                String.valueOf(result2.getProperty("Description_2"));
+//                        Description = String.valueOf(result2.getProperty("Description"));
                         No = String.valueOf(result2.getProperty("No"));
-                        Routing_No = String.valueOf(result2.getProperty("Routing_No"));
+                        Routing_No = String.valueOf(result2.getProperty("Location_Code"));
                         Quantity = String.valueOf(result2.getProperty("Quantity"));
                         list.add(new ReleaseModel(Source_No,Description,No,Routing_No,Quantity));
                        // Log.i(TAG, "Source_no " +Source_No);
