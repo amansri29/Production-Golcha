@@ -21,18 +21,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progresbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/cardview_compat_inset_shadow"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

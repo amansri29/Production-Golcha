@@ -344,8 +344,8 @@ public class SoapApis {
             ntlmTransport.call(soap_action2,envelope);
             try {
                 result = (SoapObject)envelope.getResponse();
-                result2=String.valueOf(result.getProperty("No")) + " "+String.valueOf(result.getProperty("Key"));
-                Log.i("my_new_key",String.valueOf(result.getProperty("Key")));
+                result2=String.valueOf(result.getProperty("No"));
+                Log.i("my_number",result2);
             }
             catch (SoapFault soapFault) {
                 result2 =String.valueOf(soapFault);
@@ -740,7 +740,7 @@ public class SoapApis {
                 output = result.toString();
                 Log.i("CHANGE STATUS Output", String.valueOf(result));
             } catch (SoapFault soapFault) {
-                earror = soapFault.toString();
+                earror = "Earror"+" "+soapFault.toString();
                 Log.i("earror",earror);
                 soapFault.printStackTrace();
             }
@@ -748,7 +748,7 @@ public class SoapApis {
 
         } catch (Exception e) {
             e.printStackTrace();
-            earror = e.toString();
+            earror = "Earror"+" "+e.toString();
             Log.e(TAG, "earror " + earror);
         }
 

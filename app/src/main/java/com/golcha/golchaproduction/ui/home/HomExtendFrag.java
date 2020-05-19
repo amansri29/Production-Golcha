@@ -6,14 +6,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
 import android.content.SharedPreferences;
-import android.icu.lang.UProperty;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +29,7 @@ import com.golcha.golchaproduction.DropDownAdapter;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
 import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
+import com.golcha.golchaproduction.ui.dashboard.DashboardFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,7 +37,6 @@ import org.ksoap2.serialization.SoapObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class HomExtendFrag extends Fragment {
@@ -47,7 +46,7 @@ public class HomExtendFrag extends Fragment {
     String no,KEY;
     Activity activity;
     Spinner autocom_items;
-    String UpdateresulT [];
+    String UpdateresulT;
     String Button_clickresult = "";
     ProgressDialog progressDialog;
     Button refresh,changestatus;
@@ -81,6 +80,7 @@ public class HomExtendFrag extends Fragment {
         progressDialog.setMessage("Loading");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
         progressDialog.setProgress(0);
 
 
@@ -180,8 +180,16 @@ public class HomExtendFrag extends Fragment {
             try {
                 SoapObject result = SoapApis.getPlannedCardDetails(username,password,no);
                 try {
-                    no2 = String.valueOf(result.getProperty("No"));
-                    KEY = String.valueOf(result.getProperty("Key"));
+                    try {
+                        no2 = String.valueOf(result.getProperty("No"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        KEY = String.valueOf(result.getProperty("Key"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     try {
                         desc1 = String.valueOf(result.getProperty("Description"));
                     } catch (Exception e) {
@@ -325,13 +333,27 @@ public class HomExtendFrag extends Fragment {
                 department = editdepart.getText().toString().trim();
                 machine = editmachine.getText().toString().trim();
                 Log.i("loc_dep_machine",location_code +" "+ department + " "+ machine);
-                Log.i("mygetting Key_previous",    " " +KEY);
-                UpdateresulT= SoapApis.UpdatenewPlan(username,password,source_no,product_quantity,location_code,department,machine,KEY).toString().split(" ");
-                Log.i("mygetting numbet",UpdateresulT[0] + " " +no);
-               if(UpdateresulT[0].equals(no)){
-                   Button_clickresult = SoapApis.Refreshbutton(username,password,UpdateresulT[0]);
-                   KEY =UpdateresulT[1];
-                   Log.i("mygettingKeyAfterupdate", " " +UpdateresulT[1]);
+                Log.i("Previous_key",KEY);
+                UpdateresulT= SoapApis.UpdatenewPlan(username,password,source_no,product_quantity,location_code,department,machine,KEY);
+                Log.i("mygetting numbet",UpdateresulT + " " +no);
+               if(UpdateresulT.equals(no)){
+                   Button_clickresult = SoapApis.Refreshbutton(username,password,UpdateresulT);
+                   if (Button_clickresult.equals("SUCCESSFULLY REFRESHED")) {
+                       try {
+                           SoapObject result = SoapApis.getPlannedCardDetails(username,password,no);
+                           try {
+                               String key = String.valueOf(result.getProperty("Key"));
+                               KEY = key;
+                               Log.i(TAG," "+KEY);
+                           } catch (Exception e) {
+                               e.printStackTrace();
+                           }
+                       }
+                       catch (Exception e) {
+                           e.printStackTrace();
+                       }
+
+                   }
                }
 
             }
@@ -351,7 +373,8 @@ public class HomExtendFrag extends Fragment {
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
             if (button_click.equals("refresh")) {
-                if (UpdateresulT[0].equals(no)) {
+                if (UpdateresulT.equals(no)) {
+
                     AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
                     builder.setMessage(Button_clickresult);
                     builder.setTitle("Refresh NUMBER");
@@ -367,9 +390,8 @@ public class HomExtendFrag extends Fragment {
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 } else {
-                    String x = TextUtils.join(" ",UpdateresulT);
                     AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
-                    builder.setMessage(x);
+                    builder.setMessage(UpdateresulT);
                     builder.setTitle("Update Failed!");
                     builder.setCancelable(false);
                     builder.setPositiveButton(
@@ -395,6 +417,12 @@ public class HomExtendFrag extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.cancel();
+                                    String x[]=Button_clickresult.split(" ");
+                                    if (!x[0].equals("Earror")) {
+                                        Fragment fragment = new DashboardFragment();
+                                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                        fragmentTransaction.replace(R.id.nav_host_fragment,fragment).commit();
+                                    }
                                 }
                             }
                     );

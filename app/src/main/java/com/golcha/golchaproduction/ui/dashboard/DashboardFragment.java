@@ -1,6 +1,7 @@
 package com.golcha.golchaproduction.ui.dashboard;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,7 +36,8 @@ public class DashboardFragment extends Fragment {
     String Routing_No;
     String Quantity;
     String No;
-    ProgressBar progressBar;
+    ProgressDialog progressDialog;
+
     SharedPreferences sharedPreferences;
     String username,password;
 
@@ -47,7 +49,15 @@ public class DashboardFragment extends Fragment {
         activity=getActivity();
         final TextView textView = root.findViewById(R.id.text_dashboard);
         recyclerView = (RecyclerView)root.findViewById(R.id.recycleview);
-        progressBar=(ProgressBar)root.findViewById(R.id.progresbar);
+
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setProgress(0);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);//passing saves username and pass to plan production
         username= sharedPreferences.getString("username","");
         password = sharedPreferences.getString("password","");
@@ -65,7 +75,8 @@ public class DashboardFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            progressDialog.show();
+
         }
 
         @Override
@@ -103,7 +114,7 @@ public class DashboardFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            progressBar.setVisibility(View.INVISIBLE);
+            progressDialog.dismiss();
             ReleaseProd_Listadapter releaseProdListadapter =new ReleaseProd_Listadapter(activity,list);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(releaseProdListadapter);

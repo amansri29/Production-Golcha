@@ -113,6 +113,7 @@ public class Home_to_CreateFrag extends Fragment {
         progressDialog.setMessage("Loading");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
         progressDialog.setProgress(0);
 
         Button button = (Button)root.findViewById(R.id.create_new_plan);
@@ -261,35 +262,20 @@ public class Home_to_CreateFrag extends Fragment {
         Log.i("number",resultof_newPlan);
 
     }
-    public  void post_locationList(){
-        String result_number[] =resultof_newPlan.split(" ");
-        if (result_number[0].equals("Earror")) {
-            AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
-            builder.setMessage(resultof_newPlan);
-            builder.setTitle("NEW NUMBER");
-            builder.setCancelable(false);
-            builder.setPositiveButton(
-                    "OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
 
-                        }
-                    }
-            );
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-            //Toast.makeText(getContext(),"Number :" + resultof_newPlan,Toast.LENGTH_SHORT).show();
-        } else {
-            AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
-            builder.setMessage(resultof_newPlan);
-            builder.setTitle("NEW NUMBER");
-            builder.setCancelable(false);
-            builder.setPositiveButton(
-                    "OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
+
+    public  void post_locationList(){
+        final String result_number[] =resultof_newPlan.split(" ");
+        AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+        builder.setMessage(resultof_newPlan);
+        builder.setTitle("NEW NUMBER");
+        builder.setCancelable(false);
+        builder.setPositiveButton(
+                "OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                        if (!result_number[0].equals("Earror")) {
                             Fragment fragment1 = new HomExtendFrag();
                             Bundle bundle =new Bundle();
                             bundle.putString("no",resultof_newPlan);
@@ -298,11 +284,16 @@ public class Home_to_CreateFrag extends Fragment {
                             manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
                                     .commit();
                         }
+
                     }
-            );
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
+                }
+        );
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        //Toast.makeText(getContext(),"Number :" + resultof_newPlan,Toast.LENGTH_SHORT).show();
+
+
+
     }
 
 

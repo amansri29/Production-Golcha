@@ -66,16 +66,7 @@ public class HomeFragment extends Fragment {
             }
         });
         activity = getActivity();
-        toolbar =root.findViewById(R.id.toolbar1);
-        toolbar.setNavigationIcon(R.drawable.ic_home_black_24dp);
-        toolbar.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(activity,"hellow ",Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
+
 
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage("Loading");
