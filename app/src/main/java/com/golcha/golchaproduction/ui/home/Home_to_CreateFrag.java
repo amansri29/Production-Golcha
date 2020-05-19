@@ -121,7 +121,7 @@ public class Home_to_CreateFrag extends Fragment {
                     @Override
                     public void onClick(View view) {
                         if(autocomp_textView.getText().toString().isEmpty() || mysourceno.getText().toString().isEmpty()
-                           || pro_quantity_edittxt.getText().toString().isEmpty())
+                           || pro_quantity_edittxt.getText().toString().isEmpty() || mysourceno.getText().toString().isEmpty())
                         {
                             Toast.makeText(getContext(),"Empty Field",Toast.LENGTH_SHORT).show();
                         }
@@ -262,25 +262,47 @@ public class Home_to_CreateFrag extends Fragment {
 
     }
     public  void post_locationList(){
-        AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
-        builder.setMessage(resultof_newPlan);
-        builder.setTitle("NEW NUMBER");
-        builder.setCancelable(false);
-        builder.setPositiveButton(
-                "OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                        Fragment fragment1 = new HomeFragment();
-                        FragmentManager manager = getFragmentManager();
-                        manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
-                                .commit();
+        String result_number[] =resultof_newPlan.split(" ");
+        if (result_number[0].equals("Earror")) {
+            AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+            builder.setMessage(resultof_newPlan);
+            builder.setTitle("NEW NUMBER");
+            builder.setCancelable(false);
+            builder.setPositiveButton(
+                    "OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+
+                        }
                     }
-                }
-        );
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        //Toast.makeText(getContext(),"Number :" + resultof_newPlan,Toast.LENGTH_SHORT).show();
+            );
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            //Toast.makeText(getContext(),"Number :" + resultof_newPlan,Toast.LENGTH_SHORT).show();
+        } else {
+            AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+            builder.setMessage(resultof_newPlan);
+            builder.setTitle("NEW NUMBER");
+            builder.setCancelable(false);
+            builder.setPositiveButton(
+                    "OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                            Fragment fragment1 = new HomExtendFrag();
+                            Bundle bundle =new Bundle();
+                            bundle.putString("no",resultof_newPlan);
+                            fragment1.setArguments(bundle) ;
+                            FragmentManager manager = getFragmentManager();
+                            manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
+                                    .commit();
+                        }
+                    }
+            );
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
     }
 
 
