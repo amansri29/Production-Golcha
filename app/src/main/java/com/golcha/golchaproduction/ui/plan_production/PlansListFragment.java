@@ -67,7 +67,6 @@ public class PlansListFragment extends Fragment {
 
 
 
-
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);//passing saves username and pass to plan production
         username= sharedPreferences.getString("username","");
         password = sharedPreferences.getString("password","");

@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.golcha.golchaproduction.PrfRedirectFragment;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
 
@@ -151,13 +153,61 @@ public class ReleaseDetailFragment extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
             if(button_click.equals("createIns")){
-
-                String Q_sending;
                 Q_sending = editQunatity_sending.getText().toString().trim();
                 UpdateresulT=SoapApis.UpdatenewRelease(username,password,hourlyy,compositt,Q_sending,KEY,KEY2);
                 Log.i("mygetting numbet",UpdateresulT + " " +no);
                 if(UpdateresulT.equals(no)){
                     Button_clickresult = SoapApis.CreateInspection_Release(username,password,UpdateresulT);
+                    if(Button_clickresult.equals("SUCCESSFULLY Created Inspection")){
+                        try {
+                            SoapObject result = SoapApis.getReleaseCardDetails(username,password,no);
+                            SoapObject result3 = (SoapObject) result.getProperty("ProdOrderLines");
+                            SoapObject result4 = (SoapObject) result3.getProperty("Released_Prod_Order_Lines");
+                            try {
+                                KEY = String.valueOf(result.getProperty("Key"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                Q_send = String.valueOf(result4.getProperty("Quantity_Sent_To_Quality"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                Q_sending= String.valueOf(result4.getProperty("Quantity_Sending_To_Quality"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                Q_accepted = String.valueOf(result4.getProperty("Quantity_Accepted"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                Q_rejected = String.valueOf(result4.getProperty("Quantity_Rejected"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                Q_Revoke = String.valueOf(result4.getProperty("Quantity_Rework"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                KEY2 = String.valueOf(result4.getProperty("Key"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            Log.i(TAG,"Vipulsharma key" +"    " + KEY);
+                            Log.i(TAG,"Vipulsharma key2" +"    " + KEY2);
+
+
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                 }
 
 
@@ -187,6 +237,17 @@ public class ReleaseDetailFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.cancel();
+                                    if(Button_clickresult.equals("SUCCESSFULLY Created Inspection")){
+                                        editQunatity_send.setText(Q_send);
+                                        editQunatity_sending.setText(Q_sending);
+
+                                        editQunatity_accepted.setText(Q_accepted);
+
+                                        editQunatity_rejected.setText(Q_rejected);
+
+                                        editQunatity_rewoked.setText(Q_Revoke);
+
+                                    }
                                 }
                             }
                     );
@@ -221,6 +282,12 @@ public class ReleaseDetailFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.cancel();
+                                    String x[] = Button_clickresult.split(" ");
+                                    if(!x[0].equals("Earror")){
+                                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                        fragmentTransaction.replace(R.id.nav_host_fragment,new PrfRedirectFragment())
+                                                .commit();
+                                    }
                                 }
                             }
                     );

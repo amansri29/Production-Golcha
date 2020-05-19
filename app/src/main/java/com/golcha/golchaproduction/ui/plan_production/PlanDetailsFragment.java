@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -25,6 +26,8 @@ import android.widget.Spinner;
 import com.golcha.golchaproduction.DropDownArrayAdapter;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
+import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
+import com.golcha.golchaproduction.ui.release_production.ReleaseListFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -71,6 +74,16 @@ public class PlanDetailsFragment extends Fragment {
 
 
         activity = getActivity();
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setProgress(0);
+
+
+
 
         no=getArguments().getString("no");
 
@@ -171,16 +184,56 @@ public class PlanDetailsFragment extends Fragment {
             try {
                 SoapObject result = SoapApis.getPlannedCardDetails(username,password,no);
                 try {
-                    no2 = String.valueOf(result.getProperty("No"));
-                    KEY = String.valueOf(result.getProperty("Key"));
-                    desc1 = String.valueOf(result.getProperty("Description"));
-                    desc2 = String.valueOf(result.getProperty("Description_2"));
-                    source_type = String.valueOf(result.getProperty("Source_Type"));
-                    source_no = String.valueOf(result.getProperty("Source_No"));
-                    p_quantity = String.valueOf(result.getProperty("Production_Quantity"));
-                    department = String.valueOf(result.getProperty("Shortcut_Dimension_1_Code"));
-                    location = String.valueOf(result.getProperty("Location_Code"));
-                    machine = String.valueOf(result.getProperty("Shortcut_Dimension_2_Code"));
+                    try {
+                        no2 = String.valueOf(result.getProperty("No"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        KEY = String.valueOf(result.getProperty("Key"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        desc1 = String.valueOf(result.getProperty("Description"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        desc2 = String.valueOf(result.getProperty("Description_2"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        source_type = String.valueOf(result.getProperty("Source_Type"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        source_no = String.valueOf(result.getProperty("Source_No"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        p_quantity = String.valueOf(result.getProperty("Production_Quantity"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        department = String.valueOf(result.getProperty("Shortcut_Dimension_1_Code"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        location = String.valueOf(result.getProperty("Location_Code"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        machine = String.valueOf(result.getProperty("Shortcut_Dimension_2_Code"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     Log.i(TAG, "Planned Card::" + no2 + " " + desc1 + " " + desc2);
                 } catch (Exception e) {
@@ -284,10 +337,27 @@ public class PlanDetailsFragment extends Fragment {
                 department = editdepart.getText().toString().trim();
                 machine = editmachine.getText().toString().trim();
                 Log.i("loc_dep_machine",location_code +" "+ department + " "+ machine);
-                UpdateresulT=SoapApis.UpdatenewPlan(username,password,source_no,product_quantity,location_code,department,machine,KEY);
+                Log.i("Previous_key",KEY);
+                UpdateresulT= SoapApis.UpdatenewPlan(username,password,source_no,product_quantity,location_code,department,machine,KEY);
                 Log.i("mygetting numbet",UpdateresulT + " " +no);
                if(UpdateresulT.equals(no)){
                    Button_clickresult = SoapApis.Refreshbutton(username,password,UpdateresulT);
+                   if (Button_clickresult.equals("SUCCESSFULLY REFRESHED")) {
+                       try {
+                           SoapObject result = SoapApis.getPlannedCardDetails(username,password,no);
+                           try {
+                               String key = String.valueOf(result.getProperty("Key"));
+                               KEY = key;
+                               Log.i(TAG," "+KEY);
+                           } catch (Exception e) {
+                               e.printStackTrace();
+                           }
+                       }
+                       catch (Exception e) {
+                           e.printStackTrace();
+                       }
+
+                   }
                }
 
             }
@@ -308,6 +378,7 @@ public class PlanDetailsFragment extends Fragment {
             progressDialog.dismiss();
             if (button_click.equals("refresh")) {
                 if (UpdateresulT.equals(no)) {
+
                     AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
                     builder.setMessage(Button_clickresult);
                     builder.setTitle("Refresh NUMBER");
@@ -350,6 +421,12 @@ public class PlanDetailsFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.cancel();
+                                    String x[]=Button_clickresult.split(" ");
+                                    if (!x[0].equals("Earror")) {
+                                        Fragment fragment = new ReleaseListFragment();
+                                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                        fragmentTransaction.replace(R.id.nav_host_fragment,fragment).commit();
+                                    }
                                 }
                             }
                     );

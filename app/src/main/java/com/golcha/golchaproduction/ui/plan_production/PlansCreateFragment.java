@@ -112,6 +112,7 @@ public class PlansCreateFragment extends Fragment {
         progressDialog.setMessage("Loading");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
         progressDialog.setProgress(0);
 
         Button button = (Button)root.findViewById(R.id.create_new_plan);
@@ -120,7 +121,7 @@ public class PlansCreateFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         if(autocomp_textView.getText().toString().isEmpty() || mysourceno.getText().toString().isEmpty()
-                           || pro_quantity_edittxt.getText().toString().isEmpty())
+                           || pro_quantity_edittxt.getText().toString().isEmpty() || mysourceno.getText().toString().isEmpty())
                         {
                             Toast.makeText(getContext(),"Empty Field",Toast.LENGTH_SHORT).show();
                         }
@@ -234,7 +235,7 @@ public class PlansCreateFragment extends Fragment {
                 post_locationList();
             }
             else {
-//
+
                 DropDownArrayAdapter adapter = new DropDownArrayAdapter(activity, R.layout.drop_down_items, source_array);
                 Log.i("Background", "onPostExecute: " + source_array.size());
                 adapter.notifyDataSetChanged();
@@ -260,7 +261,10 @@ public class PlansCreateFragment extends Fragment {
         Log.i("number",resultof_newPlan);
 
     }
+
+
     public  void post_locationList(){
+        final String result_number[] =resultof_newPlan.split(" ");
         AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
         builder.setMessage(resultof_newPlan);
         builder.setTitle("NEW NUMBER");
@@ -270,16 +274,25 @@ public class PlansCreateFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
-                        Fragment fragment1 = new PlansListFragment();
-                        FragmentManager manager = getFragmentManager();
-                        manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
-                                .commit();
+                        if (!result_number[0].equals("Earror")) {
+                            Fragment fragment1 = new PlanDetailsFragment();
+                            Bundle bundle =new Bundle();
+                            bundle.putString("no",resultof_newPlan);
+                            fragment1.setArguments(bundle) ;
+                            FragmentManager manager = getFragmentManager();
+                            manager.beginTransaction().replace(R.id.nav_host_fragment,fragment1)
+                                    .commit();
+                        }
+    
                     }
                 }
         );
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         //Toast.makeText(getContext(),"Number :" + resultof_newPlan,Toast.LENGTH_SHORT).show();
+
+
+
     }
 
 

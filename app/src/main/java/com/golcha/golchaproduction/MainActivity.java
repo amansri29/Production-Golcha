@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.golcha.golchaproduction.ui.release_production.ReleaseListFragment;
 import com.golcha.golchaproduction.ui.release_production.ReleaseDetailFragment;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = (Fragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment1 = null;
+        //Toast.makeText(MainActivity.this,String.valueOf(fragment),Toast.LENGTH_SHORT).show();
 
         if(fragment instanceof PlansCreateFragment){
             fragment1 = new PlansListFragment();
@@ -82,16 +84,18 @@ public class MainActivity extends AppCompatActivity {
         else if(fragment instanceof PlansListFragment){
             fragment1 = new PrfRedirectFragment();
         }
-        else if(fragment instanceof ReleaseListFragment){
-            fragment1 = new PrfRedirectFragment();
-        }
+
         else if(fragment instanceof ReleaseDetailFragment){
             fragment1 = new ReleaseListFragment();
+        }
+        else if(fragment instanceof ReleaseListFragment){
+            fragment1 = new PrfRedirectFragment();
         }
         else if(fragment instanceof PlanDetailsFragment){
             fragment1 = new PlansListFragment();
         }
         if(fragment1 != null) {
+
             manager.beginTransaction().replace(R.id.nav_host_fragment, fragment1)
                     .commit();
         }

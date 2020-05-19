@@ -242,7 +242,7 @@ public class SoapApis {
         String method_name2 = "Create";
         String soap_action2 = namespace2 + ":" + method_name2;
         SoapObject result= null;
-        String result2 = null;
+        String result2 = "";
         try {
             SoapObject request = new SoapObject(namespace2,method_name2);
             SoapObject plannedProdOrder = new SoapObject(namespace2,"PlannedProdOrder");
@@ -266,17 +266,18 @@ public class SoapApis {
                Log.i("number",result2);
             }
             catch (SoapFault soapFault) {
-                result2 =String.valueOf(soapFault);
+                result2 ="Earror"+" "+String.valueOf(soapFault);
                 soapFault.printStackTrace();
             }
 
         }
         catch (Exception e) {
+            result2 ="Earror"+" "+String.valueOf(e);
             e.printStackTrace();
         }
         return result2;
     }
-    public static String UpdatenewPlan(String myusername,String mypassword ,String source_no , String production_quan , String location_code ,String mydepartment, String mylocation,String mykey){
+    public static String UpdatenewPlan(String myusername, String mypassword , String source_no , String production_quan , String location_code , String mydepartment, String mymachine, String mykey){
         String namespace2 = Urls.planned_production_card_namespace;
         String url2 = Urls.planned_production_card_url;
         String method_name2 = "Update";
@@ -291,7 +292,7 @@ public class SoapApis {
             plannedProdOrder.addProperty("Production_Quantity",production_quan);
             plannedProdOrder.addProperty("Location_Code",location_code);
             plannedProdOrder.addProperty("Shortcut_Dimension_1_Code",mydepartment);
-            plannedProdOrder.addProperty("Shortcut_Dimension_2_Code",mylocation);
+            plannedProdOrder.addProperty("Shortcut_Dimension_2_Code",mymachine);
             request.addSoapObject(plannedProdOrder);
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
@@ -304,7 +305,7 @@ public class SoapApis {
             try {
                 result = (SoapObject)envelope.getResponse();
                 result2=String.valueOf(result.getProperty("No"));
-                Log.i("number",result2);
+                Log.i("my_number",result2);
             }
             catch (SoapFault soapFault) {
                 result2 =String.valueOf(soapFault);
@@ -699,7 +700,7 @@ public class SoapApis {
                 output = result.toString();
                 Log.i("CHANGE STATUS Output", String.valueOf(result));
             } catch (SoapFault soapFault) {
-                earror = soapFault.toString();
+                earror = "Earror"+" "+soapFault.toString();
                 Log.i("earror",earror);
                 soapFault.printStackTrace();
             }
@@ -707,7 +708,7 @@ public class SoapApis {
 
         } catch (Exception e) {
             e.printStackTrace();
-            earror = e.toString();
+            earror = "Earror"+" "+e.toString();
             Log.e(TAG, "earror " + earror);
         }
 
@@ -750,7 +751,7 @@ public class SoapApis {
                 output = result.toString();
                 Log.i("CHANGE STATUS Output", String.valueOf(result));
             } catch (SoapFault soapFault) {
-                earror = soapFault.toString();
+                earror = "Earror"+ " "+soapFault.toString();
                 Log.i("earror",earror);
                 soapFault.printStackTrace();
             }
@@ -758,7 +759,7 @@ public class SoapApis {
 
         } catch (Exception e) {
             e.printStackTrace();
-            earror = e.toString();
+            earror = "Earror" +" "+e.toString();
             Log.e(TAG, "earror " + earror);
         }
 
