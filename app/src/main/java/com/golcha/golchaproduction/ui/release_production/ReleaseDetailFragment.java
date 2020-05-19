@@ -152,65 +152,84 @@ public class ReleaseDetailFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            if(button_click.equals("createIns")){
+            if (button_click.equals("createIns")) {
                 Q_sending = editQunatity_sending.getText().toString().trim();
-                UpdateresulT=SoapApis.UpdatenewRelease(username,password,hourlyy,compositt,Q_sending,KEY,KEY2);
-                Log.i("mygetting numbet",UpdateresulT + " " +no);
-                if(UpdateresulT.equals(no)){
-                    Button_clickresult = SoapApis.CreateInspection_Release(username,password,UpdateresulT);
-                    if(Button_clickresult.equals("SUCCESSFULLY Created Inspection")){
-                        try {
+
+                try {
+                    UpdateresulT = SoapApis.UpdatenewRelease(username, password, hourlyy, compositt, Q_sending, KEY, KEY2);
+                    Log.i("mygetting numbet", UpdateresulT + " " + no);
+                    if (UpdateresulT.equals(no)) {
+                        Button_clickresult = SoapApis.CreateInspection_Release(username, password, UpdateresulT);
+                        if (Button_clickresult.equals("SUCCESSFULLY Created Inspection")) {
+                            try {
+                                SoapObject result = SoapApis.getReleaseCardDetails(username, password, no);
+                                SoapObject result3 = (SoapObject) result.getProperty("ProdOrderLines");
+                                SoapObject result4 = (SoapObject) result3.getProperty("Released_Prod_Order_Lines");
+                                try {
+                                    KEY = String.valueOf(result.getProperty("Key"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    Q_send = String.valueOf(result4.getProperty("Quantity_Sent_To_Quality"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    Q_sending = String.valueOf(result4.getProperty("Quantity_Sending_To_Quality"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    Q_accepted = String.valueOf(result4.getProperty("Quantity_Accepted"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    Q_rejected = String.valueOf(result4.getProperty("Quantity_Rejected"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    Q_Revoke = String.valueOf(result4.getProperty("Quantity_Rework"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    KEY2 = String.valueOf(result4.getProperty("Key"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                Log.i(TAG, "Vipulsharma key" + "    " + KEY);
+                                Log.i(TAG, "Vipulsharma key2" + "    " + KEY2);
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+//                            In case of result failure
                             SoapObject result = SoapApis.getReleaseCardDetails(username,password,no);
                             SoapObject result3 = (SoapObject) result.getProperty("ProdOrderLines");
                             SoapObject result4 = (SoapObject) result3.getProperty("Released_Prod_Order_Lines");
                             try {
                                 KEY = String.valueOf(result.getProperty("Key"));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                Q_send = String.valueOf(result4.getProperty("Quantity_Sent_To_Quality"));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                Q_sending= String.valueOf(result4.getProperty("Quantity_Sending_To_Quality"));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                Q_accepted = String.valueOf(result4.getProperty("Quantity_Accepted"));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                Q_rejected = String.valueOf(result4.getProperty("Quantity_Rejected"));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                Q_Revoke = String.valueOf(result4.getProperty("Quantity_Rework"));
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            } catch (Exception e2) {
+                                e2.printStackTrace();
                             }
                             try {
                                 KEY2 = String.valueOf(result4.getProperty("Key"));
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            } catch (Exception e3) {
+                                e3.printStackTrace();
                             }
-                            Log.i(TAG,"Vipulsharma key" +"    " + KEY);
-                            Log.i(TAG,"Vipulsharma key2" +"    " + KEY2);
-
-
                         }
-                        catch (Exception e) {
-                            e.printStackTrace();
-                        }
+
                     }
-
+                } catch (Exception e5) {
+                    e5.printStackTrace();
+                    //                            In Case of failure also update the key
                 }
-
-
             }
             else{
                 if(button_click.equals("changestatus")){
