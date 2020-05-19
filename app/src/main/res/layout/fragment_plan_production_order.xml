@@ -36,7 +36,7 @@
             android:layout_height="60dp"/>
 
 
-            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
+            <EditText
                 android:background="@drawable/text_bg"
                 android:textAlignment="center"
                 android:textColorHint="@android:color/white"

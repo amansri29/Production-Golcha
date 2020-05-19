@@ -1,9 +1,9 @@
 package com.golcha.golchaproduction.ui.plan_production;
 
-public class GetPlanArrayList {
+public class PlannedOrderModel {
     String sourceno,desc,no,routingno,quantity;
 
-    public GetPlanArrayList(String sourceno, String desc, String no, String routingno, String quantity){
+    public PlannedOrderModel(String sourceno, String desc, String no, String routingno, String quantity){
         this.desc=desc;
         this.sourceno=sourceno;
         this.no=no;

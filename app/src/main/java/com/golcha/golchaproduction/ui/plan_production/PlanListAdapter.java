@@ -18,12 +18,17 @@ import com.golcha.golchaproduction.R;
 import java.util.ArrayList;
 
 public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHolder> {
-    ArrayList<GetPlanArrayList> list2;
+    ArrayList<PlannedOrderModel> list2;
     private Activity context;
 
-    public PlanListAdapter(ArrayList<GetPlanArrayList> list, Activity context){
+    public PlanListAdapter(ArrayList<PlannedOrderModel> list, Activity context){
         this.list2=list;
         this.context = context;
+    }
+
+    public void updateList(ArrayList<PlannedOrderModel> list){
+        this.list2 = list;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -37,7 +42,7 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final GetPlanArrayList getarraylist=list2.get(position);
+        final PlannedOrderModel getarraylist=list2.get(position);
         holder.itemView.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
