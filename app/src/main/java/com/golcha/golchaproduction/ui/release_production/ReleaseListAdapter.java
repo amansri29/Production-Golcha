@@ -47,8 +47,8 @@ public class ReleaseListAdapter extends RecyclerView.Adapter<ReleaseListAdapter.
                         Bundle bundle=new Bundle();
                         bundle.putString("Releaseno",getReleasearraylist.getNo());
                         myFragment.setArguments(bundle);
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.dashboard, myFragment).addToBackStack(null)
-                                .remove(new ReleaseListFragment()).commit();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment)
+                               .commit();
 
                     }
                 }

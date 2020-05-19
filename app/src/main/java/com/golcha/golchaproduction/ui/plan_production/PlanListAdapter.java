@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.golcha.golchaproduction.R;
@@ -47,12 +48,10 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                         Bundle bundle=new Bundle();
                         bundle.putString("no",getarraylist.getNo());
                         myFragment.setArguments(bundle);
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.home, myFragment)
-                                .remove(new HomeFragment()).commit();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment)
+                                .remove(new PlansListFragment()).commit();
 
 
-                        FragmentTransaction fragmentTransaction=activity.getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.nav_host_fragment,myFragment).commit();
 
                     }
                 }

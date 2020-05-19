@@ -27,7 +27,7 @@ import com.golcha.golchaproduction.DropDownArrayAdapter;
 import com.golcha.golchaproduction.R;
 import com.golcha.golchaproduction.soapapi.SoapApis;
 import com.golcha.golchaproduction.ui.CustomAutoCompleteTextView;
-import com.golcha.golchaproduction.ui.dashboard.DashboardFragment;
+import com.golcha.golchaproduction.ui.release_production.ReleaseListFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -423,7 +423,7 @@ public class PlanDetailsFragment extends Fragment {
                                     dialogInterface.cancel();
                                     String x[]=Button_clickresult.split(" ");
                                     if (!x[0].equals("Earror")) {
-                                        Fragment fragment = new DashboardFragment();
+                                        Fragment fragment = new ReleaseListFragment();
                                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                         fragmentTransaction.replace(R.id.nav_host_fragment,fragment).commit();
                                     }

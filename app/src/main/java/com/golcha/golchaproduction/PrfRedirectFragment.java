@@ -47,7 +47,6 @@ public class PrfRedirectFragment extends Fragment {
                         Fragment fragment = new ReleaseListFragment();
                         FragmentManager manager = getFragmentManager();
                         manager.beginTransaction().replace(R.id.nav_host_fragment,fragment)
-                                .addToBackStack(null)
                                 .commit();
 
                     }

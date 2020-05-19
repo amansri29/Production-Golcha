@@ -751,7 +751,7 @@ public class SoapApis {
                 output = result.toString();
                 Log.i("CHANGE STATUS Output", String.valueOf(result));
             } catch (SoapFault soapFault) {
-                earror = soapFault.toString();
+                earror = "Earror"+ " "+soapFault.toString();
                 Log.i("earror",earror);
                 soapFault.printStackTrace();
             }
@@ -759,7 +759,7 @@ public class SoapApis {
 
         } catch (Exception e) {
             e.printStackTrace();
-            earror = e.toString();
+            earror = "Earror" +" "+e.toString();
             Log.e(TAG, "earror " + earror);
         }
 

@@ -116,8 +116,6 @@ public class ReleaseListFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             progressDialog.dismiss();
-           // ReleaseProd_Listadapter releaseProdListadapter =new ReleaseProd_Listadapter(activity,list);
-
             ReleaseListAdapter releaseProdListadapter =new ReleaseListAdapter(activity,list);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(releaseProdListadapter);

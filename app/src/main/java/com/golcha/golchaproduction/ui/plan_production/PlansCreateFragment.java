@@ -275,7 +275,7 @@ public class PlansCreateFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
                         if (!result_number[0].equals("Earror")) {
-                            Fragment fragment1 = new HomExtendFrag();
+                            Fragment fragment1 = new PlanDetailsFragment();
                             Bundle bundle =new Bundle();
                             bundle.putString("no",resultof_newPlan);
                             fragment1.setArguments(bundle) ;
