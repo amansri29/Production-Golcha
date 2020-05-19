@@ -28,7 +28,7 @@ import com.golcha.golchaproduction.soapapi.SoapApis;
 import org.ksoap2.serialization.SoapObject;
 
 public class ReleaseDetailFragment extends Fragment {
-    EditText editno,editdes,editdes2,editsourcetype,edit_quantity,editsourceno,editdepart,editlocation
+    EditText editno,editdes,edit_quantity,editsourceno,editdepart,editlocation
             ,editmachine,editQunatity_send,editQunatity_sending
             ,editQunatity_accepted,editQunatity_rejected,editQunatity_rewoked;
     ProgressDialog progressDialog;
@@ -45,7 +45,7 @@ public class ReleaseDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_release_pro__on_list__click, container, false);
+        View root = inflater.inflate(R.layout.fragment_release_details, container, false);
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -94,8 +94,8 @@ public class ReleaseDetailFragment extends Fragment {
 
         editno=(EditText) root.findViewById(R.id.editTextno1);
         editdes=(EditText)root.findViewById(R.id.editTextdesc1);
-        editdes2=(EditText)root.findViewById(R.id.editTextdesc2_1);
-        editsourcetype=(EditText)root.findViewById(R.id.editTextsourcetype1);
+//        editdes2=(EditText)root.findViewById(R.id.editTextdesc2_1);
+//        editsourcetype=(EditText)root.findViewById(R.id.editTextsourcetype1);
         editsourceno=(EditText)root.findViewById(R.id.editTextsourceno1);
         edit_quantity=(EditText)root.findViewById(R.id.editTextpro_quan1);
 
@@ -420,9 +420,9 @@ public class ReleaseDetailFragment extends Fragment {
             super.onPostExecute(s);
             progressDialog.dismiss();
             editno.setText(no2);
-            editdes.setText(desc1);
-            editdes2.setText(desc2);
-            editsourcetype.setText(source_type);
+            editdes.setText(desc1 + " " + desc2);
+//            editdes2.setText(desc2);
+//            editsourcetype.setText(source_type);
             editsourceno.setText(source_no);
             edit_quantity.setText(p_quantity);
 

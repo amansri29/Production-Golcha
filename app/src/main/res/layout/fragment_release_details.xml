@@ -43,7 +43,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/editTextno"/>
+                android:id="@+id/editTextno1"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -63,41 +63,10 @@
                 />
 
             <EditText
-                android:textSize="18dp"
-                android:paddingLeft="10dp"
-                android:textColor="@android:color/black"
-                android:background="@color/text_bg"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:id="@+id/editTextdesc"/>
-
-        </androidx.cardview.widget.CardView>
-
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_marginTop="10dp"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textSize="20dp"
-                android:layout_width="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_height="wrap_content"
-                android:text="Item Type"
-                />
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:textSize="18dp"
-                android:paddingLeft="10dp"
-                android:textColor="@android:color/black"
                 android:enabled="false"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
                 android:background="@color/text_bg"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="10dp"
@@ -105,7 +74,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/edit_item_select"/>
+                android:id="@+id/editTextdesc1"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -124,8 +93,9 @@
                 android:text="Item Number"
                 />
 
-            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
+            <EditText
                 android:textSize="18dp"
+                android:enabled="false"
                 android:paddingLeft="10dp"
                 android:textColor="@android:color/black"
                 android:background="@color/text_bg"
@@ -135,7 +105,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/editTextsourceno"/>
+                android:id="@+id/editTextsourceno1"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -156,8 +126,9 @@
                 />
 
             <EditText
+                android:enabled="false"
                 android:inputType="numberDecimal"
-                android:id="@+id/editTextpro_quan"
+                android:id="@+id/editTextpro_quan1"
                 android:textSize="18dp"
                 android:paddingLeft="10dp"
                 android:textColor="@android:color/black"
@@ -171,6 +142,7 @@
                 />
 
         </androidx.cardview.widget.CardView>
+
 
 
 
@@ -189,7 +161,8 @@
                 android:text="Location"
                 />
 
-            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
+            <EditText
+                android:enabled="false"
                 android:textSize="18dp"
                 android:paddingLeft="10dp"
                 android:textColor="@android:color/black"
@@ -200,7 +173,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/editTextloca"/>
+                android:id="@+id/editTextloca1"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -221,7 +194,8 @@
                 android:text="Department"
                 />
 
-            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
+            <EditText
+                android:enabled="false"
                 android:textSize="18dp"
                 android:paddingLeft="10dp"
                 android:textColor="@android:color/black"
@@ -232,7 +206,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/editTextdepart"/>
+                android:id="@+id/editTextdepart1"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -252,7 +226,83 @@
                 android:text="Machine"
                 />
 
-            <com.golcha.golchaproduction.ui.CustomAutoCompleteTextView
+            <EditText
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:enabled="false"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/editTextMachine1"/>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:text="Inspection Type"
+                />
+
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/checkBox"
+                    android:layout_width="wrap_content"
+                    android:checked="true"
+                    android:button="?android:attr/listChoiceIndicatorMultiple"
+                    android:layout_height="wrap_content"
+                    android:text="Hourly" />
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Composite" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:text="Quantity Sent to Quality"
+                />
+
+            <EditText
+                android:enabled="false"
+                android:inputType="numberDecimal"
+                android:id="@+id/editQuantity_Sent_To_Quality"
                 android:textSize="18dp"
                 android:paddingLeft="10dp"
                 android:textColor="@android:color/black"
@@ -263,7 +313,139 @@
                 android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/editTextMachine"/>
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:text="Quantity Sending to Quality"
+                />
+
+            <EditText
+                android:inputType="numberDecimal"
+                android:id="@+id/editQuantity_Sending_To_Quality"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:text="Quantity Accepted"
+                />
+
+            <EditText
+                android:enabled="false"
+                android:inputType="numberDecimal"
+                android:id="@+id/editQuantity_Accepted"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:text="Quantity Rejected"
+                />
+
+            <EditText
+                android:enabled="false"
+                android:inputType="numberDecimal"
+                android:id="@+id/editQuantity_Rejected"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:text="Quantity Rework"
+                />
+
+            <EditText
+                android:enabled="false"
+                android:inputType="numberDecimal"
+                android:id="@+id/editQuantity_Rework"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                />
+
         </androidx.cardview.widget.CardView>
 
 
@@ -275,9 +457,9 @@
             android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Refresh Order"
+            android:text="Create Inspection Order"
             android:layout_gravity="center"
-            android:id="@+id/refreshbutton"/>
+            android:id="@+id/create_inspection"/>
 
         <Button
             android:textColor="@android:color/black"
@@ -289,7 +471,7 @@
             android:layout_height="50dp"
             android:text="Change Status"
             android:layout_gravity="center"
-            android:id="@+id/changestatus"/>
+            android:id="@+id/changestatus_release"/>
     </LinearLayout>
 
 </ScrollView>
