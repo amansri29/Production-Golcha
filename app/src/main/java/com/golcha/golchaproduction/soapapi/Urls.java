@@ -1,8 +1,11 @@
 package com.golcha.golchaproduction.soapapi;
 public class Urls {
 
-    private static String base_url = "http://myerp.golchagroup.com:1132";
-    private static String company_name = "DummyGST";
+//    private static String base_url = "http://myerp.golchagroup.com:1132";
+//    private static String company_name = "DummyGST";
+
+    private static String base_url = "http://myerp.golchagroup.com:7048";
+    private static String company_name = "DynamicsNAV90";
 
     public static String planned_production_list_url = base_url +  "/" + company_name +
             "/WS/UMDS%20Pvt.Ltd./Page/PPOListPage";
@@ -10,7 +13,8 @@ public class Urls {
     public static String planned_production_list_namespace =  "urn:microsoft-dynamics-schemas/page/ppolistpage";
 
 
-    public static String planned_production_card_url = "http://myerp.golchagroup.com:1132/DummyGST/WS/UMDS%20Pvt.Ltd./Page/PlannedProdOrder";
+    public static String planned_production_card_url = base_url +  "/" + company_name +
+            "/WS/UMDS%20Pvt.Ltd./Page/PlannedProdOrder";
     public static String planned_production_card_namespace = "urn:microsoft-dynamics-schemas/page/plannedprodorder";
 
 
@@ -39,9 +43,17 @@ public class Urls {
     public static  String change_statusbutton_namespace = "urn:microsoft-dynamics-schemas/codeunit/CahngeActionButtonApi";
 
 
+
     public static  String Read_ReleaseProduction_url = base_url + "/" +company_name +
             "/WS/UMDS%20Pvt.Ltd./Page/RPODocPage";
     public static  String Read_ReleaseProduction_namespace = "urn:microsoft-dynamics-schemas/page/rpodocpage";
+
+
+//    public static  String Read_ReleaseProduction_url = base_url + "/" +company_name +
+//            "/WS/UMDS%20Pvt.Ltd./Page/ReleasedProductionOrder";
+//    public static  String Read_ReleaseProduction_namespace = "urn:microsoft-dynamics-schemas/page/releasedproductionorder";
+
+
 
     public static  String ChangeStatus_Release_url = base_url + "/" +company_name +
             "/WS/UMDS%20Pvt.Ltd./Codeunit/CahngeActionButtonApi";
