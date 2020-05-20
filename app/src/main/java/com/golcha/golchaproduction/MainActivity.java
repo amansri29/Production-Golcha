@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.golcha.golchaproduction.ui.finish_production.FinishedPro_List;
 import com.golcha.golchaproduction.ui.release_production.ReleaseListFragment;
 import com.golcha.golchaproduction.ui.release_production.ReleaseDetailFragment;
 import com.golcha.golchaproduction.ui.plan_production.PlanDetailsFragment;
@@ -99,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(fragment instanceof PlanDetailsFragment){
             fragment1 = new PlansListFragment();
+        }
+        else if(fragment instanceof FinishedPro_List){
+            fragment1 = new PrfRedirectFragment();
         }
         if(fragment1 != null) {
 
