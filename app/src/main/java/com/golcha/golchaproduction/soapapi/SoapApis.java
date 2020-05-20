@@ -318,7 +318,8 @@ public class SoapApis {
         }
         return result2;
     }
-    public static String UpdatenewRelease(String myusername,String mypassword ,Boolean hourly, Boolean composite,String Q_S_Q,String Key1,String Key2){
+    public static String UpdatenewRelease(String myusername,String mypassword ,Boolean hourly,
+                                          Boolean composite,String Q_S_Q,String Key1,String Key2){
         String namespace2 = Urls.Read_ReleaseProduction_namespace;
         String url2 = Urls.Read_ReleaseProduction_url;
         String method_name2 = "Update";
@@ -357,11 +358,13 @@ public class SoapApis {
             catch (SoapFault soapFault) {
                 result2 =String.valueOf(soapFault);
                 soapFault.printStackTrace();
+                Log.e(TAG, "UpdatenewRelease soap error: " + soapFault);
             }
 
         }
         catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG, "UpdatenewRelease: " + e.getMessage());
         }
         return result2;
     }

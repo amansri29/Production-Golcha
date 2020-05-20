@@ -246,7 +246,7 @@ public class ReleaseDetailFragment extends Fragment {
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
             if (button_click.equals("createIns")) {
-                if (UpdateresulT.equals(no)) {
+                if (UpdateresulT != null & UpdateresulT.equals(no)) {
                     AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
                     builder.setMessage(Button_clickresult);
                     builder.setTitle("CREATE INSPECTION");
