@@ -51,4 +51,9 @@ public class Urls {
             "/WS/UMDS%20Pvt.Ltd./Codeunit/CreateInspDataSheetActButonAPI";
     public static  String CreateInspection_Release_namespace = "urn:microsoft-dynamics-schemas/codeunit/CreateInspDataSheetActButonAPI";
 
+    public static  String Finish_Pro_list_url = base_url + "/" +company_name +
+            "/WS/UMDS%20Pvt.Ltd./Page/FinishedProdrderLIst";
+
+    public static  String Finish_Pro_list_namespace = "urn:microsoft-dynamics-schemas/page/finishedprodrderlist";
+
 }

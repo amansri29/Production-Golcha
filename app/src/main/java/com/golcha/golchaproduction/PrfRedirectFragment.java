@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.golcha.golchaproduction.ui.finish_production.FinishedPro_List;
 import com.golcha.golchaproduction.ui.release_production.ReleaseListFragment;
 import com.golcha.golchaproduction.ui.plan_production.PlansListFragment;
 import com.golcha.golchaproduction.ui.finish_production.FinishListFragment;
@@ -58,10 +59,10 @@ public class PrfRedirectFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-//                        Fragment fragment = new FinishListFragment();
-//                        FragmentManager manager = getFragmentManager();
-//                        manager.beginTransaction().replace(R.id.nav_host_fragment,fragment)
-//                                .commit();
+                        Fragment fragment = new FinishedPro_List();
+                        FragmentManager manager = getFragmentManager();
+                        manager.beginTransaction().replace(R.id.nav_host_fragment,fragment)
+                                .commit();
 
 
                     }
