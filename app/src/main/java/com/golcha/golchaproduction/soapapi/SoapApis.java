@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class SoapApis {
     private static final String TAG = "SoapApis";
-    public static String userName = "aman.srivastav";
-    public static String password = "Change@123";
+    //public static String userName = "aman.srivastav";
+    //public static String password = "Change@123";
     public static String domain = "gghojai";
 
 
@@ -458,6 +458,7 @@ public class SoapApis {
             //Moving to next Activity
             Intent intent = new Intent(activity, MainActivity.class);
             activity.startActivity(intent);
+            activity.finish();
 //            Log.i("Logins :  " , String.valueOf(sharedPreferences.getBoolean("Loginaccess",false)));
 //            Log.i("Logins :  " , String.valueOf(sharedPreferences.getString("username","")));
 //            Log.i("Logins :  " , String.valueOf(sharedPreferences.getString("password","")));
@@ -829,5 +830,46 @@ public class SoapApis {
         }
 
 
+    }
+    public static SoapObject Final_Production_List(String myusername,String mypassword,String mydate) {
+
+        // SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        // v SharedPreferences.Editor editor = sharedPreferences.edit();
+        String namespace2 = Urls.Finish_Pro_list_namespace;
+        String url2 = Urls.Finish_Pro_list_url;
+        String method_name2 = "ReadMultiple";
+        String soap_action2 = namespace2 + ":" + method_name2;
+        SoapObject result = null;
+        String earror = "";
+        String output = "";
+
+        try {
+            SoapObject request = new SoapObject(namespace2, method_name2);
+            SoapObject filter = new SoapObject(namespace2, "filter");
+            filter.addProperty("Field","Finished_Date" );
+            filter.addProperty("Criteria",mydate );
+            request.addSoapObject(filter);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+
+            NtlmTransport ntlm = new NtlmTransport();
+            ntlm.debug = true;
+            ntlm.setCredentials(url2, myusername, mypassword, domain, "");
+            ntlm.call(soap_action2, envelope);
+
+            try {
+                result = (SoapObject) envelope.getResponse();
+            } catch (SoapFault soapFault) {
+                soapFault.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            Log.e(TAG, "earror " + earror);
+
+        } ;
+        return result;
     }
 }

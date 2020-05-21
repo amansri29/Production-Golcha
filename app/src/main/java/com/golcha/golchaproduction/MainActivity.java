@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.golcha.golchaproduction.ui.finish_production.FinishedPro_List;
 import com.golcha.golchaproduction.ui.release_production.ReleaseListFragment;
 import com.golcha.golchaproduction.ui.release_production.ReleaseDetailFragment;
 import com.golcha.golchaproduction.ui.plan_production.PlanDetailsFragment;
@@ -20,10 +21,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     //EditText password;
     LinearLayout linearLayout;
+    private Calendar calendar,calendar2;
+    private SimpleDateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = (Fragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment1 = null;
-        //Toast.makeText(MainActivity.this,String.valueOf(fragment),Toast.LENGTH_SHORT).show();
+
 
         if(fragment instanceof PlansCreateFragment){
             fragment1 = new PlansListFragment();
@@ -93,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(fragment instanceof PlanDetailsFragment){
             fragment1 = new PlansListFragment();
+        }
+        else if(fragment instanceof FinishedPro_List){
+            fragment1 = new PrfRedirectFragment();
         }
         if(fragment1 != null) {
 
