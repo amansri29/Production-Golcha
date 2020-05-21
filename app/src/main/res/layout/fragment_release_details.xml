@@ -284,6 +284,39 @@
 
 
 
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:text="No of Bags"
+                />
+
+            <EditText
+                android:text="0"
+                android:inputType="numberDecimal"
+                android:id="@+id/no_of_bags"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:background="@color/text_bg"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
 
         <androidx.cardview.widget.CardView
             android:layout_marginTop="10dp"
@@ -333,6 +366,7 @@
                 />
 
             <EditText
+                android:text="0"
                 android:inputType="numberDecimal"
                 android:id="@+id/editQuantity_Sending_To_Quality"
                 android:textSize="18dp"

@@ -318,8 +318,11 @@ public class SoapApis {
         }
         return result2;
     }
+
+
+
     public static String UpdatenewRelease(String myusername,String mypassword ,Boolean hourly,
-                                          Boolean composite,String Q_S_Q,String Key1,String Key2){
+                                          Boolean composite,String Q_S_Q,String Key1,String Key2, String bags){
         String namespace2 = Urls.Read_ReleaseProduction_namespace;
         String url2 = Urls.Read_ReleaseProduction_url;
         String method_name2 = "Update";
@@ -333,6 +336,7 @@ public class SoapApis {
             RPODocPage.addProperty("Key",Key1);
             RPODocPage.addProperty("Hourly",hourly);
             RPODocPage.addProperty("Composite",composite);
+            RPODocPage.addProperty("No_Of_Bags",bags);
             SoapObject ProdOrderLines = new SoapObject(namespace2,"ProdOrderLines");
 
             SoapObject Released_Prod_Order_Lines = new SoapObject(namespace2,"Released_Prod_Order_Lines");

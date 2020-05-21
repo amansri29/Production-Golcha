@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.golcha.golchaproduction.PrfRedirectFragment;
 import com.golcha.golchaproduction.R;
@@ -30,7 +31,8 @@ import org.ksoap2.serialization.SoapObject;
 public class ReleaseDetailFragment extends Fragment {
     EditText editno,editdes,edit_quantity,editsourceno,editdepart,editlocation
             ,editmachine,editQunatity_send,editQunatity_sending
-            ,editQunatity_accepted,editQunatity_rejected,editQunatity_rewoked;
+            ,editQunatity_accepted,editQunatity_rejected,editQunatity_rewoked,
+        edit_no_of_bags;
     ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;
     String username,password,UpdateresulT;
@@ -38,7 +40,7 @@ public class ReleaseDetailFragment extends Fragment {
     CheckBox checkBox1,checkBox2;
     String no,KEY,KEY2,Button_clickresult;
     String no2,desc1,desc2,location,machine,department,source_type,
-            source_no,p_quantity,Q_send,Q_sending,Q_accepted,Q_rejected,Q_Revoke;
+            source_no,p_quantity,Q_send,Q_sending,Q_accepted,Q_rejected,Q_Revoke, bags;
     private static final String TAG = "ReleasePro_OnList_Click";
     Boolean hourlyy =true ,compositt =false;
 
@@ -91,7 +93,7 @@ public class ReleaseDetailFragment extends Fragment {
 
 
 
-
+        edit_no_of_bags = (EditText) root.findViewById(R.id.no_of_bags);
         editno=(EditText) root.findViewById(R.id.editTextno1);
         editdes=(EditText)root.findViewById(R.id.editTextdesc1);
 //        editdes2=(EditText)root.findViewById(R.id.editTextdesc2_1);
@@ -118,7 +120,18 @@ public class ReleaseDetailFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new MyButton_click("createIns").execute();
+                        int bags = Integer.parseInt(edit_no_of_bags.getText().toString());
+                        int quant = Integer.parseInt(editQunatity_sending.getText().toString());
+                        if(bags > 0 & quant > 0)
+                        {
+                            new MyButton_click("createIns").execute();
+                        }
+                        else
+                        {
+                            Toast.makeText(activity, "No. of bags and quantity sending to quality should greater than 0.", Toast.LENGTH_LONG).show();
+                        }
+
+
                     }
                 }
         );
@@ -154,9 +167,10 @@ public class ReleaseDetailFragment extends Fragment {
         protected String doInBackground(String... strings) {
             if (button_click.equals("createIns")) {
                 Q_sending = editQunatity_sending.getText().toString().trim();
+                bags = edit_no_of_bags.getText().toString();
 
                 try {
-                    UpdateresulT = SoapApis.UpdatenewRelease(username, password, hourlyy, compositt, Q_sending, KEY, KEY2);
+                    UpdateresulT = SoapApis.UpdatenewRelease(username, password, hourlyy, compositt, Q_sending, KEY, KEY2, bags);
                     Log.i("mygetting numbet", UpdateresulT + " " + no);
                     if (UpdateresulT.equals(no)) {
                         Button_clickresult = SoapApis.CreateInspection_Release(username, password, UpdateresulT);
@@ -249,7 +263,7 @@ public class ReleaseDetailFragment extends Fragment {
                 if (UpdateresulT != null & UpdateresulT.equals(no)) {
                     AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
                     builder.setMessage(Button_clickresult);
-                    builder.setTitle("CREATE INSPECTION");
+                    builder.setTitle("Inspection order successfully created.");
                     builder.setCancelable(false);
                     builder.setPositiveButton(
                             "OK", new DialogInterface.OnClickListener() {
@@ -265,6 +279,8 @@ public class ReleaseDetailFragment extends Fragment {
                                         editQunatity_rejected.setText(Q_rejected);
 
                                         editQunatity_rewoked.setText(Q_Revoke);
+
+                                        edit_no_of_bags.setText("0");
 
                                     }
                                 }
