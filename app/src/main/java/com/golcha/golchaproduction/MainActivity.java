@@ -1,5 +1,7 @@
 package com.golcha.golchaproduction;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     private Calendar calendar,calendar2;
     private SimpleDateFormat dateFormat;
+    SharedPreferences sharedPreferences2;
+    SharedPreferences.Editor editor2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         manager.beginTransaction().replace(R.id.nav_host_fragment,fragment)
                 .commit();
         this.getFragmentManager().popBackStack();
+        sharedPreferences2 =getSharedPreferences("Save_Username", Context.MODE_PRIVATE);
+        editor2 = sharedPreferences2.edit();
+
 
 
 
@@ -65,10 +72,16 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.acion_button:
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String username = sharedPreferences.getString("username","");
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear().apply();
-                Login_activity.passedittext.setText("");
-                finish();
+                editor2.putString("myusername",username);
+                editor2.commit();
+                Intent intent = new Intent(MainActivity.this,Login_activity.class);
+                MainActivity.this.finish();
+                startActivity(intent);
+
+
         }
         return super.onOptionsItemSelected(item);
     }

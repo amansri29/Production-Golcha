@@ -28,8 +28,8 @@ public class Login_activity extends AppCompatActivity {
     ArrayList<String> mylist;
     Activity activity;
     EditText useredittext;
-    public  static EditText passedittext;
-    String Logins =null;
+    EditText passedittext;
+    String Logins =null,username,password;
     ProgressDialog progressDialog;
 
     @Override
@@ -53,8 +53,13 @@ public class Login_activity extends AppCompatActivity {
         useredittext = (EditText)findViewById(R.id.username);
         passedittext = (EditText)findViewById(R.id.password);
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences sharedPreferences2 = getSharedPreferences("Save_Username", Context.MODE_PRIVATE);
         boolean logins = sharedPreferences.getBoolean("Loginaccess",false);
+        String Set_username =sharedPreferences2.getString("myusername","");
+        useredittext.setText(Set_username);
         if(logins==true){
+            SharedPreferences.Editor editor = sharedPreferences2.edit();
+            editor.clear().apply();
             Intent intent = new Intent(Login_activity.this ,MainActivity.class);
             startActivity(intent);
             finish();
@@ -80,8 +85,8 @@ public class Login_activity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String... strings) {
-                String username = useredittext.getText().toString().trim();
-                String password = passedittext.getText().toString().trim();
+                username = useredittext.getText().toString().trim();
+                password = passedittext.getText().toString().trim();
                 Logins = SoapApis.Login(activity,username,password);
                 return null;
             }
