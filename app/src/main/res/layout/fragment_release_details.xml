@@ -300,7 +300,6 @@
 
             <EditText
                 android:text="0"
-                android:inputType="numberDecimal"
                 android:id="@+id/no_of_bags"
                 android:textSize="18dp"
                 android:paddingLeft="10dp"

@@ -120,15 +120,15 @@ public class ReleaseDetailFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int bags = Integer.parseInt(edit_no_of_bags.getText().toString());
+                        String bags = edit_no_of_bags.getText().toString();
                         int quant = Integer.parseInt(editQunatity_sending.getText().toString());
-                        if(bags > 0 & quant > 0)
+                        if(!bags.isEmpty() & quant > 0)
                         {
                             new MyButton_click("createIns").execute();
                         }
                         else
                         {
-                            Toast.makeText(activity, "No. of bags and quantity sending to quality should greater than 0.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity, "This field should not be empty!", Toast.LENGTH_LONG).show();
                         }
 
 
@@ -280,7 +280,7 @@ public class ReleaseDetailFragment extends Fragment {
 
                                         editQunatity_rewoked.setText(Q_Revoke);
 
-                                        edit_no_of_bags.setText("0");
+                                        edit_no_of_bags.setText("");
 
                                     }
                                 }
