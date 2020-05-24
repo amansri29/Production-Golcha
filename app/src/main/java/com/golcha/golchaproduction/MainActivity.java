@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -17,6 +19,10 @@ import com.golcha.golchaproduction.ui.release_production.ReleaseDetailFragment;
 import com.golcha.golchaproduction.ui.plan_production.PlanDetailsFragment;
 import com.golcha.golchaproduction.ui.plan_production.PlansListFragment;
 import com.golcha.golchaproduction.ui.plan_production.PlansCreateFragment;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.crashlytics.internal.CrashlyticsNativeComponent;
+import com.google.firebase.crashlytics.internal.common.CrashlyticsCore;
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     SharedPreferences sharedPreferences2;
     SharedPreferences.Editor editor2;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
