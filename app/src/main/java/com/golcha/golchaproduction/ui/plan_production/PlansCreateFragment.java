@@ -160,11 +160,12 @@ public class PlansCreateFragment extends Fragment {
 //            ArrayAdapter<String> Departmentadapter = new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,Department_list);
 //            ArrayAdapter<String> Machineadapter= new ArrayAdapter<String>(getContext(),android.R.layout.select_dialog_item,machine_list);
             Boolean fullaccess = sharedPreferences.getBoolean("fullaccess",false);
-            if (fullaccess == false) {
-                Gson gson = new Gson();
-                String json = sharedPreferences.getString("Location_code_name","");
-                Type type = new TypeToken<ArrayList<String>>(){}.getType();
-                ArrayList<String> mynewLocationlist = new ArrayList<String>();
+
+            Gson gson = new Gson();
+            String json = sharedPreferences.getString("Location_code_name",null);
+            Type type = new TypeToken<ArrayList<String>>(){}.getType();
+            ArrayList<String> mynewLocationlist = new ArrayList<String>();
+            if (mynewLocationlist != null & fullaccess == false) {
                 mynewLocationlist = gson.fromJson(json,type);
                 for(int i=0;i<mynewLocationlist.size();i++){
                     Log.i("mmynewLocations",mynewLocationlist.get(i));
