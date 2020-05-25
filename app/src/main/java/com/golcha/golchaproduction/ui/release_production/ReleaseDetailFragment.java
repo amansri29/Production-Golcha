@@ -128,7 +128,7 @@ public class ReleaseDetailFragment extends Fragment {
                         }
                         else
                         {
-                            Toast.makeText(activity, "This field should not be empty!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity, "No. of bags and Quantity sending to quality should not be empty!", Toast.LENGTH_LONG).show();
                         }
 
 
