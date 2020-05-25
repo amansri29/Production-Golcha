@@ -61,7 +61,7 @@ public class FinishedPro_List extends Fragment {
         recyclerView =(RecyclerView)root.findViewById(R.id.recycleview3);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setProgress(0);
-        progressDialog.setMessage("please wait while we are fetchine details");
+        progressDialog.setMessage("please wait while we are fetching details");
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
