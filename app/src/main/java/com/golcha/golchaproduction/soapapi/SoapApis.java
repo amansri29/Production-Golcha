@@ -556,7 +556,7 @@ public class SoapApis {
 
         return  list;
     }
-    public static ArrayList<String> get_deprt_machine(Activity activity,String myusername,String mypassword,String key_item){
+    public static ArrayList<String> get_deprt_machine(Activity activity,String myusername,String mypassword,String key_item,String split){
 
        // SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         //SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -595,7 +595,7 @@ public class SoapApis {
                         name = String.valueOf(result2.getProperty("Name"));
                         code = String.valueOf(result2.getProperty("Code"));
 
-                        myresult = code + " " + name;
+                        myresult = code + split + name;
                         Log.i("code_name",myresult);
                         list.add(myresult);
 

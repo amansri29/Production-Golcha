@@ -106,7 +106,18 @@ public class PlanDetailsFragment extends Fragment {
 
         editmachine = (CustomAutoCompleteTextView)root.findViewById(R.id.editTextMachine);
         showSuggestionsOnClick(editmachine);
-        setSelectedValue(editmachine);
+        editmachine.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        String[] splited = editmachine.getText().toString().split(",");
+                        if(splited.length > 0)
+                        {
+                            editmachine.setText(splited[0]);
+                        }
+                    }
+                }
+        );
 
 
 
@@ -176,8 +187,8 @@ public class PlanDetailsFragment extends Fragment {
         protected String doInBackground(String... params) {
             String result3 = "";
             mylocationlist= SoapApis.getLocationlist(activity,username,password);
-            Department_list = SoapApis.get_deprt_machine(activity,username,password,"1");
-            machine_list = SoapApis.get_deprt_machine(activity,username,password,"2");
+            Department_list = SoapApis.get_deprt_machine(activity,username,password,"1"," ");
+            machine_list = SoapApis.get_deprt_machine(activity,username,password,"2",",");
 
             try {
                 SoapObject result = SoapApis.getPlannedCardDetails(username,password,no);
@@ -290,8 +301,8 @@ public class PlanDetailsFragment extends Fragment {
             editmachine.setThreshold(1);
             editmachine.setAdapter(Machineadapter);
 
-           editdepart.setThreshold(1);
-           editdepart.setAdapter(Departmentadapter);
+            editdepart.setThreshold(1);
+            editdepart.setAdapter(Departmentadapter);
 
             editlocation.setThreshold(1);
             editlocation.setAdapter(Locationadapter);

@@ -79,7 +79,18 @@ public class PlansCreateFragment extends Fragment {
 
         autocom_machine = (CustomAutoCompleteTextView) root.findViewById(R.id.edit_item_select_machine);
         showSuggestionsOnClick(autocom_machine);
-        setSelectedValue(autocom_machine);
+        autocom_machine.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        String[] splited = autocom_machine.getText().toString().split(",");
+                        if(splited.length > 0)
+                        {
+                            autocom_machine.setText(splited[0]);
+                        }
+                    }
+                }
+        );
 
 
 
@@ -147,8 +158,8 @@ public class PlansCreateFragment extends Fragment {
         protected String doInBackground(String... strings) {
 
             mylocationlist= SoapApis.getLocationlist(activity, username, password);
-            Department_list = SoapApis.get_deprt_machine(activity,username,password,"1");
-            machine_list = SoapApis.get_deprt_machine(activity,username,password,"2");
+            Department_list = SoapApis.get_deprt_machine(activity,username,password,"1"," ");
+            machine_list = SoapApis.get_deprt_machine(activity,username,password,"2",",");
 
             return null;
         }
