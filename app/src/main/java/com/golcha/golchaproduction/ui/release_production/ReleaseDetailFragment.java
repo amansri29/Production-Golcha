@@ -121,7 +121,8 @@ public class ReleaseDetailFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         String bags = edit_no_of_bags.getText().toString();
-                        int quant = Integer.parseInt(editQunatity_sending.getText().toString());
+                        float quant = Float.parseFloat(editQunatity_sending.getText().toString());
+                        Log.i(TAG, "onClick: "+quant);
                         if(!bags.isEmpty() & quant > 0)
                         {
                             new MyButton_click("createIns").execute();
