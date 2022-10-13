@@ -25,6 +25,7 @@
             android:required="false" />
 
         <activity
+            android:exported="true"
             android:theme="@style/NoActionBar"
             android:name=".Login_activity"
             android:configChanges="orientation"
